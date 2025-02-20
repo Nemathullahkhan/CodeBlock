@@ -7,8 +7,8 @@ import { CodeEditorState } from "@/app/types/types";
 
 
 export const useCodeEditorStore = create<CodeEditorState>((set, get) => ({
-  language: "javascript",
-  theme: "vs-dark",
+  language: "c",
+  theme: "github-dark",
   fontSize: 16,
   output: "",
   isRunning: false,
