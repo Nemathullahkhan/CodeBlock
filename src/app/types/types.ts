@@ -58,3 +58,16 @@ export interface CodeEditorState{
 }
 
 
+export interface ModulesType{
+    id:string;
+    name:string;
+    description:string;
+}
+
+export interface Topics{
+    id:string;
+    name:string;
+    description:string;
+    code:string;
+    
+}

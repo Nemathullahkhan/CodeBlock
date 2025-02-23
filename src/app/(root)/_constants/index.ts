@@ -1,4 +1,4 @@
-import { Theme } from "@/app/types/types";
+import {  Theme } from "@/app/types/types";
 import { Monaco } from "@monaco-editor/react";
 
 type LangaugeConfig = Record<
@@ -267,3 +267,4 @@ export const defineMonacoThemes = (monaco: Monaco) => {
     });
   });
 };
+

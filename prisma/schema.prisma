@@ -1,25 +1,10 @@
-// // This is your Prisma schema file,
-// // learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
-// generator client {
-//   provider = "prisma-client-js"
-// }
-
-// datasource db {
-//   provider = "postgresql"
-//   url      = env("DATABASE_URL")
-// }
+generator client {
+  provider = "prisma-client-js"
+}
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
-}
-
-generator client {
-  provider = "prisma-client-js"
 }
 
 model Account {
@@ -69,3 +54,90 @@ model VerificationToken {
 
   @@unique([identifier, token])
 }
+
+model Module {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  description String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  topics      Topic[]
+}
+
+model Topic {
+  id          String    @id @default(cuid())
+  name        String    @unique
+  description String
+  moduleId    String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  contents    Content[]
+  module      Module    @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+}
+
+model Content {
+  id                 String          @id @default(cuid())
+  title              String
+  description        String
+  photos             String[] // Array of image URLs
+  complexityAnalysis String?
+  applications       String?
+  advantages         String[] 
+  disadvantages      String[]
+  faq                FaqQuestion[]
+  vivaQuestions      VivaQuestion[]
+  videos             String[]
+  topicId            String
+  createdAt          DateTime        @default(now())
+  updatedAt          DateTime        @updatedAt
+  topic              Topic           @relation(fields: [topicId], references: [id], onDelete: Cascade)
+  working            Working?
+  implementation     Implementation?
+  illustration       Illustration?
+}
+
+model FaqQuestion {
+  id        String  @id @default(cuid())
+  question  String
+  answer    String
+  contentId String
+  content   Content @relation(fields: [contentId], references: [id], onDelete: Cascade)
+}
+
+model VivaQuestion {
+  id        String  @id @default(cuid())
+  question  String
+  answer    String
+  contentId String
+  content   Content @relation(fields: [contentId], references: [id], onDelete: Cascade)
+}
+
+model Working {
+  id          String @id @default(cuid())
+  contentId   String @unique
+  explanation String
+
+  content Content @relation(fields: [contentId], references: [id], onDelete: Cascade)
+}
+
+model Illustration {
+  id        String   @id @default(cuid())
+  contentId String   @unique
+  summary   String?
+  tips      String?
+  images    String[]
+
+  content Content @relation(fields: [contentId], references: [id], onDelete: Cascade)
+}
+
+
+model Implementation {
+  id        String @id @default(cuid())
+  contentId String @unique
+  intuition String
+  approach  String
+  code      Json  
+
+  content Content @relation(fields: [contentId], references: [id], onDelete: Cascade)
+}
+
