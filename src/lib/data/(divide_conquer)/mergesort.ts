@@ -1,54 +1,74 @@
 export const mergeSortData = {
-    module: {
-      name: "Design And Analysis of Algorithms",
+  module: {
+    name: "Design And Analysis of Algorithms",
+    description:
+      "Practical course on Design & Analysis of Algorithms based on the syllabus followed at Engineering colleges in India.",
+  },
+  topics: [
+    {
+      name: "Divide and Conquer",
       description:
-        "Practical course on Design & Analysis of Algorithms based on the syllabus followed at Engineering colleges in India.",
+        "Algorithms that recursively divide problems into subproblems",
+      moduleId: "cm7f4ndrz0008bue4mhqje0qh",
     },
-    topics: [
-      {
-        name: "Divide and Conquer",
-        description: "Algorithms that recursively divide problems into subproblems",
-        moduleId: "cm7f4ndrz0008bue4mhqje0qh",
-      },
+  ],
+  content: {
+    title: "Merge Sort",
+    description: "Understanding Merge Sort Algorithm",
+    brief:
+      "Merge sort is a sorting algorithm that follows the divide-and-conquer approach. It works by recursively dividing the input array into smaller subarrays and sorting those subarrays then merging them back together to obtain the sorted array. : In simple terms, we can say that the process of merge sort is to divide the array into two halves, sort each half, and then merge the sorted halves back together. This process is repeated until the entire array is sorted.",
+    photos: [
+      "https://media.geeksforgeeks.org/wp-content/uploads/20230706153706/Merge-Sort-Algorithm-(1).png",
     ],
-    content: {
-      title: "Merge Sort",
-      description: "Understanding Merge Sort Algorithm",
-      photos: ["https://example.com/merge-sort.png"],
-      complexityAnalysis: "O(n log n) in all cases, uses extra space O(n).",
-      applications: "Used in external sorting, linked lists, and stable sorting scenarios.",
-      advantages: ["Stable", "Efficient for large datasets", "Guaranteed O(n log n)"],
-      disadvantages: ["Requires extra memory", "Slower for small datasets"],
-      topicId: "cm7f4otem000abue44msxb0xv",
+    complexityAnalysis: "O(n log n) in all cases, uses extra space O(n).",
+    applications: [
+      "External Sorting - Used in sorting large datasets that do not fit in memory, such as database sorting and file systems.",
+      "Linked Lists - Preferred for sorting linked lists since it does not require random access and works efficiently with node-based structures.",
+      "Stable Sorting - Ensures that the relative order of equal elements remains unchanged, making it ideal for sorting records with multiple keys.",
+      "Inversion Count Problems - Used in competitive programming and computer vision to count the number of inversions in an array efficiently.",
+      "Multithreading and Parallel Computing - Can be optimized to work efficiently with multithreading by dividing and merging subarrays concurrently.",
+    ],
+    advantages: [
+      "Stable",
+      "Efficient for large datasets",
+      "Guaranteed O(n log n)",
+    ],
+    disadvantages: ["Requires extra memory", "Slower for small datasets"],
+    videos: [
+      "https://www.youtube.com/watch?v=iKGAgWdgoRk&t=2s",
+      "https://www.youtube.com/watch?v=iKGAgWdgoRk&t=2s",
+    ],
+    topicId: "cm7f4otem000abue44msxb0xv",
+  },
+  faq: [
+    {
+      question: "What is Merge Sort?",
+      answer: "Merge Sort is a divide-and-conquer sorting algorithm.",
+      contentId: "cm7j5g8wc0003bugszt63oddx",
     },
-    faq: [
-      {
-        question: "What is Merge Sort?",
-        answer: "Merge Sort is a divide-and-conquer sorting algorithm.",
-        contentId: "cm7g2rs5j0003buf8uumw3bgr",
-      },
-    ],
-    vivaQuestions: [
-      {
-        question: "Why is Merge Sort preferred for Linked Lists?",
-        answer: "Because linked lists do not support random access, Merge Sort is better suited for them than Quick Sort.",
-        contentId: "cm7g2rs5j0003buf8uumw3bgr",
-      },
-    ],
-    working: {
-      explanation:
-        "Merge Sort works by recursively dividing the array into smaller subarrays until they consist of a single element, then merging them in sorted order.",
-      contentId: "cm7g2rs5j0003buf8uumw3bgr",
+  ],
+  vivaQuestions: [
+    {
+      question: "Why is Merge Sort preferred for Linked Lists?",
+      answer:
+        "Because linked lists do not support random access, Merge Sort is better suited for them than Quick Sort.",
+      contentId: "cm7j5g8wc0003bugszt63oddx",
     },
-    implementation: {
-      intuition:
-        "Merge Sort is a divide-and-conquer algorithm that splits an array into two halves, sorts them recursively, and merges them back.",
-      approach:
-        "Break the array into halves recursively until each half contains a single element. Then, merge the sorted halves back together.",
-      code: [
-        {
-          language: "C",
-          code: `#include <stdio.h>
+  ],
+  working: {
+    explanation:
+      "Merge Sort works by recursively dividing the array into smaller subarrays until they consist of a single element, then merging them in sorted order.",
+    contentId: "cm7j5g8wc0003bugszt63oddx",
+  },
+  implementation: {
+    intuition:
+      "Merge Sort is a divide-and-conquer algorithm that splits an array into two halves, sorts them recursively, and merges them back.",
+    approach:
+      "Break the array into halves recursively until each half contains a single element. Then, merge the sorted halves back together.",
+    code: [
+      {
+        language: "C",
+        code: `#include <stdio.h>
   
   // Function to merge two subarrays
   void merge(int arr[], int left, int mid, int right) {
@@ -98,10 +118,10 @@ export const mergeSortData = {
   
       return 0;
   }`,
-        },
-        {
-          language: "JavaScript",
-          code: `function merge(left, right) {
+      },
+      {
+        language: "JavaScript",
+        code: `function merge(left, right) {
       let sortedArray = [];
       while (left.length && right.length) {
           if (left[0] < right[0]) sortedArray.push(left.shift());
@@ -119,10 +139,10 @@ export const mergeSortData = {
   }
   
   console.log(mergeSort([12, 11, 13, 5, 6, 7]));`,
-        },
-        {
-          language: "Python",
-          code: `def merge_sort(arr):
+      },
+      {
+        language: "Python",
+        code: `def merge_sort(arr):
       if len(arr) <= 1:
           return arr
       mid = len(arr) // 2
@@ -136,16 +156,43 @@ export const mergeSortData = {
       return result + left + right
   
   print(merge_sort([12, 11, 13, 5, 6, 7]))`,
-        },
-      ],
-      contentId: "cm7g2rs5j0003buf8uumw3bgr",
-    },
-    illustration: {
-      summary:
-        "Merge Sort works by splitting an array into halves and merging them in sorted order.",
-      tips: "Use recursion for efficient implementation. Avoid Merge Sort when memory constraints exist.",
-      images: ["https://example.com/merge-sort-illustration.png"],
-      contentId: "cm7g2rs5j0003buf8uumw3bgr",
-    },
-  };
-  
+      },
+    ],
+    contentId: "cm7j5g8wc0003bugszt63oddx",
+  },
+  illustration: {
+    summary:
+      "Merge Sort works by splitting an array into halves and merging them in sorted order.",
+    tips: ["Use recursion for efficient implementation." ," Avoid Merge Sort when memory constraints exist."],
+    images: [
+      "https://media.geeksforgeeks.org/wp-content/uploads/20240627163910/Merge-Sort-1.webp",
+      "https://media.geeksforgeeks.org/wp-content/uploads/20240627163910/Merge-Sort-2.webp",
+      "https://media.geeksforgeeks.org/wp-content/uploads/20240627163911/Merge-Sort-3.webp",
+      "https://media.geeksforgeeks.org/wp-content/uploads/20240627163912/Merge-Sort-4.webp",
+    ],
+    explanation: `Let’s look at the working of above example: 
+      \n
+
+Divide: 
+
+
+[38, 27, 43, 10]  is divided into  [38, 27  ] and  [43, 10]  . 
+[38, 27]  is divided into  [38]  and  [27]  . 
+[43, 10]  is divided into  [43]  and  [10]  . 
+Conquer: 
+
+
+[38]  is already sorted. 
+[27]  is already sorted. 
+[43]  is already sorted. 
+[10]  is already sorted. 
+Merge: 
+
+
+Merge  [38]  and  [27]  to get  [27, 38]  . 
+Merge  [43]  and  [10]  to get  [10,43]  . 
+Merge  [27, 38]  and  [10,43]  to get the final sorted list  [10, 27, 38, 43] 
+Therefore, the sorted list is  [10, 27, 38, 43]  . `,
+    contentId: "cm7j5g8wc0003bugszt63oddx",
+  },
+};

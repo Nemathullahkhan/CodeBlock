@@ -90,7 +90,7 @@ export default function OutputPanel() {
                         </div>
                     )}
                 </div>
-            </div>uuu
+            </div>
         </div>
     )
 }

@@ -6,12 +6,24 @@ interface props {
 
 export default function Complexity({complexityAnalysis}:props) {
   return (
-    <Card className="bg-zinc-900 ">
+    // <Card className="bg-zinc-900 ">
+    //   <CardHeader>
+    //     <CardTitle className="text-gray-100">Complexity Analysis</CardTitle>
+    //   </CardHeader>
+    //   <CardContent>
+    //     <p className="text-gray-300 whitespace-pre-wrap">{complexityAnalysis}</p>
+    //   </CardContent>
+    // </Card>
+    <Card className="bg-black border-zinc-800 ">
       <CardHeader>
-        <CardTitle className="text-gray-100">Complexity Analysis</CardTitle>
+        <CardTitle className="text-gray-50">Complexity Analysis</CardTitle>
       </CardHeader>
-      <CardContent>
-        <p className="text-gray-300 whitespace-pre-wrap">{complexityAnalysis}</p>
+      <CardContent >
+        <div className="px-4">
+        <pre className="text-gray-300 whitespace-pre-wrap font-mono bg-zinc-900/90 p-2 px-10 rounded-lg leading-7 ">
+          {complexityAnalysis}
+        </pre>
+        </div>
       </CardContent>
     </Card>
   );

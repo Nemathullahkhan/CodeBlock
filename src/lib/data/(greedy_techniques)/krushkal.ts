@@ -1,0 +1,206 @@
+export const kruskalData = {
+    module: {
+      name: "Design And Analysis of Algorithms",
+      description:
+        "Practical course on Design & Analysis of Algorithms based on the syllabus followed at Engineering colleges in India.",
+    },
+    topics: [
+      {
+        name: "Greedy Techniques",
+        description:
+          "Algorithms that make locally optimal choices at each step with the hope of finding a global optimum.",
+        moduleId: "cm7f4ndrz0008bue4mhqje0qh",
+      },
+    ],
+    content: {
+      title: "Kruskal’s Algorithm (Minimum Spanning Tree)",
+      description: "Understanding Kruskal’s Algorithm for Minimum Spanning Tree",
+      brief:
+        "Kruskal's Algorithm is a Greedy algorithm that finds the Minimum Spanning Tree (MST) for a weighted, undirected graph. It works by sorting all edges in non-decreasing order of weight and picking the smallest edges that don’t form a cycle until we get (V-1) edges.",
+      photos: [
+        "https://media.geeksforgeeks.org/wp-content/uploads/20230806153920/Kruskal1.png",
+      ],
+      complexityAnalysis:
+        "O(E log E) due to sorting edges, where E is the number of edges.",
+      applications: [
+        "Network Design - Used in designing LAN networks and circuit design.",
+        "Clustering - Used in machine learning for hierarchical clustering.",
+        "Transportation - Helps in planning roads and pipelines with minimal cost.",
+        "Image Segmentation - Used in computer vision applications.",
+        "Telecommunication - Used in laying out efficient cable networks.",
+      ],
+      advantages: [
+        "Works well with sparse graphs.",
+        "Efficient sorting makes it faster compared to Prim's Algorithm for large graphs.",
+        "Easy to implement using Disjoint Set Union (DSU).",
+      ],
+      disadvantages: [
+        "Requires sorting of edges, which can be costly in dense graphs.",
+        "Not suitable for dynamically changing graphs.",
+      ],
+      videos: [
+        "https://www.youtube.com/watch?v=71UQH7Pr9kU",
+        "https://www.youtube.com/watch?v=fAuF0EuZVCk",
+      ],
+      topicId: "cm7f4otem000abue44msxb0xv",
+    },
+    faq: [
+      {
+        question: "What is Kruskal’s Algorithm used for?",
+        answer:
+          "Kruskal’s Algorithm is used to find the Minimum Spanning Tree (MST) of a graph, which connects all vertices with the minimum total edge weight.",
+        contentId: "cm7ja3jju000hbugs0bx8uvid",
+      },
+      {
+        question: "How does Kruskal’s Algorithm ensure no cycles are formed?",
+        answer:
+          "Kruskal’s Algorithm uses the Disjoint Set Union (DSU) data structure to detect cycles while adding edges.",
+        contentId: "cm7ja3jju000hbugs0bx8uvid",
+      },
+    ],
+    vivaQuestions: [
+      {
+        question: "What is the time complexity of Kruskal’s Algorithm?",
+        answer: "O(E log E), where E is the number of edges in the graph.",
+        contentId: "cm7ja3jju000hbugs0bx8uvid",
+      },
+      {
+        question: "How does Kruskal’s Algorithm differ from Prim’s Algorithm?",
+        answer:
+          "Kruskal’s Algorithm sorts edges and picks the smallest ones, while Prim’s Algorithm grows the MST starting from a vertex.",
+        contentId: "cm7ja3jju000hbugs0bx8uvid",
+      },
+    ],
+    working: {
+      explanation:
+        "Kruskal’s Algorithm sorts all edges in ascending order of weight and picks edges one by one, ensuring no cycles form until (V-1) edges are added.",
+      contentId: "cm7ja3jju000hbugs0bx8uvid",
+    },
+    illustration: {
+      summary:
+        "Kruskal’s Algorithm selects edges in increasing order of weight and ensures no cycles form, eventually connecting all nodes with minimal cost.",
+      tips: [
+        "Use Disjoint Set Union (DSU) to optimize cycle detection.",
+        "For dense graphs, consider Prim’s Algorithm instead.",
+      ],
+      images: [
+        "https://media.geeksforgeeks.org/wp-content/uploads/20230806153920/Kruskal2.png",
+      ],
+      explanation: `1. **Sort edges by weight**  
+      2. **Pick the smallest edge** that doesn’t form a cycle.  
+      3. **Repeat until (V-1) edges are added** to the MST.  
+      4. **Final MST has the minimum possible total edge weight.**`,
+      contentId: "cm7ja3jju000hbugs0bx8uvid",
+    },
+    implementation: {
+      intuition:
+        "Kruskal’s Algorithm builds the MST by always choosing the smallest available edge and ensuring no cycles are formed using Disjoint Set Union (DSU).",
+      approach:
+        `1. Sort all edges in non-decreasing order of weight.\n
+         2. Use DSU to check if adding an edge forms a cycle.\n
+         3. If no cycle, add the edge to the MST.\n
+         4. Stop when (V-1) edges are added.`,
+      code: [
+        {
+          language: "C",
+          code: `#include<stdio.h>
+  #include<stdlib.h>
+  
+  int i, j, k, a, b, u, v, n, ne = 1;
+  int min, mincost = 0, cost[9][9], parent[9];
+  
+  int find(int i) {
+      while (parent[i])
+          i = parent[i];
+      return i;
+  }
+  
+  int unionSets(int i, int j) {
+      if (i != j) {
+          parent[j] = i;
+          return 1;
+      }
+      return 0;
+  }
+  
+  int main() {
+      printf("Enter the number of vertices: ");
+      scanf("%d", &n);
+  
+      printf("Enter the cost adjacency matrix:");
+      for (i = 1; i <= n; i++)
+          for (j = 1; j <= n; j++) {
+              scanf("%d", &cost[i][j]);
+              if (cost[i][j] == 0) cost[i][j] = 999;
+          }
+  
+      printf("Edges in the Minimum Cost Spanning Tree:");
+      while (ne < n) {
+          for (i = 1, min = 999; i <= n; i++)
+              for (j = 1; j <= n; j++)
+                  if (cost[i][j] < min) {
+                      min = cost[i][j];
+                      a = u = i;
+                      b = v = j;
+                  }
+  
+          u = find(u);
+          v = find(v);
+  
+          if (unionSets(u, v)) {
+              printf("Edge %d: (%d, %d) Cost: %d", ne++, a, b, min);
+              mincost += min;
+          }
+          cost[a][b] = cost[b][a] = 999;
+      }
+  
+      printf("Minimum Cost: %d", mincost);
+      return 0;
+  }`
+        },
+        {
+          language: "Java",
+          code: `import java.util.*;
+  
+  class Kruskal {
+      static class Edge implements Comparable<Edge> {
+          int src, dest, weight;
+          public int compareTo(Edge compareEdge) {
+              return this.weight - compareEdge.weight;
+          }
+      }
+  
+      static class Subset {
+          int parent, rank;
+      }
+  
+      static int find(Subset subsets[], int i) {
+          if (subsets[i].parent != i)
+              subsets[i].parent = find(subsets, subsets[i].parent);
+          return subsets[i].parent;
+      }
+  
+      static void union(Subset subsets[], int x, int y) {
+          int xroot = find(subsets, x);
+          int yroot = find(subsets, y);
+          if (subsets[xroot].rank < subsets[yroot].rank)
+              subsets[xroot].parent = yroot;
+          else if (subsets[xroot].rank > subsets[yroot].rank)
+              subsets[yroot].parent = xroot;
+          else {
+              subsets[yroot].parent = xroot;
+              subsets[xroot].rank++;
+          }
+      }
+  
+      static void kruskalMST(int[][] graph, int V) {
+          Edge[] edges = new Edge[V * V];
+          // Convert adjacency matrix to edge list (Skipping for brevity)
+      }
+  }`
+        },
+      ],
+      contentId: "cm7ja3jju000hbugs0bx8uvid",
+    },
+  };
+  

@@ -35,17 +35,20 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
+  id            String         @id @default(cuid())
   firstName     String
   lastName      String
   password      String
-  email         String    @unique
+  email         String         @unique
   emailVerified DateTime?
   phone         String
   image         String?
   accounts      Account[]
   sessions      Session[]
+  UserProgress  UserProgress[]
 }
+
+
 
 model VerificationToken {
   identifier String
@@ -79,14 +82,16 @@ model Content {
   id                 String          @id @default(cuid())
   title              String
   description        String
+  brief              String
   photos             String[] // Array of image URLs
   complexityAnalysis String?
-  applications       String?
-  advantages         String[] 
+  applications       String[]
+  advantages         String[]
   disadvantages      String[]
   faq                FaqQuestion[]
   vivaQuestions      VivaQuestion[]
   videos             String[]
+  testCases          String[]
   topicId            String
   createdAt          DateTime        @default(now())
   updatedAt          DateTime        @updatedAt
@@ -94,6 +99,7 @@ model Content {
   working            Working?
   implementation     Implementation?
   illustration       Illustration?
+  UserProgress       UserProgress[]
 }
 
 model FaqQuestion {
@@ -121,23 +127,34 @@ model Working {
 }
 
 model Illustration {
-  id        String   @id @default(cuid())
-  contentId String   @unique
-  summary   String?
-  tips      String?
-  images    String[]
+  id          String   @id @default(cuid())
+  contentId   String   @unique
+  summary     String?
+  tips        String[]
+  images      String[]
+  explanation String
 
   content Content @relation(fields: [contentId], references: [id], onDelete: Cascade)
 }
-
 
 model Implementation {
   id        String @id @default(cuid())
   contentId String @unique
   intuition String
   approach  String
-  code      Json  
+  code      Json
 
   content Content @relation(fields: [contentId], references: [id], onDelete: Cascade)
 }
 
+
+model UserProgress {
+  id          String    @id @default(cuid())
+  userId      String
+  contentId   String
+  isCompleted Boolean   @default(false)
+  completedAt DateTime?
+
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  content Content @relation(fields: [contentId], references: [id], onDelete: Cascade)
+}

@@ -12,27 +12,16 @@ import VivaQuestions from "../_components/VivaQuestions";
 import FAQComponent from "../_components/FAQComponent";
 import Video from "../_components/Video";
 import { Separator } from "@/components/ui/separator";
+import Link from "next/link";
 
 export default async function TopicPage({
   params,
 }: {
   params: { id: string };
 }) {
-  // const topics = await prisma.topic.findUnique({
-  //     where:{id:params.id},
-  //     include:{
-  //         contents:{
-  //             include:{
-  //                 faq:true,
-  //                 vivaQuestions:true,
-  //                 working:true,
-  //                 illustration:true,
-  //                 implementation:true
-  //             }
-  //         }
-  //     },
-  // });
-  // if(!topics) return notFound(); // Show 404
+ 
+
+
   const contents = await prisma.content.findUnique({
     where: { id: params.id },
     include: {
@@ -46,85 +35,24 @@ export default async function TopicPage({
 
   if (!contents) return notFound();
 
-  // return (
-  //   <div className="min-h-screen max-w-8xl mx-6">
-  //     <div className="">
-  //       <h1 className="text-6xl">{contents.title}</h1>
-  //       <p className="text-xl ml-2">{contents.description}</p>
-  //     </div>
+  // Define sections for the Table of Contents
 
-  //     {/* Photos components */}
-  //     {contents.photos && contents.photos.length > 0 && (
-  //       <div className="text-center flex justify-center">
-  //         <Photos photos={contents.photos} />
-  //       </div>
-  //     )}
-
-  //     {/* Table of Contents */}
-  //     <div className="text-3xl tracking-tight">
-  //       <h1>Table of Contents</h1>
-  //     </div>
-
-  //     {/* Working */}
-  //     <div className="">
-  //       <Working working={contents.working} />
-  //     </div>
-
-  //     {/* Illustration */}
-  //     <div className="">
-  //       <Illustration illustration={contents.illustration} />
-  //     </div>
-
-  //     {/* Implementation */}
-  //     <div className="">
-  //       <Implementation implementation={contents.implementation} />
-  //     </div>
-
-  //     {/* Complexity Analysis */}
-  //     <div className="">
-  //       <Complexity
-  //         complexityAnalysis={contents.complexityAnalysis ?? undefined}
-  //       />
-  //     </div>
-
-  //     {/* Applications */}
-  //     <div className="">
-  //       <Applications applications={contents.applications ?? undefined} />
-  //     </div>
-
-  //     {/* Advantages */}
-  //     <div className="">
-  //       <Advantages advantages={contents.advantages ?? undefined} />
-  //     </div>
-
-  //     {/* DisAdvantages */}
-  //     <div className="">
-  //       <DisAdvantages disadvantages={contents.disadvantages ?? undefined} />
-  //     </div>
-
-  //     {/* FAQ */}
-  //     <div className="">
-  //     <h1 className="text-xl font-semibold tracking-tight text-gray-100">FAQ</h1>
-  //     <FAQComponent faq = {contents.faq} />
-  //     </div>
-      
-  //     {/* Viva Questions */}
-
-  //     <div className="">
-  //       <h1 className="text-xl font-semibold tracking-tight text-gray-100">Viva Questions</h1>
-  //       <VivaQuestions vivaQuestions={contents.vivaQuestions} />
-  //     </div>
-
-  //     {/* Videos */}
-  //     <div className="">
-  //       <Video videos={contents.videos} />
-  //     </div>
-  //   </div>
-  // );
+  const sections = [
+    { id: "working", title: "Working" },
+    { id: "illustration", title: "Illustration" },
+    { id: "implementation", title: "Implementation" },
+    { id: "complexity", title: "Complexity Analysis" },
+    { id: "applications", title: "Applications" },
+    { id: "advantages", title: "Advantages" },
+    { id: "disadvantages", title: "Disadvantages" },
+    { id: "faq", title: "FAQ" },
+    { id: "viva-questions", title: "Viva Questions" },
+    { id: "videos", title: "Videos" },
+  ];
 
   return (
     <div className="min-h-screen bg-zinc-950">
-      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="space-y-8">
           {/* Header */}
           <div className="space-y-4">
@@ -134,6 +62,12 @@ export default async function TopicPage({
             <p className="text-lg text-gray-400 max-w-4xl">
               {contents.description}
             </p>
+            <div className="w-full h-[0.5px] rounded-full bg-zinc-800"></div>
+          </div>
+          <div className="tracking-wide text-gray-300 space-y-4">
+            {contents.brief.split(":").map((part, index) => (
+              <p key={index}>{part.trim()}</p>
+            ))}
           </div>
 
           {/* Photos */}
@@ -146,60 +80,86 @@ export default async function TopicPage({
           <Separator className="my-8 bg-zinc-800" />
 
           {/* Table of Contents */}
-          <div className="space-y-6">
-            <h2 className="text-2xl font-semibold tracking-tight text-gray-50">
-              Table of Contents
+          <div className="space-y-2">
+            <h2 className="text-2xl font-semibold tracking-tight text-gray-50 px-6">
+              Table of contents
             </h2>
+            <div className="space-y-2 -mt-4 px-10">
+              {sections.map((section) => (
+                <Link
+                  key={section.id}
+                  href={`#${section.id}`}
+                  className="block text-gray-400 hover:text-gray-50 transition-colors "
+                >
+                  {section.title}
+                </Link>
+              ))}
+            </div>
           </div>
 
-          {/* Content Sections */}
+          <Separator className="my-8 bg-zinc-800" />
+
+          {/* Content working  */}
           <div className="space-y-12">
             {contents.working && (
-              <section>
+              <section id="working">
                 <Working working={contents.working} />
               </section>
             )}
 
-            {contents.illustration && (
-              <section>
+            {/* Illustration */}
+            {contents.illustration &&  (
+              <section id="illustration">
                 <Illustration illustration={contents.illustration} />
               </section>
             )}
 
+            {/* Implementation */}
             {contents.implementation && (
-              <section>
-                <Implementation implementation={contents.implementation} />
+              <section id="implementation">
+                <Implementation
+                  implementation={{
+                    intuition: contents.implementation.intuition,
+                    approach: contents.implementation.approach,
+                    code: Array.isArray(contents.implementation.code)
+                      ? (contents.implementation.code as {
+                          language: string;
+                          code: string;
+                        }[])
+                      : null,
+                  }}
+                />
               </section>
             )}
-
+            {/* Complexity Analysis */}
             {contents.complexityAnalysis && (
-              <section>
+              <section id="complexity">
                 <Complexity complexityAnalysis={contents.complexityAnalysis} />
               </section>
             )}
-
+            {/* Applications */}
             {contents.applications && (
-              <section>
+              <section id="applications">
                 <Applications applications={contents.applications} />
               </section>
             )}
-
+            {/* Advantages */}
             {contents.advantages && (
-              <section>
+              <section id="advantages">
                 <Advantages advantages={contents.advantages} />
               </section>
             )}
-
+            {/* Disadvantages */}
             {contents.disadvantages && (
-              <section>
+              <section id="disadvantages">
                 <DisAdvantages disadvantages={contents.disadvantages} />
               </section>
             )}
 
             {/* FAQ Section */}
             {contents.faq && contents.faq.length > 0 && (
-              <section className="space-y-6">
-                <h2 className="text-2xl font-semibold tracking-tight text-gray-50">
+              <section id="faq" className="space-y-6">
+                <h2 className="text-2xl font-semibold tracking-tight text-gray-50 px-6">
                   Frequently Asked Questions
                 </h2>
                 <FAQComponent faq={contents.faq} />
@@ -208,8 +168,8 @@ export default async function TopicPage({
 
             {/* Viva Questions */}
             {contents.vivaQuestions && contents.vivaQuestions.length > 0 && (
-              <section className="space-y-6">
-                <h2 className="text-2xl font-semibold tracking-tight text-gray-50">
+              <section id="viva-questions" className="space-y-6">
+                <h2 className="text-2xl font-semibold tracking-tight text-gray-50 px-6">
                   Viva Questions
                 </h2>
                 <VivaQuestions vivaQuestions={contents.vivaQuestions} />
@@ -218,15 +178,18 @@ export default async function TopicPage({
 
             {/* Videos */}
             {contents.videos && contents.videos.length > 0 && (
-              <section className="space-y-6">
+              <section id="videos" className="space-y-6">
                 <Video videos={contents.videos} />
               </section>
             )}
+
+            {/* Playground Link */}
+            <Link href={`/playground/${contents.id}`}>
+              Playground
+            </Link>
           </div>
         </div>
       </div>
     </div>
   );
 }
-
-

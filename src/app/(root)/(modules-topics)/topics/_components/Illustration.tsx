@@ -1,9 +1,10 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+// import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 interface IllustrationProps {
   illustration?: {
+    explanation: string | null;
     summary: string | null;
-    tips: string | null;
+    tips: string[];
     images: string[];
   } | null;
 }
@@ -11,24 +12,67 @@ interface IllustrationProps {
 export default function Illustration({ illustration }: IllustrationProps) {
   if (!illustration) return null;
   return (
-    <Card className="bg-zinc-900 ">
-      <CardHeader>
-        <CardTitle className="text-gray-100">Illustration</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <p className="text-gray-300">{illustration?.summary}</p>
-        <p className="text-gray-300">{illustration?.tips}</p>
-        <div className="grid grid-cols-4 gap-4 mt-4">
-          {illustration?.images.map((image, index) => (
-            <img
+    // Card design
+    // <Card className="bg-zinc-900 border-zinc-800">
+    //   <CardHeader>
+    //     <CardTitle className="text-gray-50">Illustration</CardTitle>
+    //   </CardHeader>
+    //   <CardContent className="space-y-6">
+    //     <div className="space-y-4">
+    //       <p className="text-gray-300 leading-7">{illustration.summary}</p>
+    //       <p className="text-gray-300 leading-7">{illustration.tips}</p>
+    //     </div>
+    //     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+    //       {illustration.images.map((image, index) => (
+    //         <img
+    //           key={index}
+    //           src={image || "/placeholder.svg"}
+    //           alt={`Illustration ${index + 1}`}
+    //           className="rounded-lg border border-zinc-800 w-full aspect-[2/1] object-cover"
+    //         />
+    //       ))}
+    //     </div>
+    //   </CardContent>
+    // </Card>
+
+    <section className="space-y-6">
+      <h2 className="text-2xl font-bold tracking-tight text-gray-50 px-6">
+        Illustration
+      </h2>
+      <div className="space-y-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 px-2">
+          {illustration.images.map((image, index) => (
+            <div
               key={index}
-              src={image}
-              alt={`Illustration ${index}`}
-              className="rounded-lg border w-[300px] h-[150px] items-center border-zinc-700"
-            />
+              className="relative aspect-[2/1] overflow-hidden rounded-lg border border-zinc-800/50"
+            >
+              <img
+                src={image || "/placeholder.svg"}
+                alt={`Illustration ${index + 1}`}
+                className="object-cover w-full h-full transition-transform hover:scale-105"
+              />
+            </div>
           ))}
         </div>
-      </CardContent>
-    </Card>
+        <div className="bg-zinc-900 p-4 rounded-xl text-gray-300">
+          <div className="text-gray-300 leading-7 px-2">
+            {illustration?.explanation?.split("\n").map((step, index) => (
+              <p key={index}>{step}</p>
+            ))}
+          </div>
+        </div>
+
+        <h1 className="text-xl font-bold tracking-tight  px-8">
+          Implementation tips
+        </h1>
+        {illustration?.tips?.map((tip,idx)=>(
+          <p className="px-10 text-gray-300" key = {idx}><span className="text-gray-600 font-bold"> - </span> {tip}</p>
+        ))}
+        <h1 className="text-xl font-bold tracking-tight text-gray-5 px-8">
+          Summary
+        </h1>
+        <p className="text-gray-300 leading-7 px-10">{illustration.summary}</p>
+      </div>
+    </section>
   );
 }
