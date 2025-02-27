@@ -11,7 +11,8 @@ import { Button } from "@/components/ui/button";
 import { CheckCircle, Copy } from "lucide-react";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import OutputPanelAST from "./_components/OutputPanelAST";
+// import OutputPanelAST from "./_components/OutputPanelAST";
+import OutputPanel from "../../_components/OutputPanel";
 
 export default function Page() {
   const [solutionView, setSolutionView] = useState(false);
@@ -138,7 +139,7 @@ export default function Page() {
               </Button>
               <div className="lg:flex-col gap-3 mt-2">
                 <InputPanel />
-                <OutputPanelAST />
+                <OutputPanel/>
               </div>
             </div>
           </div>

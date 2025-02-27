@@ -4,6 +4,7 @@ import { LANGUAGE_CONFIG } from "@/app/(root)/_constants";
 import { create } from "zustand";
 import { Monaco } from "@monaco-editor/react";
 import { CodeEditorState } from "@/app/types/types";
+import { verifyMergeSortProgram } from "@/lib/verification";
 
 
 export const useCodeEditorStore = create<CodeEditorState>((set, get) => ({
@@ -16,6 +17,7 @@ export const useCodeEditorStore = create<CodeEditorState>((set, get) => ({
   editor: null,
   executionResult: null,
   userInput: "",  // <-- New state for user input
+  verificationResult: null,
 
   getCode: () => get().editor?.getValue() || "",
 
@@ -99,5 +101,20 @@ export const useCodeEditorStore = create<CodeEditorState>((set, get) => ({
       set({ isRunning: false });
     }
   },
+
+  verifyMergeSort: async () => {
+    const { getCode } = get();
+    const code = getCode();
+    if (!code) {
+      set({ verificationResult: { passed: false, details: "No code provided." } });
+      return;
+    }
+    // For property tests, use a sample input and expected output.
+    const testInput = [5, 2, 9, 1, 5, 6];
+    const expectedOutput = [...testInput].sort((a, b) => a - b);
+    const result = await verifyMergeSortProgram(code, testInput, expectedOutput);
+    set({ verificationResult: result });
+  },
+
 }));
 

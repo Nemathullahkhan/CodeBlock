@@ -1,42 +1,47 @@
-"use client"
+"use client";
 import { getModules } from "@/lib/actions/moduleActions";
 import { useEffect, useState } from "react";
 import ModuleCard from "../components/ModuleCard";
 import Link from "next/link";
-import CreationMod from "../components/CreationMod";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface ModuleType {
-    id: string;
-    name?: string;
-    description?: string;
-  }
+  id: string;
+  name?: string;
+  description?: string;
+}
 
-  
 export default function Page() {
-    const [modules,setModules] = useState<ModuleType[]>([]);
-    
-    useEffect(()=>{
-        const getAllModules = async ()=>{
-            const getSubject = await getModules();
-            setModules(getSubject);
-        }
-        getAllModules();
-    },[]);
+  const [modules, setModules] = useState<ModuleType[] | null>(null);
 
-    return (
+  useEffect(() => {
+    const getAllModules = async () => {
+      const getSubject = await getModules();
+      setModules(getSubject);
+    };
+    getAllModules();
+  }, []);
+
+  return (
+    <>
+      {/* Todo - design the home page */}
+      <div className="">{/* <CreationMod/> */}</div>
+
+      {modules === null ? (
+        Array.from({ length: 3 }, (_, index) => (
+          <Skeleton key={index} className="max-w-md h-16 rounded-lg bg-zinc-900/90" />
+        ))
+      ) : (
         <>
-        {/* Todo - design the home page */}
-        <div className="">
-            {/* <CreationMod/> */}
-        </div>
-        {modules.map((mod)=> (
-            <div className="max-w-md text-center" key = {mod.id}>
-                <Link href ={`/module/${mod.id}`} >
-                <ModuleCard {...mod}/>
-                </Link>
+          {modules?.map((mod) => (
+            <div className="max-w-md text-center" key={mod.id}>
+              <Link href={`/module/${mod.id}`}>
+                <ModuleCard {...mod} />
+              </Link>
             </div>
-        ))}
-        
+          ))}
         </>
-    )
+      )}
+    </>
+  );
 }

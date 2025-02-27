@@ -9,13 +9,17 @@ import { Play } from "lucide-react";
 import { useState } from "react";
 
 export default function RunButton() {
-  const { runCode, isRunning } = useCodeEditorStore();
+  const { runCode, verifyMergeSort, isRunning } = useCodeEditorStore();
   const [open, setOpen] = useState(false);
 
   const handleRun = async () => {
     setOpen(true); // Open dialog when execution starts
     await runCode();
     setOpen(false); // Close dialog when execution finishes
+  };
+
+  const handleVerify = async () => {
+    await verifyMergeSort();
   };
 
   return (
@@ -36,6 +40,7 @@ export default function RunButton() {
           </>
         )}
       </Button>
+    
 
       {/* Dialog for Execution Animation */}
       <Dialog open={open} onOpenChange={setOpen}>
