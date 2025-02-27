@@ -27,7 +27,7 @@ export default function Page() {
         <>
         {/* Todo - design the home page */}
         <div className="">
-            <CreationMod/>
+            {/* <CreationMod/> */}
         </div>
         {modules.map((mod)=> (
             <div className="max-w-md text-center" key = {mod.id}>

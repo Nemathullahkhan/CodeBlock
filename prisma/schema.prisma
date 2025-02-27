@@ -35,20 +35,19 @@ model Session {
 }
 
 model User {
-  id            String         @id @default(cuid())
+  id            String          @id @default(cuid())
   firstName     String
   lastName      String
   password      String
-  email         String         @unique
+  email         String          @unique
   emailVerified DateTime?
   phone         String
   image         String?
   accounts      Account[]
   sessions      Session[]
   UserProgress  UserProgress[]
+  CodeExecution CodeExecution[]
 }
-
-
 
 model VerificationToken {
   identifier String
@@ -59,12 +58,13 @@ model VerificationToken {
 }
 
 model Module {
-  id          String   @id @default(cuid())
-  name        String   @unique
-  description String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  topics      Topic[]
+  id           String         @id @default(cuid())
+  name         String         @unique
+  description  String
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  topics       Topic[]
+  UserProgress UserProgress[]
 }
 
 model Topic {
@@ -88,6 +88,7 @@ model Content {
   applications       String[]
   advantages         String[]
   disadvantages      String[]
+  iscompleted        Boolean         @default(false)
   faq                FaqQuestion[]
   vivaQuestions      VivaQuestion[]
   videos             String[]
@@ -100,6 +101,7 @@ model Content {
   implementation     Implementation?
   illustration       Illustration?
   UserProgress       UserProgress[]
+  CodeExecution      CodeExecution[]
 }
 
 model FaqQuestion {
@@ -147,14 +149,31 @@ model Implementation {
   content Content @relation(fields: [contentId], references: [id], onDelete: Cascade)
 }
 
-
 model UserProgress {
-  id          String    @id @default(cuid())
-  userId      String
-  contentId   String
-  isCompleted Boolean   @default(false)
-  completedAt DateTime?
+  id        String   @id @default(cuid())
+  userId    String
+  moduleId  String
+  contentId String
+  completed Boolean  @default(false)
+  score     Int      @default(0)
+  attempts  Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id])
+  module    Module   @relation(fields: [moduleId], references: [id])
+  content   Content  @relation(fields: [contentId], references: [id])
 
-  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  content Content @relation(fields: [contentId], references: [id], onDelete: Cascade)
+  @@unique([userId, contentId])
+}
+
+model CodeExecution {
+  id        String   @id @default(cuid())
+  userId    String
+  contentId String
+  code      String
+  status    String // 'success' | 'failed' | 'pending'
+  results   Json
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+  content   Content  @relation(fields: [contentId], references: [id])
 }
