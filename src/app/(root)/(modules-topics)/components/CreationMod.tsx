@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { questions } from "@/lib/actions/ideActions";
 import {
   createContent,
   createFAQ,
@@ -125,6 +126,17 @@ export default function CreationMod() {
       }
     })
   }
+
+  const handlePlaygroundQuestions = ()=>{
+    startTransition(async ()=>{
+      try{
+        const pq = await questions();
+      }catch (err) {
+        setError(err.message);
+        console.error("failed to add illustrate",err);
+      }
+    })
+  }
   return (
     <div>
       {error && <p className="text-red-500">{error}</p>}
@@ -197,6 +209,16 @@ export default function CreationMod() {
           className="w-36 h-10 text-xs" variant={"outline"}
         >
           {isPending ? "Creating.." : "Enter illustration"}
+        </Button>
+      </div>
+      <div className="mx-10 mt-4">
+        <h1 className="text-2xl">Playground Questions</h1>
+        <Button
+          onClick={handlePlaygroundQuestions}
+          disabled={isPending}
+          className="w-36 h-10 mx-10 p-2 border-2 text-xs" variant={"outline"}
+        >
+          {isPending ? "Creating.." : "Enter Questions/testCases"}
         </Button>
       </div>
 

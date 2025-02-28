@@ -102,6 +102,7 @@ model Content {
   illustration       Illustration?
   UserProgress       UserProgress[]
   CodeExecution      CodeExecution[]
+  Questions          Questions?
 }
 
 model FaqQuestion {
@@ -145,6 +146,19 @@ model Implementation {
   intuition String
   approach  String
   code      Json
+
+  content Content @relation(fields: [contentId], references: [id], onDelete: Cascade)
+}
+
+model Questions {
+  id          String   @id @default(cuid())
+  contentId   String   @unique
+  question    String
+  examples    Json
+  constraints String[]
+  difficulty  String
+  averageTime String
+  testcases   Json
 
   content Content @relation(fields: [contentId], references: [id], onDelete: Cascade)
 }

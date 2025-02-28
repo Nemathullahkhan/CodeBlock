@@ -1,4 +1,4 @@
-import {  Theme } from "@/app/types/types";
+import { Theme } from "@/app/types/types";
 import { Monaco } from "@monaco-editor/react";
 
 type LangaugeConfig = Record<
@@ -84,23 +84,22 @@ print(f"Sum of numbers: {numbers_sum}")`,
     logoPath: "/c.png",
     pistonRuntime: { language: "c", version: "10.2.0" },
     monacoLanguage: "c",
-    defaultCode:  `#include <stdio.h>\\n
-    \\n
-    int main() {\\n
-        // Print "Hello, World!"\\n
-        printf("Hello, World");\\n
-    \\n
-        // Declare two numbers\\n
-        int a = 10, b = 5;\\n
-    \\n
-        // Perform arithmetic operations\\n
-        printf("Sum: %d\\n", a + b);\\n
-        printf("Difference: %d\\n", a - b);\\n
-        printf("Product: %d\\n", a * b);\\n
-        printf("Quotient: %d\\n", a / b);\\n
-    \\n
-        return 0;\\n
-    }`,
+    defaultCode: `#include <stdio.h>
+    int main() {
+    // Print "Hello, World!"
+    printf("Hello, World\\n");
+    
+    // Declare two numbers
+    int a = 10, b = 5;
+    
+    // Perform arithmetic operations
+    printf("Sum: %d\\n", a + b);
+    printf("Difference: %d\\n", a - b);
+    printf("Product: %d\\n", a * b);
+    printf("Quotient: %d\\n", a / b);
+    
+    return 0;
+}`,
   },
   cpp: {
     id: "cpp",
@@ -245,4 +244,3 @@ export const defineMonacoThemes = (monaco: Monaco) => {
     });
   });
 };
-

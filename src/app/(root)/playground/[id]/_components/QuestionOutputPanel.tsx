@@ -1,10 +1,10 @@
-"use client"
+"use client";
 
-import { useCodeEditorStore } from "@/store/useCodeEditorStore"
+import { useCodeEditorStore } from "@/store/useCodeEditorStore";
 import { AlertTriangle, CheckCircle, Clock, Copy, Terminal } from "lucide-react";
 import { useState } from "react";
 
-export default function OutputPanelAST() {
+export default function QUestionOutputPanel() {
     const { output, error, isRunning } = useCodeEditorStore();
     const [isCopied, setIsCopied] = useState(false);
 
@@ -20,9 +20,9 @@ export default function OutputPanelAST() {
     }
 
     return (
-        <div className="relative bg-black rounded-xl p-4 ring-2 ring-zinc-900">
-            {/* Header  */}
-            <div className="flex items-center justify-between mb-3">
+        <div className="h-full flex flex-col bg-black rounded-xl p-4 ring-2 ring-zinc-900 ">
+            {/* Header */}
+            <div className="flex items-center justify-between mb-3 flex-shrink-0">
                 <div className="flex items-center gap-2">
                     <div className="">
                         <Terminal className="w-4 h-4 text-zinc-400" />
@@ -30,9 +30,7 @@ export default function OutputPanelAST() {
                     <span className="text-sm font-medium text-zinc-300">Output</span>
                 </div>
 
-
-                {/* copy button */}
-
+                {/* Copy button */}
                 {hasContent && (
                     <button
                         onClick={handleCopy}
@@ -53,9 +51,14 @@ export default function OutputPanelAST() {
             </div>
 
             {/* Output area */}
-            <div className="relative">
-                <div className="relative bg-black   rounded-xl p-4 h-[250px] overflow-auto scrollbar-thin
-                scrollbar-thumb-gray-700 scrollbar-track-black text-sm">
+            <div className="relative flex-grow">
+                <div className="h-full relative bg-black rounded-xl p-4 overflow-auto scrollbar-thin
+                scrollbar-thumb-gray-700 scrollbar-track-black text-sm"
+                    style={{ 
+                        fontFamily: '"Fira Code","Cascadia Code",Consolas, monospace',
+                        fontSize: '14px',
+                        lineHeight: '1.5'
+                    }}>
                     {isRunning ? (
                         <div className="">Running</div>
                     ) : error ? (
@@ -83,7 +86,7 @@ export default function OutputPanelAST() {
                         </div>
                     ) : (
                         <div className="h-full flex flex-col items-center justify-center text-zinc-400">
-                            <div className="flex items-center justify-center w-12 h-12 rounded-xl  ring-1 ring-gray-700/50 mb-4">
+                            <div className="flex items-center justify-center w-12 h-12 rounded-xl ring-1 ring-gray-700/50 mb-4">
                                 <Clock className="w-6 h-6" />
                             </div>
                             <p className="text-center text-xs tracking-tight">Run your code to see the output here...</p>
@@ -92,5 +95,5 @@ export default function OutputPanelAST() {
                 </div>
             </div>
         </div>
-    )
+    );
 }

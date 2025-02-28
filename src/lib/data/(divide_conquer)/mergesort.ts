@@ -55,6 +55,30 @@ export const mergeSortData = {
       contentId: "cm7j5g8wc0003bugszt63oddx",
     },
   ],
+  questions: {
+    question:
+      "Given an array arr[], its starting position l and its ending position r. Sort the array using the merge sort algorithm.",
+    examples: [
+      { input: "[4, 1, 3, 9, 7]", output: "[1, 3, 4, 7, 9]" },
+      {
+        input: "[10, 9, 8, 7, 6, 5, 4, 3, 2, 1]",
+        output: "[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]",
+      },
+      { input: "[1, 3, 2]", output: "[1, 2, 3]" },
+    ],
+    constraints: ["1 <= arr.size() <= 10^5", "1 <= arr[i] <= 10^5"],
+    difficulty: "Medium",
+    averageTime: "15m",
+    testcases: [
+      { input: "[4, 1, 3, 9, 7]", output: "[1, 3, 4, 7, 9]" },
+      {
+        input: "[10, 9, 8, 7, 6, 5, 4, 3, 2, 1]",
+        output: "[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]",
+      },
+      { input: "[1, 3, 2]", output: "[1, 2, 3]" },
+    ],
+  },
+
   working: {
     explanation:
       "Merge Sort works by recursively dividing the array into smaller subarrays until they consist of a single element, then merging them in sorted order.",
@@ -163,7 +187,10 @@ export const mergeSortData = {
   illustration: {
     summary:
       "Merge Sort works by splitting an array into halves and merging them in sorted order.",
-    tips: ["Use recursion for efficient implementation." ," Avoid Merge Sort when memory constraints exist."],
+    tips: [
+      "Use recursion for efficient implementation.",
+      " Avoid Merge Sort when memory constraints exist.",
+    ],
     images: [
       "https://media.geeksforgeeks.org/wp-content/uploads/20240627163910/Merge-Sort-1.webp",
       "https://media.geeksforgeeks.org/wp-content/uploads/20240627163910/Merge-Sort-2.webp",

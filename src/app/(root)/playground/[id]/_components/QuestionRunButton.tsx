@@ -8,7 +8,7 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Play } from "lucide-react";
 import { useState } from "react";
 
-export default function RunButton() {
+export default function QuestionRunButton() {
   const { runCode, isRunning } = useCodeEditorStore();
   const [open, setOpen] = useState(false);
 

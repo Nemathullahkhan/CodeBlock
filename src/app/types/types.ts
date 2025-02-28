@@ -9,12 +9,6 @@ export interface Language {
   pistonRuntime:LanguageRuntime;
 }
 
-export interface VerificationResult {
-    passed: boolean;
-    details: string;
-}
-
-
 
 export interface Theme {
     id: string;
@@ -54,7 +48,8 @@ export interface CodeEditorState{
     editor: Monaco | null;
     executionResult: ExecutionResult | null;
     userInput: string;
-    verificationResult: VerificationResult | null;  // <-- Add this
+    testCases: string[];
+    testCaseResults: string[];
 
     setEditor:(editor:Monaco) => void;
     getCode: () => string;
@@ -62,8 +57,8 @@ export interface CodeEditorState{
     setTheme:(theme:string)=>void;
     setFontSize: (fontSize:number) => void;
     setUserInput:(input:string) => void;
+    setTestCases:(testCases:string[]) => void;
     runCode: ()=> Promise<void>;
-    verifyMergeSort: () => Promise<void>;  // <-- Add this to match the store
 }
 
 

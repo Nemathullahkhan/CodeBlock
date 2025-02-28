@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import ModuleCard from "../components/ModuleCard";
 import Link from "next/link";
 import { Skeleton } from "@/components/ui/skeleton";
+import CreationMod from "../components/CreationMod";
 
 interface ModuleType {
   id: string;
@@ -25,7 +26,7 @@ export default function Page() {
   return (
     <>
       {/* Todo - design the home page */}
-      <div className="">{/* <CreationMod/> */}</div>
+      <div className="mx-10"><CreationMod/></div>
 
       {modules === null ? (
         Array.from({ length: 3 }, (_, index) => (
