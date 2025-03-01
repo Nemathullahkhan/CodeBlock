@@ -32,35 +32,84 @@ export interface ExecuteCodeResponse{
     };
 }
 
-export interface ExecutionResult {
-    code:string;
-    output:string;
-    error:string | null;
-}
+// export interface ExecutionResult {
+//     code:string;
+//     output:string;
+//     error:string | null;
+// }
 
-export interface CodeEditorState{
-    language:string;
-    output:string;
-    isRunning:boolean;
-    error:string | null;
-    theme:string;
-    fontSize:number;
+// export interface CodeEditorState{
+//     language:string;
+//     output:string;
+//     isRunning:boolean;
+//     error:string | null;
+//     theme:string;
+//     fontSize:number;
+//     editor: Monaco | null;
+//     executionResult: ExecutionResult | null;
+//     userInput: string;
+//     testCases: string[];
+//     testCaseResults: string[];
+
+//     setEditor:(editor:Monaco) => void;
+//     getCode: () => string;
+//     setLanguage: (language: string) => void;
+//     setTheme:(theme:string)=>void;
+//     setFontSize: (fontSize:number) => void;
+//     setUserInput:(input:string) => void;
+//     setTestCases:(testCases:string[]) => void;
+//     runCode: ()=> Promise<void>;
+// }
+
+
+
+export interface TestCase {
+    input: string;
+    expectedOutput: string;
+  }
+  
+  export interface TestCaseResult {
+    input: string;
+    expected: string;
+    actual: string;
+    passed: boolean;
+  }
+  
+  export interface ExecutionResult {
+    output: string;
+    error: string | null;
+  }
+
+export interface RuntimeConfig {
+    language: string;
+    version: string;
+  }
+  
+  export interface CodeEditorState {
+    language: string;
+    output: string;
+    isRunning: boolean;
+    error: string | null;
+    theme: string;
+    fontSize: number;
     editor: Monaco | null;
     executionResult: ExecutionResult | null;
     userInput: string;
-    testCases: string[];
-    testCaseResults: string[];
-
-    setEditor:(editor:Monaco) => void;
+    testCases: TestCase[];
+    testCaseResults: TestCaseResult[];
+  
+    setEditor: (editor: Monaco) => void;
     getCode: () => string;
     setLanguage: (language: string) => void;
-    setTheme:(theme:string)=>void;
-    setFontSize: (fontSize:number) => void;
-    setUserInput:(input:string) => void;
-    setTestCases:(testCases:string[]) => void;
-    runCode: ()=> Promise<void>;
-}
-
+    setTheme: (theme: string) => void;
+    setFontSize: (fontSize: number) => void;
+    setUserInput: (input: string) => void;
+    setTestCases: (testCases: TestCase[]) => void;
+    runCode: () => Promise<void>;
+    executeCode: (runtime: RuntimeConfig, code: string, userInput: string) => Promise<string>;
+    runAndVerifyCode: () => Promise<void>;
+  }
+  
 
 export interface ModulesType{
     id:string;
