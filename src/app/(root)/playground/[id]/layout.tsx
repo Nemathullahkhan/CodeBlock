@@ -5,6 +5,7 @@ import QuestionOutputPanel from "./_components/QuestionOutputPanel";
 import RandomComponentForTesting from "./_components/RandomComponentForTesting";
 import prisma from "@/lib/prisma";
 import { Button } from "@/components/ui/button";
+import SubmitButton from "./_components/SubmitButton";
 
 export default async function Layout({
   children,
@@ -38,7 +39,7 @@ export default async function Layout({
               </div>
 
               {/* Submit Button */}
-              <Button variant={"outline"}>SUBMIT</Button>
+              <SubmitButton id ={id}/>
             </div>
             <Questionaire id={id} /> {/* ✅ Renders Server Component Fast */}
           </div>

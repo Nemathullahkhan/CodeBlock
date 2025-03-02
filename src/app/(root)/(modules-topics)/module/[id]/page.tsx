@@ -32,7 +32,20 @@ export default async function MulePage({ params }: { params: { id: string } }) {
   })
 
   // Assuming we track progress (you can modify this based on your data model)
-  const progress = 35
+  const completedPro = await prisma.content.findMany({
+    where: {
+      topic: {
+        moduleId: params.id,
+      },
+    },
+  });
+  
+  // Calculate the number of completed programs
+  const completedPrograms = completedPro.filter((completed) => completed.iscompleted === true).length;
+ 
+  const progressRounded = (completedPrograms/totalPrograms)*100;
+  
+  const progress = progressRounded.toFixed(2);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-background/95">
@@ -41,6 +54,7 @@ export default async function MulePage({ params }: { params: { id: string } }) {
         <section className="space-y-6">
         <StarterLinks/>
           <div className="space-y-4">
+
             <div className="flex items-center gap-2">
               <GraduationCap className="h-8 w-8 text-primary" />
               <h1 className="text-4xl font-bold tracking-tight text-primary">{mule.name}</h1>
@@ -109,8 +123,8 @@ export default async function MulePage({ params }: { params: { id: string } }) {
                             className="flex items-center gap-4 p-4 transition-colors hover:bg-muted"
                           >
                             <div className="flex h-6 w-6 shrink-0 items-center justify-center">
-                              {/* Replace with actual completion check */}
-                              {idx === 0 ? (
+                              
+                              {content.iscompleted === true ? (
                                 <CheckCircle className="h-5 w-5 text-primary" />
                               ) : (
                                 <Circle className="h-5 w-5 text-muted-foreground" />
