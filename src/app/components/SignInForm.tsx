@@ -48,7 +48,7 @@ const SignInForm = (props: SignInProps) => {
         toast.error(result?.error);
         return;
     }
-    router.push(props.callbackUrl? props.callbackUrl:"/");
+    router.push(props.callbackUrl? props.callbackUrl:"/home");
     toast.success("Welcome")
     console.log(values);
     //

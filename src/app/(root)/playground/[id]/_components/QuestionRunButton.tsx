@@ -160,8 +160,8 @@
           <Button
             onClick={handleRun}
             disabled={isRunning || isLoadingTestCases}
-            variant="default"
-            className="bg-zinc-100 text-black hover:bg-zinc-900 hover:text-white hover:scale-105 transition-all transition-colors"
+            variant={"ghost"}
+            className=" text-zinc-300 hover:bg-zinc-900 border-2 border-zinc-950 hover:text-white hover:scale-105 transition-all  w-32 transition-colors"
           >
             {isRunning || isLoadingTestCases ? (
               <Loader2 className="w-4 h-4 animate-spin" />

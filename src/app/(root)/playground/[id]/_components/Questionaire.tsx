@@ -35,6 +35,8 @@ export default async function Questionaire({ id }: { id: string }) {
       console.error("Invalid examples data:", error);
     }
   }
+  
+ 
 
   return (
     <div className="min-h-screen bg-zinc-950">
@@ -68,19 +70,25 @@ export default async function Questionaire({ id }: { id: string }) {
           </div>
 
           {/* Question */}
-          <section className="flex flex-col gap-2 text-zinc-300">
+          <section className="flex flex-col gap-4 text-zinc-300">
             <p className="">{data.Questions?.question}</p>
             {/* Examples */}
-            <div className="text-primary">
+            <div className="text-primary gap-2">
               {validatedExamples.map((ex, idx) => (
-                <div key={idx} className="border p-2 rounded-md bg-zinc-900/90">
-                  <p className="text-sm text-primary font-semibold">
-                    Example {idx + 1}:
-                  </p>
-                  <div className="border-l-4 ml-2 border-zinc-900 p-2 flex flex-col">
-                    <span className="text-sm text-primary font-semibold">Input:<span className="text-zinc-400 font-normal"> {ex.input}</span></span>
+                <div key={idx} className="border rounded-md m-2 bg-zinc-900/90 ">
 
-                    <span className="text-sm text-primary font-semibold">Output:<span className="text-zinc-400 font-normal"> {ex.output}</span></span>
+                  <div className="">
+
+                  <div className="text-sm py-1 px-2  bg-gradient-to-br from-zinc-800/70 to-zinc-900 border-b border-zinc-700/50 ">
+                  <p className="text-zinc-200 font-extralight tracking-tight px-4 ">
+                    Example - {idx + 1}
+                  </p>
+                  </div>
+                  <div className="border-l-4 ml-2 border-zinc-900 p-2 flex flex-col px-5">
+                    <span className="text-sm text-primary m-2 font-mono font-semibold">Input:<span className="text-zinc-400 font-normal tracking-widest"> {ex.input}</span></span>
+
+                    <span className="text-sm text-primary font-semibold font-mono">Output:<span className="text-zinc-400 font-normal tracking-widest"> {ex.output}</span></span>
+                  </div>
                   
                   </div>
                 </div>
@@ -88,7 +96,7 @@ export default async function Questionaire({ id }: { id: string }) {
             </div>
             {/* Constraints */}
             <div className="text-zinc-300 text-muted-foreground">
-              <h1 className="font-bold text-md text-primary text-muted-foreground ">Constraints:</h1>
+              <h1 className="font-bold text-md text-muted-foreground ">Constraints:</h1>
               <div className="m-2">
               {data?.Questions?.constraints.map((cons,idx)=>(
                 <p key = {idx} className=""> {cons}</p>

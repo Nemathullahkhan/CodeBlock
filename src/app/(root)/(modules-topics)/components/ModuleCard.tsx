@@ -2,9 +2,7 @@
 
 import {
   Card,
-  CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -18,14 +16,12 @@ interface ModuleType {
 export default function ModuleCard({ name, description }: ModuleType) {
   return (
     <>
-      <Card>
+      <Card className="max-h-full flex flex-col justify-center mx-3">
+        <div className="h-[250px]"></div>
         <CardHeader>
           <CardTitle>{name}</CardTitle>
           <CardDescription>{description}</CardDescription>
         </CardHeader>
-        <CardContent>
-          <p>Card content</p>
-        </CardContent>
       </Card>
     </>
   );
