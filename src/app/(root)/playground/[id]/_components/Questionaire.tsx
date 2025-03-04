@@ -85,7 +85,7 @@ export default async function Questionaire({ id }: { id: string }) {
                   </p>
                   </div>
                   <div className="border-l-4 ml-2 border-zinc-900 p-2 flex flex-col px-5">
-                    <span className="text-sm text-primary m-2 font-mono font-semibold">Input:<span className="text-zinc-400 font-normal tracking-widest"> {ex.input}</span></span>
+                    <span className="text-sm text-primary m-2 font-mono font-semibold">Input:<span className="text-zinc-400 font-normal tracking-wide"> {ex.input}</span></span>
 
                     <span className="text-sm text-primary font-semibold font-mono">Output:<span className="text-zinc-400 font-normal tracking-widest"> {ex.output}</span></span>
                   </div>

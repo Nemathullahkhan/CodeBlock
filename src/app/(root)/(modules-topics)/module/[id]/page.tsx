@@ -45,14 +45,15 @@ export default async function MulePage({ params }: { params: { id: string } }) {
  
   const progressRounded = (completedPrograms/totalPrograms)*100;
   
-  const progress = progressRounded.toFixed(2);
+  const progress = parseFloat(progressRounded.toFixed(2));
+
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-background/95">
       <div className="container mx-auto px-4 py-8">
         {/* Module Header */}
         <section className="space-y-6">
-        <StarterLinks/>
+        <StarterLinks name = {mule.name}/>
           <div className="space-y-4">
 
             <div className="flex items-center gap-2">
@@ -78,12 +79,13 @@ export default async function MulePage({ params }: { params: { id: string } }) {
           </div>
 
           {/* Progress Bar */}
-          <div className="space-y-2">
+          <div className="space-y-2 mx-10">
             <div className="flex justify-between text-sm">
               <span className="text-muted-foreground">Course Progress</span>
-              <span className="text-primary font-medium">{progress}%</span>
+              <span className="text-primary font-medium">
+                <span className="text-xl">{progress}%</span></span>
             </div>
-            <Progress value={progress} className="h-2" />
+            <Progress value={progress}  className="h-1" />
           </div>
         </section>
 
@@ -118,7 +120,7 @@ export default async function MulePage({ params }: { params: { id: string } }) {
                       <div className="border-t bg-muted/50">
                         {topic.contents.map((content, idx) => (
                           <Link
-                            key={content.id}
+                            key={idx}
                             href={`/topics/${content.id}`}
                             className="flex items-center gap-4 p-4 transition-colors hover:bg-muted"
                           >

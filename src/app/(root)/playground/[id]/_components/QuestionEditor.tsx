@@ -10,7 +10,6 @@ import { defineMonacoThemes } from "@/app/(root)/_constants";
 import LanguageSelector from "@/app/(root)/_components/LanguageSelector";
 import FontSizeSelector from "@/app/(root)/_components/fontSize";
 import ThemeSelector from "@/app/(root)/_components/ThemeSelector";
-import OutputRunButton from "./QuestionRunButton";
 import { CODE_CONFIG } from "@/app/(root)/_constants/codes";
 import {
   DropdownMenu,

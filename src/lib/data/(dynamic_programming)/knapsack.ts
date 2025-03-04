@@ -67,6 +67,42 @@ export const knapSackData = {
         contentId: "cm7ja3jju000hbugs0bx8uvid",
       },
     ],
+    questions: {
+      question:
+        `You are given the weights and values of items, and you need to put these items in a knapsack of capacity capacity to achieve the maximum total value in the knapsack. Each item is available in only one quantity.
+
+In other words, you are given two integer arrays val[] and wt[], which represent the values and weights associated with items, respectively. You are also given an integer capacity, which represents the knapsack capacity. Your task is to find the maximum sum of values of a subset of val[] such that the sum of the weights of the corresponding subset is less than or equal to capacity. You cannot break an item; you must either pick the entire item or leave it (0-1 property).`,
+      examples: [
+        { input:"capacity = 4, val[] = [1, 2, 3], wt[] = [4, 5, 1]",
+          output:"3" },
+        {
+          input:"capacity = 3, val[] = [1, 2, 3], wt[] = [4, 5, 6]",
+output: "0"
+        },
+        {input:"capacity = 5, val[] = [10, 40, 30, 50], wt[] = [5, 4, 6, 3]", 
+          output:"50" },
+      ],
+      constraints: ["2 ≤ val.size() = wt.size() ≤ 10^3", 
+        "1 ≤ capacity ≤ 10^3",
+      "1 ≤ val[i] ≤ 10^3",
+    "1 ≤ wt[i] ≤ 10^3"],
+    difficulty: "Medium",
+    averageTime: "25m",
+    testcases: [
+      {
+        input: "4\n1 2 3\n4 5 1", // capacity = 4, val[] = [1, 2, 3], wt[] = [4, 5, 1]
+        expectedOutput: "3", // Expected maximum value
+      },
+      {
+        input: "3\n1 2 3\n4 5 6", // capacity = 3, val[] = [1, 2, 3], wt[] = [4, 5, 6]
+        expectedOutput: "0", // Expected maximum value
+      },
+      {
+        input: "5\n10 40 30 50\n5 4 6 3", // capacity = 5, val[] = [10, 40, 30, 50], wt[] = [5, 4, 6, 3]
+        expectedOutput: "50", // Expected maximum value
+      },
+    ],
+  },
     working: {
       explanation:
         "The 0/1 Knapsack Problem is solved using Dynamic Programming by creating a 2D table where rows represent items and columns represent knapsack capacities. The table is filled iteratively, and the maximum value is computed by considering whether to include or exclude each item.",

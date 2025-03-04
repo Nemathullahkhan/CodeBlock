@@ -64,6 +64,7 @@ import SubmitButton from "./_components/SubmitButton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import QuestionRunButton from "./_components/QuestionRunButton";
 import SolutionTab from "./_components/SolutionTab";
+import TestCaseComponent from "./_components/RandomComponentForTesting";
 
 export default async function Layout({
   children,
@@ -86,14 +87,6 @@ export default async function Layout({
     <div className="min-h-screen bg-black">
       <div className="max-w-[1800px] mx-auto p-4 h-full">
         <div className="w-full flex items-center justify-between px-4 py-2 bg-zinc-950 ">
-          {/* Sidebar + Logo */}
-          {/* <div className="flex items-center gap-3">
-            <SidebarIcon />
-            <span className="text-lg font-semibold text-gray-200">
-              {programName}
-            </span>
-          </div> */}
-          
           {/* Buttons (Run + Submit) */}
           <div className="flex items-center gap-2 bg-stone-800/70 p-1 mx-auto rounded-lg">
             {/* Run Button */}
@@ -134,6 +127,13 @@ export default async function Layout({
                     <Code className="w-4 h-4 mr-2" />
                     Submissions
                   </TabsTrigger>
+                  <TabsTrigger
+                    value="testcases"
+                    className="data-[state=active]:bg-zinc-300 data-[state=active]:text-black"
+                  >
+                    <Code className="w-4 h-4 mr-2" />
+                    Submissions
+                  </TabsTrigger>
                 </TabsList>
                 <TabsContent value="problem" className="mt-0">
                   <div className="p-4">
@@ -157,12 +157,15 @@ export default async function Layout({
                     </div>
                   </div>
                 </TabsContent>
+                <TabsContent value="testcases" className="mt-0">
+                <TestCaseComponent id = {id} />                  
+                </TabsContent>
               </Tabs>
             </div>
           </div>
           <div className="space-y-4">
             <QuestionEditorPanel programName={programName} id={id} />
-            <QuestionOutputPanel />
+            <QuestionOutputPanel questionId={id}/>
           </div>
         </div>
         {children} {/* Render the actual page */}

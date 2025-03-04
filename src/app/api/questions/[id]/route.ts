@@ -1,25 +1,32 @@
 import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
-export async function GET(
-  req: Request,
-  { params }: { params: { id: string } }
-) {
-  try { 
-    const id = params.id;
+export async function GET(req: Request) {
+  try {
+    // Extract module ID from the query params
+    const { searchParams } = new URL(req.url);
+    const id = searchParams.get("id");
 
-    const result = await prisma.content.findUnique({
-      where: { id },
-      include: { Questions: true },
-    });
-
-    if (!result) {
-      return NextResponse.json({ error: "Content not found" }, { status: 404 });
+    if (!id) {
+      return NextResponse.json({ error: "Module ID is required" }, { status: 400 });
     }
 
-    return NextResponse.json(result, { status: 200 }); // Ensure JSON response
+    // ✅ Count total programs in this module
+    const totalPrograms = await prisma.content.count({
+      where: { topic: { moduleId: id } },
+    });
+
+    // ✅ Count completed programs
+    const completedPrograms = await prisma.content.count({
+      where: { topic: { moduleId: id }, iscompleted: true },
+    });
+
+    // ✅ Calculate progress percentage
+    const progress = totalPrograms > 0 ? ((completedPrograms / totalPrograms) * 100).toFixed(2) : "0";
+
+    return NextResponse.json({ progress });
   } catch (error) {
-    console.error("Error fetching content with questions:", error);
+    console.error("Error fetching progress:", error);
     return NextResponse.json(
       { error: "Internal Server Error" },
       { status: 500 }

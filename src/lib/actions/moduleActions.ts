@@ -23,9 +23,9 @@ import { nQueensData } from "../data/(backtracking)/nqueen";
 export async function createModule() {
   const result = await prisma.module.create({
     data: {
-      name: "Design And Analysis of Algorithms ",
+      name: "Java Programming ",
       description:
-        "Practical course on Design & Analysis of Algorithms based on the syllabus followed at Engineering colleges in India. Solutions and approaches explained using C++, Java & Python",
+        "Practical course on Java Programming based on the syllabus followed at LIET in India. Solutions and approaches explained in an easy  simplified manner",
     },
   });
   return result;

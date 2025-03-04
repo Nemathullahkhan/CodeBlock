@@ -67,6 +67,32 @@ export const quickSortData = {
         contentId: "cm7ja3jju000hbugs0bx8uvid",
       },
     ],
+    questions: {
+      question:
+        `Implement Quick Sort, a Divide and Conquer algorithm, to sort an array, arr[] in ascending order. Given an array, arr[], with starting index low and ending index high, complete the functions partition() and quickSort(). Use the last element as the pivot so that all elements less than or equal to the pivot come before it, and elements greater than the pivot follow it.
+        \n
+        Note: The low and high are inclusive.
+        `,
+      examples: [
+        { input: "[4, 1, 3, 9, 7]", output: "[1, 3, 4, 7, 9]" },
+        {
+          input: "[10, 9, 8, 7, 6, 5, 4, 3, 2, 1]",
+          output: "[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]",
+        },
+        { input: "[1, 3, 2]", output: "[1, 2, 3]" },
+      ],
+      constraints: ["1 <= arr.size() <= 10^5", "1 <= arr[i] <= 10^5"],
+      difficulty: "Medium",
+      averageTime: "15m",
+      testcases: [
+        { input: "[4, 1, 3, 9, 7]", output: "[1, 3, 4, 7, 9]" },
+        {
+          input: "[10, 9, 8, 7, 6, 5, 4, 3, 2, 1]",
+          output: "[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]",
+        },
+        { input: "[1, 3, 2]", output: "[1, 2, 3]" },
+      ],
+    },  
     working: {
       explanation:
         "Quick Sort works by selecting a pivot element and partitioning the array into two subarrays: one with elements less than the pivot and one with elements greater than the pivot. The algorithm then recursively sorts the subarrays. This process continues until the entire array is sorted.",

@@ -97,6 +97,7 @@ export interface RuntimeConfig {
     userInput: string;
     testCases: TestCase[];
     testCaseResults: TestCaseResult[];
+    progress:string;
   
     setEditor: (editor: Monaco) => void;
     getCode: () => string;
@@ -108,6 +109,7 @@ export interface RuntimeConfig {
     runCode: () => Promise<void>;
     executeCode: (runtime: RuntimeConfig, code: string, userInput: string) => Promise<string>;
     runAndVerifyCode: () => Promise<void>;
+    setProgress: (progress:string) => void;
   }
   
 
