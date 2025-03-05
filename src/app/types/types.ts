@@ -109,6 +109,7 @@ export interface RuntimeConfig {
     runCode: () => Promise<void>;
     executeCode: (runtime: RuntimeConfig, code: string, userInput: string) => Promise<string>;
     runAndVerifyCode: () => Promise<void>;
+    runfloydAndVerifyCode: () => Promise<void>;
     setProgress: (progress:string) => void;
   }
   

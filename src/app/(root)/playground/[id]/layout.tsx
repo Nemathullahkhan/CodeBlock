@@ -90,7 +90,7 @@ export default async function Layout({
           {/* Buttons (Run + Submit) */}
           <div className="flex items-center gap-2 bg-stone-800/70 p-1 mx-auto rounded-lg">
             {/* Run Button */}
-            <QuestionRunButton id={id} />
+            <QuestionRunButton id={id} programName= {programName} />
 
             {/* Submit Button (No Extra Button Wrapper Needed) */}
             <SubmitButton id={id} />

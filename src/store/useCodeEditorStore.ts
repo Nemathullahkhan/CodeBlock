@@ -143,6 +143,8 @@ export const useCodeEditorStore = create<CodeEditorState>((set, get) => ({
   },
   
 
+// quicksort,mergeSort,knapsack.
+
   runAndVerifyCode: async () => {
     const { language, getCode, testCases, executeCode } = get();
     const code = getCode();
@@ -158,69 +160,58 @@ export const useCodeEditorStore = create<CodeEditorState>((set, get) => ({
       const runtime = LANGUAGE_CONFIG[language].pistonRuntime;
       const results = [];
   
-      // Process each test case individually
-      for (let i = 0; i < testCases.length; i++) {
-        const testCase = testCases[i];
-        
-        // Normalize input by ensuring space separation
-        const input = testCase.input
-          .split(/\s+/)  // Split by whitespace
-          .join(' ');    // Rejoin with single space
+      // Log the combined input for all test cases
+      const combinedInput = testCases.map((testCase) => testCase.input).join(" ");
+      console.log("Combined Input for Test Cases:", combinedInput);
   
-        const executionResult = await executeCode(runtime, code, input);
+      const executionResult = await executeCode(runtime, code, combinedInput);
   
-        // Handle errors
-        if (executionResult.type === "Compile Error" || executionResult.type === "Runtime Error") {
-          console.error(`Error Type: ${executionResult.type}`, `Message: ${executionResult.message}`);
-          set({ 
-            error: `${executionResult.type}: ${executionResult.message}`,
-            isRunning: false 
-          });
-          return;
-        }
-  
-        // Normalize output based on algorithm type
-        let normalizedOutput = executionResult.output.trim();
-        let normalizedExpected = testCase.expectedOutput.trim();
-
-        // Remove any extra spaces and newlines
-        normalizedOutput = normalizedOutput.replace(/\s+/g, ' ');
-        normalizedExpected = normalizedExpected.replace(/\s+/g, ' ');
-
-        // Remove any trailing/leading spaces
-        normalizedOutput = normalizedOutput.trim();
-        normalizedExpected = normalizedExpected.trim();
-
-        // For array outputs (QuickSort, MergeSort), ensure we only take the first array
-        if (normalizedOutput.includes('[')) {
-          normalizedOutput = normalizedOutput.match(/\[[^\]]*\]/)?.[0] || normalizedOutput;
-        }
-
-        // Compare outputs
-        const isCorrect = normalizedOutput === normalizedExpected;
-  
-        // Log detailed comparison
-        console.log(`Test Case ${i + 1}:`);
-        console.log(`Input:`, input);
-        console.log(`Expected Output:`, normalizedExpected);
-        console.log(`Actual Output:`, normalizedOutput);
-        console.log(`Passed: ${isCorrect}`);
-  
-        // Store test case result
-        results.push({
-          input: testCase.input,
-          expected: normalizedExpected,
-          actual: normalizedOutput,
-          passed: isCorrect,
-        });
+      // Handle errors
+      if (executionResult.type === "Compile Error" || executionResult.type === "Runtime Error") {
+        console.error(`Error Type: ${executionResult.type}`, `Message: ${executionResult.message}`);
+        set({ error: `${executionResult.type}: ${executionResult.message}` });
+        return;
       }
   
-      // Update state with test case results
-      set({ 
-        testCaseResults: results,
-        output: results[results.length - 1]?.actual || ''
-      });
+      // Log the raw output from the execution
+      console.log("Raw Output from Execution:", executionResult.output);
   
+      // Split the output by spaces
+      const outputSections = executionResult.output.trim().split(/\s+/);
+  
+      // Compare each section with the corresponding test case
+      for (let i = 0; i < testCases.length; i++) {
+        const testCase = testCases[i];
+        const actualOutput = outputSections[i] || ""; // Use empty string if no output section exists
+  
+        // Log the inputs and outputs for each test case
+        console.log(`Test Case ${i + 1} Input:`, testCase.input);
+        console.log(`Expected Output:`, testCase.expectedOutput);
+        console.log(`Actual Output:`, actualOutput);
+  
+        // Normalize the expected and actual outputs by removing spaces
+        const normalizedExpected = testCase.expectedOutput.replace(/\s+/g, "");
+        const normalizedActual = actualOutput.replace(/\s+/g, "");
+  
+        // Log normalized outputs for debugging
+        console.log(`Normalized Expected Output: ${normalizedExpected}`);
+        console.log(`Normalized Actual Output: ${normalizedActual}`);
+  
+        // Compare the normalized outputs
+        const isCorrect = normalizedActual === normalizedExpected;
+  
+        results.push({
+          input: testCase.input,
+          expected: testCase.expectedOutput,
+          actual: actualOutput,
+          passed: isCorrect,
+        });
+  
+        // Log whether the test case passed or failed
+        console.log(`Test Case ${i + 1} ${isCorrect ? "Passed" : "Failed"}`);
+      }
+  
+      set({ testCaseResults: results });
     } catch (err) {
       console.error("Error running code:", err);
       set({ error: "Error running code" });
@@ -229,150 +220,73 @@ export const useCodeEditorStore = create<CodeEditorState>((set, get) => ({
     }
   },
 
-// quicksort,mergeSort,knapsack.
 
-  // runAndVerifyCode: async () => {
-  //   const { language, getCode, testCases, executeCode } = get();
-  //   const code = getCode();
-  
-  //   if (!code) {
-  //     set({ error: "Please write some code." });
-  //     return;
-  //   }
-  
-  //   set({ isRunning: true, error: null, output: "", testCaseResults: [] });
-  
-  //   try {
-  //     const runtime = LANGUAGE_CONFIG[language].pistonRuntime;
-  //     const results = [];
-  
-  //     // Log the combined input for all test cases
-  //     const combinedInput = testCases.map((testCase) => testCase.input).join(" ");
-  //     console.log("Combined Input for Test Cases:", combinedInput);
-  
-  //     const executionResult = await executeCode(runtime, code, combinedInput);
-  
-  //     // Handle errors
-  //     if (executionResult.type === "Compile Error" || executionResult.type === "Runtime Error") {
-  //       console.error(`Error Type: ${executionResult.type}`, `Message: ${executionResult.message}`);
-  //       set({ error: `${executionResult.type}: ${executionResult.message}` });
-  //       return;
-  //     }
-  
-  //     // Log the raw output from the execution
-  //     console.log("Raw Output from Execution:", executionResult.output);
-  
-  //     // Split the output by spaces
-  //     const outputSections = executionResult.output.trim().split(/\s+/);
-  
-  //     // Compare each section with the corresponding test case
-  //     for (let i = 0; i < testCases.length; i++) {
-  //       const testCase = testCases[i];
-  //       const actualOutput = outputSections[i] || ""; // Use empty string if no output section exists
-  
-  //       // Log the inputs and outputs for each test case
-  //       console.log(`Test Case ${i + 1} Input:`, testCase.input);
-  //       console.log(`Expected Output:`, testCase.expectedOutput);
-  //       console.log(`Actual Output:`, actualOutput);
-  
-  //       // Normalize the expected and actual outputs by removing spaces
-  //       const normalizedExpected = testCase.expectedOutput.replace(/\s+/g, "");
-  //       const normalizedActual = actualOutput.replace(/\s+/g, "");
-  
-  //       // Log normalized outputs for debugging
-  //       console.log(`Normalized Expected Output: ${normalizedExpected}`);
-  //       console.log(`Normalized Actual Output: ${normalizedActual}`);
-  
-  //       // Compare the normalized outputs
-  //       const isCorrect = normalizedActual === normalizedExpected;
-  
-  //       results.push({
-  //         input: testCase.input,
-  //         expected: testCase.expectedOutput,
-  //         actual: actualOutput,
-  //         passed: isCorrect,
-  //       });
-  
-  //       // Log whether the test case passed or failed
-  //       console.log(`Test Case ${i + 1} ${isCorrect ? "Passed" : "Failed"}`);
-  //     }
-  
-  //     set({ testCaseResults: results });
-  //   } catch (err) {
-  //     console.error("Error running code:", err);
-  //     set({ error: "Error running code" });
-  //   } finally {
-  //     set({ isRunning: false });
-  //   }
-  // },
+  runfloydAndVerifyCode: async () => {
+    const { language, getCode, testCases, executeCode } = get();
+    const code = getCode();
 
-//  Floyd algorithm
-//   runAndVerifyCode: async () => {
-//     const { language, getCode, testCases, executeCode } = get();
-//     const code = getCode();
+    if (!code) {
+        set({ error: "Please write some code." });
+        return;
+    }
 
-//     if (!code) {
-//         set({ error: "Please write some code." });
-//         return;
-//     }
+    set({ isRunning: true, error: null, output: "", testCaseResults: [] });
 
-//     set({ isRunning: true, error: null, output: "", testCaseResults: [] });
+    try {
+        const runtime = LANGUAGE_CONFIG[language].pistonRuntime;
+        const results = [];
 
-//     try {
-//         const runtime = LANGUAGE_CONFIG[language].pistonRuntime;
-//         const results = [];
+        // Log the combined input for all test cases
+        const combinedInput = testCases.map((testCase) => testCase.input).join(" ");
+        console.log("Combined Input for Test Cases:", combinedInput);
 
-//         // Log the combined input for all test cases
-//         const combinedInput = testCases.map((testCase) => testCase.input).join(" ");
-//         console.log("Combined Input for Test Cases:", combinedInput);
+        const executionResult = await executeCode(runtime, code, combinedInput);
 
-//         const executionResult = await executeCode(runtime, code, combinedInput);
+        // Handle errors
+        if (executionResult.type === "Compile Error" || executionResult.type === "Runtime Error") {
+            console.error(`Error Type: ${executionResult.type}`, `Message: ${executionResult.message}`);
+            set({ error: `${executionResult.type}: ${executionResult.message}` });
+            return;
+        }
 
-//         // Handle errors
-//         if (executionResult.type === "Compile Error" || executionResult.type === "Runtime Error") {
-//             console.error(`Error Type: ${executionResult.type}`, `Message: ${executionResult.message}`);
-//             set({ error: `${executionResult.type}: ${executionResult.message}` });
-//             return;
-//         }
+        // Log the raw output from the execution
+        console.log("Raw Output from Execution:", executionResult.output);
 
-//         // Log the raw output from the execution
-//         console.log("Raw Output from Execution:", executionResult.output);
+        // Normalize the output by trimming and replacing multiple spaces with single spaces
+        const normalizedOutput = executionResult.output.trim().replace(/\s+/g, " ");
 
-//         // Normalize the output by trimming and replacing multiple spaces with single spaces
-//         const normalizedOutput = executionResult.output.trim().replace(/\s+/g, " ");
+        // Compare the normalized output with the expected output for each test case
+        for (let i = 0; i < testCases.length; i++) {
+            const testCase = testCases[i];
+            const normalizedExpected = testCase.expectedOutput.replace(/\s+/g, " ").trim();
 
-//         // Compare the normalized output with the expected output for each test case
-//         for (let i = 0; i < testCases.length; i++) {
-//             const testCase = testCases[i];
-//             const normalizedExpected = testCase.expectedOutput.replace(/\s+/g, " ").trim();
+            // Log the inputs and outputs for each test case
+            console.log(`Test Case ${i + 1} Input:`, testCase.input);
+            console.log(`Expected Output:`, normalizedExpected);
+            console.log(`Actual Output:`, normalizedOutput);
 
-//             // Log the inputs and outputs for each test case
-//             console.log(`Test Case ${i + 1} Input:`, testCase.input);
-//             console.log(`Expected Output:`, normalizedExpected);
-//             console.log(`Actual Output:`, normalizedOutput);
+            // Compare the normalized outputs
+            const isCorrect = normalizedOutput === normalizedExpected;
 
-//             // Compare the normalized outputs
-//             const isCorrect = normalizedOutput === normalizedExpected;
+            results.push({
+                input: testCase.input,
+                expected: normalizedExpected,
+                actual: normalizedOutput,
+                passed: isCorrect,
+            });
 
-//             results.push({
-//                 input: testCase.input,
-//                 expected: normalizedExpected,
-//                 actual: normalizedOutput,
-//                 passed: isCorrect,
-//             });
+            // Log whether the test case passed or failed
+            console.log(`Test Case ${i + 1} ${isCorrect ? "Passed" : "Failed"}`);
+        }
 
-//             // Log whether the test case passed or failed
-//             console.log(`Test Case ${i + 1} ${isCorrect ? "Passed" : "Failed"}`);
-//         }
-
-//         set({ testCaseResults: results });
-//     } catch (err) {
-//         console.error("Error running code:", err);
-//         set({ error: "Error running code" });
-//     } finally {
-//         set({ isRunning: false });
-//     }
-// },
+        set({ testCaseResults: results });
+    } catch (err) {
+        console.error("Error running code:", err);
+        set({ error: "Error running code" });
+    } finally {
+        set({ isRunning: false });
+    }
+},
 }));
 
 
