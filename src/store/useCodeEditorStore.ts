@@ -287,6 +287,80 @@ export const useCodeEditorStore = create<CodeEditorState>((set, get) => ({
         set({ isRunning: false });
     }
 },
+runWarshallAndVerifyCode: async () => {
+  const { language, getCode, testCases, executeCode } = get();
+  const code = getCode();
+
+  if (!code) {
+    set({ error: "Please write some code." });
+    return;
+  }
+
+  set({ isRunning: true, error: null, output: "", testCaseResults: [] });
+
+  try {
+    const runtime = LANGUAGE_CONFIG[language].pistonRuntime;
+    const results = [];
+
+    // Log the combined input for all test cases
+    const combinedInput = testCases.map((testCase) => testCase.input).join("\n");
+    console.log("Combined Input for Test Cases:", combinedInput);
+
+    const executionResult = await executeCode(runtime, code, combinedInput);
+
+    // Handle errors
+    if (executionResult.type === "Compile Error" || executionResult.type === "Runtime Error") {
+      console.error(`Error Type: ${executionResult.type}`, `Message: ${executionResult.message}`);
+      set({ error: `${executionResult.type}: ${executionResult.message}` });
+      return;
+    }
+
+    // Log the raw output from the execution
+    console.log("Raw Output from Execution:", executionResult.output);
+
+    // Split the output by lines
+    const outputLines = executionResult.output.trim().split("\n");
+
+    // Compare each line with the corresponding test case
+    for (let i = 0; i < testCases.length; i++) {
+      const testCase = testCases[i];
+      const actualOutput = outputLines[i] || ""; // Use empty string if no output line exists
+
+      // Log the inputs and outputs for each test case
+      console.log(`Test Case ${i + 1} Input:`, testCase.input);
+      console.log(`Expected Output:`, testCase.expectedOutput);
+      console.log(`Actual Output:`, actualOutput);
+
+      // Normalize the expected and actual outputs by removing spaces
+      const normalizedExpected = testCase.expectedOutput.replace(/\s+/g, "");
+      const normalizedActual = actualOutput.replace(/\s+/g, "");
+
+      // Log normalized outputs for debugging
+      console.log(`Normalized Expected Output: ${normalizedExpected}`);
+      console.log(`Normalized Actual Output: ${normalizedActual}`);
+
+      // Compare the normalized outputs
+      const isCorrect = normalizedActual === normalizedExpected;
+
+      results.push({
+        input: testCase.input,
+        expected: testCase.expectedOutput,
+        actual: actualOutput,
+        passed: isCorrect,
+      });
+
+      // Log whether the test case passed or failed
+      console.log(`Test Case ${i + 1} ${isCorrect ? "Passed" : "Failed"}`);
+    }
+
+    set({ testCaseResults: results });
+  } catch (err) {
+    console.error("Error running code:", err);
+    set({ error: "Error running code" });
+  } finally {
+    set({ isRunning: false });
+  }
+},
 }));
 
 

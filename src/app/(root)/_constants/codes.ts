@@ -483,46 +483,183 @@ for i in range(numTests):
         language: "c",
         monacoLanguage: "c",
         defaultCode: `#include <stdio.h>
-  
-  void merge(int arr[], int l, int m, int r) {
-      // Implement the merge function here
-  }
-  
-  void mergeSort(int arr[], int l, int r) {
-      // Implement the mergeSort function here
-  }
-  
-  void printArray(int A[], int size) {
-      printf("[");
-      for (int i = 0; i < size; i++) {
-          printf("%d", A[i]);
-          if (i < size - 1) {
-              printf(",");
-          }
-      }
-      printf("] ");
-  }
-  
-  int main() {
-      // Test cases
-      int testCases[][10] = {
-          {4,1,3,9,7},
-          {10,9,8,7,6,5,4,3,2,1},
-          {1,3,2},
-          {2,9,0,1}
-      };
-  
-      int testSizes[] = {5, 10, 3, 4};
-  
-      int numTests = sizeof(testSizes) / sizeof(testSizes[0]);
-  
-      for (int i = 0; i < numTests; i++) {
-          mergeSort(testCases[i], 0, testSizes[i] - 1);
-          printArray(testCases[i], testSizes[i]);
-      }
-  
-      return 0;
-  }`,
+#include <stdlib.h>
+#define INF 99999
+
+// Function to initialize the distance matrix
+void initializeDistanceMatrix(int **graph, int **dist, int V) {
+    for (int i = 0; i < V; i++) {
+        for (int j = 0; j < V; j++) {
+            dist[i][j] = graph[i][j];
+        }
+    }
+}
+
+// Function to perform the Floyd-Warshall algorithm
+void floydWarshallAlgorithm(int **dist, int V) {
+    for (int k = 0; k < V; k++) {
+        for (int i = 0; i < V; i++) {
+            for (int j = 0; j < V; j++) {
+                if (dist[i][k] != INF && dist[k][j] != INF) {
+                    int through_k_dist = dist[i][k] + dist[k][j];
+                    if (through_k_dist < dist[i][j]) {
+                        dist[i][j] = through_k_dist;
+                    }
+                }
+            }
+        }
+    }
+}
+
+// Function to print the distance matrix
+void printDistanceMatrix(int **dist, int V) {
+    for (int i = 0; i < V; i++) {
+        for (int j = 0; j < V; j++) {
+            if (dist[i][j] == INF) {
+                printf("-1 ");
+            } else {
+                printf("%d ", dist[i][j]);
+            }
+        }
+        printf("\n");
+    }
+}
+
+// Main function
+int main() {
+    int V;
+    scanf("%d", &V); // Read the number of vertices
+
+    // Allocate memory for the graph
+    int **graph = (int **)malloc(V * sizeof(int *));
+    for (int i = 0; i < V; i++) {
+        graph[i] = (int *)malloc(V * sizeof(int));
+    }
+
+    // Read the graph input as space-separated values
+    for (int i = 0; i < V; i++) {
+        for (int j = 0; j < V; j++) {
+            scanf("%d", &graph[i][j]);
+            if (graph[i][j] == -1) {
+                graph[i][j] = INF; // Replace -1 with INF
+            }
+        }
+    }
+
+    // Allocate memory for the distance matrix
+    int **dist = (int **)malloc(V * sizeof(int *));
+    for (int i = 0; i < V; i++) {
+        dist[i] = (int *)malloc(V * sizeof(int));
+    }
+
+    // Initialize the distance matrix
+    initializeDistanceMatrix(graph, dist, V);
+
+    // Run Floyd-Warshall algorithm
+    floydWarshallAlgorithm(dist, V);
+
+    // Print the output
+    printDistanceMatrix(dist, V);
+
+    // Free allocated memory for graph and dist
+    for (int i = 0; i < V; i++) {
+        free(graph[i]);
+        free(dist[i]);
+    }
+    free(graph);
+    free(dist);
+
+    return 0;
+}`,
+      },
+    ],
+  },
+  "Warshall Algorithm (Transitive Closure)": {
+    id: "warshall-algorithm",
+    title: "warshall Algorithm",
+    description:
+      "To solve the problem of finding the shortest distances between every pair of vertices in a given edge-weighted directed graph, we can use the Floyd-Warshall algorithm. This algorithm is suitable for this task because it computes the shortest paths between all pairs of vertices in a weighted graph with positive or negative edge weights (but no negative cycles).",
+    difficulty: "easy",
+    languages: [
+      {
+        language: "c",
+        monacoLanguage: "c",
+        defaultCode: `#include <stdio.h>
+#include <stdlib.h>
+
+void warshall(int graph[10][10], int n) {
+    int i, j, k;
+    
+    // Warshall's algorithm for transitive closure
+    for (k = 0; k < n; k++) {
+        for (i = 0; i < n; i++) {
+            for (j = 0; j < n; j++) {
+                graph[i][j] = graph[i][j] || (graph[i][k] && graph[k][j]);
+            }
+        }
+    }
+}
+
+void printMatrix(int graph[10][10], int n) {
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            printf("%d", graph[i][j]);
+            if (j < n - 1) {
+                printf(" ");  // Add space between elements
+            }
+        }
+    }
+     printf("\\n");  // Ensure each row prints on a new line
+}
+
+int main() {
+    // Test Case 1: 3x3 matrix
+    int testCase1[10][10] = {
+        {0, 1, 0},
+        {0, 0, 1},
+        {0, 0, 0}
+    };
+    int size1 = 3;
+    
+    // Test Case 2: 4x4 matrix
+    int testCase2[10][10] = {
+        {1, 0, 1, 0},
+        {0, 1, 0, 0},
+        {0, 0, 1, 0},
+        {1, 0, 0, 1}
+    };
+    int size2 = 4;
+    
+    // Test Case 3: 2x2 matrix
+    int testCase3[10][10] = {
+        {0, 1},
+        {0, 0}
+    };
+    int size3 = 2;
+    
+    // Test Case 4: 4x4 matrix
+    int testCase4[10][10] = {
+        {1, 1, 0, 0},
+        {0, 1, 1, 0},
+        {0, 0, 1, 1},
+        {0, 0, 0, 1}
+    };
+    int size4 = 4;
+    
+    warshall(testCase1, size1);
+    printMatrix(testCase1, size1);
+    
+    warshall(testCase2, size2);
+    printMatrix(testCase2, size2);
+    
+    warshall(testCase3, size3);
+    printMatrix(testCase3, size3);
+    
+    warshall(testCase4, size4);
+    printMatrix(testCase4, size4);
+    
+    return 0;
+}`,
       },
     ],
   },

@@ -131,7 +131,7 @@ export const warshallData = {
       },
       {
         input: "4\n1 1 0 0\n0 1 1 0\n0 0 1 1\n0 0 0 1", // Number of vertices = 4, adjacency matrix
-        expectedOutput: "1 1 1 1\n0 1 1 1\n0 0 1 1\n0 0 0 1", // Transitive closure matrix
+        output: "1 1 1 1\n0 1 1 1\n0 0 1 1\n0 0 0 1", // Transitive closure matrix
       },
     ],
   },

@@ -83,7 +83,7 @@ export default async function MulePage({ params }: { params: { id: string } }) {
             <div className="flex justify-between text-sm">
               <span className="text-muted-foreground">Course Progress</span>
               <span className="text-primary font-medium">
-                <span className="text-xl">{progress}%</span></span>
+                <span className={`text-xl font-semibold ${progress === 0 ? 'text-zinc-300' : 'text-emerald-500'}`}>{progress}%</span></span>
             </div>
             <Progress value={progress}  className="h-1" />
           </div>

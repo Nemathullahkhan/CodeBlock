@@ -5,6 +5,7 @@ import { quickSortData } from "../data/(divide_conquer)/quicksort";
 import { floydsAlgorithmData } from "../data/(dynamic_programming)/floyd";
 import { knapSackData } from "../data/(dynamic_programming)/knapsack";
 
+import { warshallData } from "../data/(graph_algorithms)/warshall";
 
 import prisma from "../prisma";
 
@@ -23,20 +24,20 @@ export async function getSolution({ contentId }: props) {
 export async function questions() {
   try {
     const program = await prisma.content.findUnique({
-      where: { id: "cm7uvzzus0005buksajyrtv9o" },
+      where: { id: "cm7lga8960045bu8o60dooyso" },
     });
 
     if (!program) throw new Error("Id is incorrect");
 
     const questions = await prisma.questions.create({
       data: {
-        question: floydsAlgorithmData.questions.question,
-        examples: floydsAlgorithmData.questions.examples,
-        constraints: floydsAlgorithmData.questions.constraints,
-        difficulty: floydsAlgorithmData.questions.difficulty,
-        testcases: floydsAlgorithmData.questions.testcases,
-        averageTime: floydsAlgorithmData.questions.averageTime,
-        contentId: "cm7uvzzus0005buksajyrtv9o",
+        question: warshallData.questions.question,
+        examples: warshallData.questions.examples,
+        constraints: warshallData.questions.constraints,
+        difficulty: warshallData.questions.difficulty,
+        testcases: warshallData.questions.testcases,
+        averageTime: warshallData.questions.averageTime,
+        contentId: "cm7lga8960045bu8o60dooyso",
       },
     });
     return questions;
@@ -51,12 +52,12 @@ export async function updateTestCases() {
     const updatedQuestion = await prisma.questions.update({
       where: { contentId: "cm7uvzzus0005buksajyrtv9o" },
       data: {
-        question: floydsAlgorithmData.questions.question,
-        examples: floydsAlgorithmData.questions.examples,
-        constraints: floydsAlgorithmData.questions.constraints,
-        difficulty: floydsAlgorithmData.questions.difficulty,
-        testcases: floydsAlgorithmData.questions.testcases,
-        averageTime: floydsAlgorithmData.questions.averageTime,
+        question: warshallData.questions.question,
+        examples: warshallData.questions.examples,
+        constraints: warshallData.questions.constraints,
+        difficulty: warshallData.questions.difficulty,
+        testcases: warshallData.questions.testcases,
+        averageTime: warshallData.questions.averageTime,
       },
     });
 

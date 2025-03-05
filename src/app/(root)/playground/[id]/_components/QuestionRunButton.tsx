@@ -106,7 +106,7 @@ import { useState } from "react";
 import { useCodeEditorStore } from "@/store/useCodeEditorStore";
 
 export default function QuestionRunButton({ id, programName }: { id: string; programName: string }) {
-  const { runAndVerifyCode, isRunning, runfloydAndVerifyCode, setTestCases } = useCodeEditorStore();
+  const { runAndVerifyCode, isRunning, runfloydAndVerifyCode, runWarshallAndVerifyCode, setTestCases } = useCodeEditorStore();
   const [open, setOpen] = useState(false);
   const [isLoadingTestCases, setIsLoadingTestCases] = useState(false);
   const [testCaseError, setTestCaseError] = useState<string | null>(null);
@@ -155,9 +155,13 @@ export default function QuestionRunButton({ id, programName }: { id: string; pro
     setOpen(true); // Open dialog when execution starts
     try {
       await loadTestCases(); // Load test cases before running
-      if (["0/1 Knapsack Problem", "Merge Sort", "Quick Sort"].includes(programName)) {
+      if (["0/1 Knapsack Problem", "Merge Sort", "Quick Sort",].includes(programName)) {
         await runAndVerifyCode(); // Run and verify the code
-      } else {
+      }
+      else if (["Warshall Algorithm (Transitive Closure)"].includes(programName)){
+        await runWarshallAndVerifyCode(); 
+      }
+       else {
         await runfloydAndVerifyCode(); // Run Floyd-Warshall specific verification
       }
     } catch (error) {
