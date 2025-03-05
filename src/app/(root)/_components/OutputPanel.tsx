@@ -20,7 +20,7 @@ export default function OutputPanel() {
     }
 
     return (
-        <div className="h-full flex flex-col bg-black rounded-xl p-4 ring-2 ring-zinc-900 ">
+        <div className="h-full flex flex-col bg-black rounded-xl p-4 ring-2 ring-zinc-900">
             {/* Header */}
             <div className="flex items-center justify-between mb-3 flex-shrink-0">
                 <div className="flex items-center gap-2">
@@ -51,9 +51,9 @@ export default function OutputPanel() {
             </div>
 
             {/* Output area */}
-            <div className="relative flex-grow">
+            <div className="relative flex-grow overflow-hidden">
                 <div className="h-full relative bg-black rounded-xl p-4 overflow-auto scrollbar-thin
-                scrollbar-thumb-gray-700 scrollbar-track-black text-sm"
+                scrollbar-thumb-gray-500 hover:scrollbar-thumb-gray-400 scrollbar-track-black scrollbar-thumb-rounded-md"
                     style={{ 
                         fontFamily: '"Fira Code","Cascadia Code",Consolas, monospace',
                         fontSize: '14px',

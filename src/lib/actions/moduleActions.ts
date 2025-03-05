@@ -55,16 +55,16 @@ export async function createContent() {
   try {
     const result = await prisma.content.create({
       data: {
-        title: nQueensData.content.title,
-        description: nQueensData.content.description,
-        brief: nQueensData.content.brief,
-        photos: nQueensData.content.photos,
-        complexityAnalysis: nQueensData.content.complexityAnalysis,
-        applications: nQueensData.content.applications,
-        advantages: nQueensData.content.advantages,
-        disadvantages: nQueensData.content.disadvantages,
-        videos: nQueensData.content.videos,
-        topicId: "cm7lgjquq004hbu8otwz96s1k",
+        title: floydsAlgorithmData.content.title,
+        description: floydsAlgorithmData.content.description,
+        brief: floydsAlgorithmData.content.brief,
+        photos: floydsAlgorithmData.content.photos,
+        complexityAnalysis: floydsAlgorithmData.content.complexityAnalysis,
+        applications: floydsAlgorithmData.content.applications,
+        advantages: floydsAlgorithmData.content.advantages,
+        disadvantages: floydsAlgorithmData.content.disadvantages,
+        videos: floydsAlgorithmData.content.videos,
+        topicId: "cm7kklzg8000pbutcs2ksz8zq",
       },
     });
     return result;
@@ -83,8 +83,8 @@ export async function createFAQ() {
 
     const createQuestions = await prisma.faqQuestion.create({
       data: {
-        question: nQueensData.faq[0].question,
-        answer: nQueensData.faq[0].answer,
+        question: floydsAlgorithmData.faq[0].question,
+        answer: floydsAlgorithmData.faq[0].answer,
         contentId: "cm7lgm7w7004jbu8ouk8n694l",
       },
     });
@@ -104,8 +104,8 @@ export async function createViva() {
 
     const createVivaQuestions = await prisma.vivaQuestion.create({
       data: {
-        question: nQueensData.vivaQuestions[0].question,
-        answer: nQueensData.vivaQuestions[0].answer,
+        question: floydsAlgorithmData.vivaQuestions[0].question,
+        answer: floydsAlgorithmData.vivaQuestions[0].answer,
         contentId: "cm7lgm7w7004jbu8ouk8n694l"
       },
     });
@@ -124,7 +124,7 @@ export async function working() {
 
     const processing = await prisma.working.create({
       data: {
-        explanation: nQueensData.working.explanation,
+        explanation: floydsAlgorithmData.working.explanation,
         contentId:"cm7lgm7w7004jbu8ouk8n694l",
       },
     });
@@ -145,9 +145,9 @@ export async function implementation() {
     // Create the implementation with multiple code languages
     const implementing = await prisma.implementation.create({
       data: {
-        intuition: nQueensData.implementation.intuition,
-        approach: nQueensData.implementation.approach,
-        code: nQueensData.implementation.code,
+        intuition: floydsAlgorithmData.implementation.intuition,
+        approach: floydsAlgorithmData.implementation.approach,
+        code: floydsAlgorithmData.implementation.code,
         contentId: "cm7lgm7w7004jbu8ouk8n694l",
       },
     });
@@ -166,11 +166,11 @@ export async function illustration() {
 
     const illustrate = await prisma.illustration.create({
       data: {
-        summary: nQueensData.illustration.summary,
-        tips: nQueensData.illustration.tips,
-        images: nQueensData.illustration.images,
+        summary: floydsAlgorithmData.illustration.summary,
+        tips: floydsAlgorithmData.illustration.tips,
+        images: floydsAlgorithmData.illustration.images,
         contentId: "cm7lgm7w7004jbu8ouk8n694l",
-        explanation: nQueensData.illustration.explanation,
+        explanation: floydsAlgorithmData.illustration.explanation,
       },
     });
     return illustrate;

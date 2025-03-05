@@ -23,7 +23,7 @@ export async function getSolution({ contentId }: props) {
 export async function questions() {
   try {
     const program = await prisma.content.findUnique({
-      where: { id: "cm7l9h70a0001bu8oovkc9zgb" },
+      where: { id: "cm7uvzzus0005buksajyrtv9o" },
     });
 
     if (!program) throw new Error("Id is incorrect");
@@ -36,7 +36,7 @@ export async function questions() {
         difficulty: floydsAlgorithmData.questions.difficulty,
         testcases: floydsAlgorithmData.questions.testcases,
         averageTime: floydsAlgorithmData.questions.averageTime,
-        contentId: "cm7l9h70a0001bu8oovkc9zgb",
+        contentId: "cm7uvzzus0005buksajyrtv9o",
       },
     });
     return questions;
@@ -49,7 +49,7 @@ export async function questions() {
 export async function updateTestCases() {
   try {
     const updatedQuestion = await prisma.questions.update({
-      where: { contentId: "cm7t8ogw50001bu98qslpa3g8" },
+      where: { contentId: "cm7uvzzus0005buksajyrtv9o" },
       data: {
         question: floydsAlgorithmData.questions.question,
         examples: floydsAlgorithmData.questions.examples,

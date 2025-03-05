@@ -77,7 +77,7 @@ export const floydsAlgorithmData = {
       "The problem is to find the shortest distances between every pair of vertices in a given edge-weighted directed graph. The graph is represented as an adjacency matrix. mat[i][j] denotes the weight of the edge from i to j. If mat[i][j] = -1, it means there is no edge from i to j. Note: Modify the distances for every pair in place.",
     examples: [
       {
-        input:"mat = [[0, 25], [-1, 0 ]]",
+        input: "mat = [[0, 25], [-1, 0 ]]",
         inputImage:
           "https://media.geeksforgeeks.org/wp-content/uploads/20221106202714/WhatsAppImage20221106at82359PM.jpeg",
         output: `[[0, 25],[-1, 0]]`,
@@ -90,7 +90,7 @@ export const floydsAlgorithmData = {
         input: "mat = [[0, 1, 43],[1, 0, 6], [-1, -1, 0]]",
         inputImage:
           "https://media.geeksforgeeks.org/wp-content/uploads/20221106203741/WhatsAppImage20221106at83711PM.jpeg",
-        output: `[[0, 25],[-1, 0]]`,
+        output: `[[0, 1, 7],[1, 0, 6],[-1, -1, 0]]`,
         outputImage:
           "https://media.geeksforgeeks.org/wp-content/uploads/20221106204057/WhatsAppImage20221106at84031PM.jpeg",
         explanation:
@@ -102,16 +102,16 @@ export const floydsAlgorithmData = {
     averageTime: "25m",
     testcases: [
       {
-        input:"2\n0 25\n-1 0", // capacity = 4, val[] = [1, 2, 3], wt[] = [4, 5, 1]
-        output: "0 25\n-1 0", // Expected maximum value
+        input: "2\n0 25\n-1 0",
+        output: "0 25\n-1 0",
       },
       {
-        input: "3\n0 1 43\n1 0 6\n-1 -1 0", // capacity = 3, val[] = [1, 2, 3], wt[] = [4, 5, 6]
-        output: "0 1 7\n1 0 6\n-1 -1 0", // Expected maximum value
+        input: "3\n0 1 43\n1 0 6\n-1 -1 0",
+        output: "0 1 7\n1 0 6\n-1 -1 0",
       },
       {
-        input: "3\n0 3 -1\n2 0 -1\n-1 7 0", // capacity = 5, val[] = [10, 40, 30, 50], wt[] = [5, 4, 6, 3]
-        output: "0 3 -1\n2 0 -1\n-1 5 0", // Expected maximum value
+        input: "3\n0 3 -1\n2 0 -1\n-1 7 0",
+        output: "0 3 -1\n2 0 -1\n-1 5 0",
       },
     ],
   },
