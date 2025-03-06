@@ -660,6 +660,234 @@ int main() {
     
     return 0;
 }`,
+        
+      },
+      
+    ],
+  },
+  "Dijkstra Algorithm (Single-Source Shortest Path)": {
+    id: "dijkstra-algorithm",
+    title: "dijkstra Algorithm",
+    description:
+      "Implement Dijkstra's Algorithm to find the shortest path from a given source vertex to all other vertices in a weighted graph represented as an adjacency matrix.",
+    difficulty: "medium",
+    languages: [
+      {
+        language: "c",
+        monacoLanguage: "c",
+        defaultCode: `#include <stdio.h>
+#include <limits.h>
+
+#define INF INT_MAX
+
+void dijkstra(int n, int src, int cost[10][10], int dist[10]) {
+    int visited[10] = {0};
+    for (int i = 0; i < n; i++) {
+        dist[i] = INF;
+    }
+    dist[src] = 0;
+
+    for (int count = 0; count < n - 1; count++) {
+        int u = -1;
+        for (int v = 0; v < n; v++) {
+            if (!visited[v] && (u == -1 || dist[v] < dist[u])) {
+                u = v;
+            }
+        }
+        if (dist[u] == INF) break; // No more reachable vertices
+        visited[u] = 1;
+
+        for (int v = 0; v < n; v++) {
+            if (!visited[v] && cost[u][v] != INF && dist[u] != INF && dist[u] + cost[u][v] < dist[v]) {
+                dist[v] = dist[u] + cost[u][v];
+            }
+        }
+    }
+}
+
+void printShortestDistances(int dist[], int n, int src) {
+    printf("[");
+    for (int i = 0; i < n; i++) {
+        if (i == src) {
+            printf("0");
+        } else if (dist[i] == INF) {
+            printf("INF");
+        } else {
+            printf("%d", dist[i]);
+        }
+        if (i < n - 1) {
+            printf(", ");
+        }
+    }
+    printf("]\\n");
+}
+
+int main() {
+    int n, src;
+    int cost[10][10];
+    int dist[10];
+
+    // Predefined test cases
+    int testCases[][10][10] = {
+        { // Test case 1
+            {0, 9, INF, INF},
+            {9, 0, INF, INF},
+            {INF, INF, 0, INF},
+            {INF, INF, INF, 0}
+        },
+        { // Test case 2
+            {0, 1, 6, INF},
+            {1, 0, 3, INF},
+            {6, 3, 0, INF},
+            {INF, INF, INF, 0}
+        },
+        { // Test case 3 (new test case)
+            {0, 4, 8, 7},
+            {1, 0, 2, 3},
+            {2, 4, 0, 1},
+            {1, 2, 3, 0}
+        }
+    };
+
+    int testSizes[] = {2, 3, 4}; // Number of nodes for each test case
+    int testSrcs[] = {0, 2, 1}; // Source vertex for each test case (0-based index)
+    int numTests = sizeof(testSizes) / sizeof(testSizes[0]);
+
+    for (int i = 0; i < numTests; i++) {
+        n = testSizes[i];
+        src = testSrcs[i];
+
+        // Copy the cost matrix from the predefined test case
+        for (int j = 0; j < n; j++) {
+            for (int k = 0; k < n; k++) {
+                cost[j][k] = testCases[i][j][k];
+            }
+        }
+
+        // Compute shortest paths
+        dijkstra(n, src, cost, dist);
+
+        // Print shortest distances
+        printf("Test case %d:\\n", i + 1);
+        printShortestDistances(dist, n, src);
+    }
+
+    return 0;
+}`,
+        
+      },
+      
+    ],
+  },
+  "Topological Sorting": {
+    id: "dijkstra-algorithm",
+    title: "dijkstra Algorithm",
+    description:
+      "Implement Dijkstra's Algorithm to find the shortest path from a given source vertex to all other vertices in a weighted graph represented as an adjacency matrix.",
+    difficulty: "medium",
+    languages: [
+      {
+        language: "c",
+        monacoLanguage: "c",
+        defaultCode: `#include <stdio.h>
+#include <limits.h>
+
+#define INF INT_MAX
+
+void dijkstra(int n, int src, int cost[10][10], int dist[10]) {
+    int visited[10] = {0};
+    for (int i = 0; i < n; i++) {
+        dist[i] = INF;
+    }
+    dist[src] = 0;
+
+    for (int count = 0; count < n - 1; count++) {
+        int u = -1;
+        for (int v = 0; v < n; v++) {
+            if (!visited[v] && (u == -1 || dist[v] < dist[u])) {
+                u = v;
+            }
+        }
+        if (dist[u] == INF) break; // No more reachable vertices
+        visited[u] = 1;
+
+        for (int v = 0; v < n; v++) {
+            if (!visited[v] && cost[u][v] != INF && dist[u] != INF && dist[u] + cost[u][v] < dist[v]) {
+                dist[v] = dist[u] + cost[u][v];
+            }
+        }
+    }
+}
+
+void printShortestDistances(int dist[], int n, int src) {
+    printf("[");
+    for (int i = 0; i < n; i++) {
+        if (i == src) {
+            printf("0");
+        } else if (dist[i] == INF) {
+            printf("INF");
+        } else {
+            printf("%d", dist[i]);
+        }
+        if (i < n - 1) {
+            printf(", ");
+        }
+    }
+    printf("]\\n");
+}
+
+int main() {
+    int n, src;
+    int cost[10][10];
+    int dist[10];
+
+    // Predefined test cases
+    int testCases[][10][10] = {
+        { // Test case 1
+            {0, 9, INF, INF},
+            {9, 0, INF, INF},
+            {INF, INF, 0, INF},
+            {INF, INF, INF, 0}
+        },
+        { // Test case 2
+            {0, 1, 6, INF},
+            {1, 0, 3, INF},
+            {6, 3, 0, INF},
+            {INF, INF, INF, 0}
+        },
+        { // Test case 3 (new test case)
+            {0, 4, 8, 7},
+            {1, 0, 2, 3},
+            {2, 4, 0, 1},
+            {1, 2, 3, 0}
+        }
+    };
+
+    int testSizes[] = {2, 3, 4}; // Number of nodes for each test case
+    int testSrcs[] = {0, 2, 1}; // Source vertex for each test case (0-based index)
+    int numTests = sizeof(testSizes) / sizeof(testSizes[0]);
+
+    for (int i = 0; i < numTests; i++) {
+        n = testSizes[i];
+        src = testSrcs[i];
+
+        // Copy the cost matrix from the predefined test case
+        for (int j = 0; j < n; j++) {
+            for (int k = 0; k < n; k++) {
+                cost[j][k] = testCases[i][j][k];
+            }
+        }
+
+        // Compute shortest paths
+        dijkstra(n, src, cost, dist);
+
+        // Print shortest distances
+        printf("Test case %d:\\n", i + 1);
+        printShortestDistances(dist, n, src);
+    }
+
+    return 0;
+}`,
       },
     ],
   },

@@ -158,7 +158,7 @@ export default function QuestionRunButton({ id, programName }: { id: string; pro
       if (["0/1 Knapsack Problem", "Merge Sort", "Quick Sort",].includes(programName)) {
         await runAndVerifyCode(); // Run and verify the code
       }
-      else if (["Warshall Algorithm (Transitive Closure)"].includes(programName)){
+      else if (["Warshall Algorithm (Transitive Closure)","Dijkstra Algorithm (Single-Source Shortest Path)"].includes(programName)){
         await runWarshallAndVerifyCode(); 
       }
        else {
