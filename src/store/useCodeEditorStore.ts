@@ -361,6 +361,74 @@ runWarshallAndVerifyCode: async () => {
     set({ isRunning: false });
   }
 },
+
+runTopologicalSortAndVerifyCode: async () => {
+  const { language, getCode, testCases, executeCode } = get();
+  const code = getCode();
+
+  if (!code) {
+    set({ error: "Please write some code." });
+    return;
+  }
+
+  set({ isRunning: true, error: null, output: "", testCaseResults: [] });
+
+  try {
+    const runtime = LANGUAGE_CONFIG[language].pistonRuntime;
+    const results = [];
+
+    // Combine all test case inputs into a single input string
+    const combinedInput = testCases.map((testCase) => testCase.input).join("\n");
+
+    // Execute the code with the combined input
+    const executionResult = await executeCode(runtime, code, combinedInput);
+
+    // Handle errors
+    if (executionResult.type === "Compile Error" || executionResult.type === "Runtime Error") {
+      console.error(`Error Type: ${executionResult.type}`, `Message: ${executionResult.message}`);
+      set({ error: `${executionResult.type}: ${executionResult.message}` });
+      return;
+    }
+
+    // Log the raw output from the execution
+    console.log("Raw Output from Execution:", executionResult.output);
+
+    // Split the output into individual lines
+    const outputLines = executionResult.output.trim().split("\n");
+
+    // Compare each line with the corresponding test case's expected output
+    for (let i = 0; i < testCases.length; i++) {
+      const testCase = testCases[i];
+      const expectedOutput = testCase.expectedOutput.trim();
+      const actualOutput = outputLines[i] || ""; // Use empty string if no output line exists
+
+      // Log the inputs and outputs for each test case
+      console.log(`Test Case ${i + 1} Input:`, testCase.input);
+      console.log(`Expected Output:`, expectedOutput);
+      console.log(`Actual Output:`, actualOutput);
+
+      // Compare the actual output with the expected output
+      const isCorrect = actualOutput === expectedOutput;
+
+      results.push({
+        input: testCase.input,
+        expected: expectedOutput,
+        actual: actualOutput,
+        passed: isCorrect,
+      });
+
+      // Log whether the test case passed or failed
+      console.log(`Test Case ${i + 1} ${isCorrect ? "Passed" : "Failed"}`);
+    }
+
+    set({ testCaseResults: results });
+  } catch (err) {
+    console.error("Error running code:", err);
+    set({ error: "Error running code" });
+  } finally {
+    set({ isRunning: false });
+  }
+},
 }));
 
 

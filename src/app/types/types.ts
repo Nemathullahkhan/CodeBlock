@@ -111,6 +111,7 @@ export interface RuntimeConfig {
     runAndVerifyCode: () => Promise<void>;
     runfloydAndVerifyCode: () => Promise<void>;
     runWarshallAndVerifyCode: () => Promise<void>;
+    runTopologicalSortAndVerifyCode: ()=> Promise<void>;
     setProgress: (progress:string) => void;
   }
   
