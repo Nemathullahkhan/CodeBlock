@@ -69,6 +69,34 @@ export const dfsData = {
         contentId: "cm7ja3jju000hbugs0bx8uvid",
       },
     ],
+    questions:{
+      question:`Check whether a given graph is connected or not using DFS method.`,
+      examples:[
+          {input:"G = [[2,3,1], [0], [0,4], [0], [2]]",
+          output: "1"
+          },
+          {
+            input: "adj = [[1], [0, 2], [1], [4], [3]]",
+            output: "0",
+          },
+      ],
+      constraints:[
+        "1 ≤ adj.size() ≤ 10^4",
+"1 ≤ adj[i][j] ≤ 104"
+      ],
+      difficulty: "easy",
+      averageTime:"10m",
+      testcases:[
+        {
+          input: "4\n2 1 2\n2 0 3\n2 0 3\n2 1 2", // adj = [[1, 2], [0, 3], [0, 3], [1, 2]]
+          output: "1",
+        },
+        {
+          input: "5\n1 1\n2 0 2\n1 1\n1 4\n1 3", // adj = [[1], [0, 2], [1], [4], [3]]
+          output: "0",
+        },
+      ]
+    },
     working: {
       explanation:
         "DFS starts from a given source node and explores as far as possible along each branch before backtracking. It continues until all nodes are visited.",

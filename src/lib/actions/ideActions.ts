@@ -1,13 +1,15 @@
 "use server";
 
-import { mergeSortData } from "../data/(divide_conquer)/mergesort";
-import { quickSortData } from "../data/(divide_conquer)/quicksort";
-import { floydsAlgorithmData } from "../data/(dynamic_programming)/floyd";
-import { knapSackData } from "../data/(dynamic_programming)/knapsack";
-import { dijkstraData } from "../data/(graph_algorithms)/dijkstra";
+// import { mergeSortData } from "../data/(divide_conquer)/mergesort";
+// import { quickSortData } from "../data/(divide_conquer)/quicksort";
+// import { floydsAlgorithmData } from "../data/(dynamic_programming)/floyd";
+// import { knapSackData } from "../data/(dynamic_programming)/knapsack";
+// import { dijkstraData } from "../data/(graph_algorithms)/dijkstra";
 
-import { warshallData } from "../data/(graph_algorithms)/warshall";
-import { topologicalSortData } from "../data/(graph_algorithms)/topological";
+// import { warshallData } from "../data/(graph_algorithms)/warshall";
+// import { topologicalSortData } from "../data/(graph_algorithms)/topological";
+import { bfsData } from "../data/(graph_algorithms)/bfs";
+import { dfsData } from "../data/(graph_algorithms)/dfs";
 
 
 import prisma from "../prisma";
@@ -27,20 +29,20 @@ export async function getSolution({ contentId }: props) {
 export async function questions() {
   try {
     const program = await prisma.content.findUnique({
-      where: { id: "cm7lejvex0029bu8o52nimkv5" },
+      where: { id: "cm7lfha460039bu8okiox53xv" },
     });
 
     if (!program) throw new Error("Id is incorrect");
 
     const questions = await prisma.questions.create({
       data: {
-        question: topologicalSortData.questions.question,
-        examples: topologicalSortData.questions.examples,
-        constraints: topologicalSortData.questions.constraints,
-        difficulty: topologicalSortData.questions.difficulty,
-        testcases: topologicalSortData.questions.testcases,
-        averageTime: topologicalSortData.questions.averageTime,
-        contentId: "cm7lejvex0029bu8o52nimkv5",
+        question: dfsData.questions.question,
+        examples: dfsData.questions.examples,
+        constraints: dfsData.questions.constraints,
+        difficulty: dfsData.questions.difficulty,
+        testcases: dfsData.questions.testcases,
+        averageTime: dfsData.questions.averageTime,
+        contentId: "cm7lfha460039bu8okiox53xv",
       },
     });
     return questions;
@@ -55,12 +57,12 @@ export async function updateTestCases() {
     const updatedQuestion = await prisma.questions.update({
       where: { contentId: "cm7wx9udj0003bud004j1fycm" },
       data: {
-        question: topologicalSortData.questions.question,
-        examples: topologicalSortData.questions.examples,
-        constraints: topologicalSortData.questions.constraints,
-        difficulty: topologicalSortData.questions.difficulty,
-        testcases: topologicalSortData.questions.testcases,
-        averageTime: topologicalSortData.questions.averageTime,
+        question: dfsData.questions.question,
+        examples: dfsData.questions.examples,
+        constraints: dfsData.questions.constraints,
+        difficulty: dfsData.questions.difficulty,
+        testcases: dfsData.questions.testcases,
+        averageTime: dfsData.questions.averageTime,
       },
     });
 

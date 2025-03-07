@@ -55,7 +55,7 @@ export default async function Questionaire({ id }: { id: string }) {
                     ? "text-green-500"
                     : data.Questions?.difficulty === "Medium"
                     ? "text-yellow-500 "
-                    : "text-red-500"
+                    : "text-red-500" 
                 } bg-gradient-to-br from-slate-950 to-zinc-800 font-thin items-center`}
               >
                 {data.Questions?.difficulty}

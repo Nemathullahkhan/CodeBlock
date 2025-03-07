@@ -69,6 +69,46 @@ export const bfsData = {
         contentId: "cm7ja3jju000hbugs0bx8uvid",
       },
     ],
+    questions: {
+      question:
+        `Given a undirected graph represented by an adjacency list adj, which is a vector of vectors where each adj[i] represents the list of vertices connected to vertex i. Perform a Breadth First Traversal (BFS) starting from vertex 0, visiting vertices from left to right according to the adjacency list, and return a list containing the BFS traversal of the graph.
+        \n
+        Note: Do traverse in the same order as they are in the adjacency list.`,
+      examples: [
+        { input: "adj = [[2,3,1], [0], [0,4], [0], [2]]", output: "[0, 2, 3, 1, 4]" },
+        { input: "adj = [[], [3], [3], [], [0,1], [0,2]]", output: "[0, 1, 2, 3, 4]" },
+        { input: "adj = [[1], [0, 2, 3], [1], [1, 4], [3]]", output: "[0, 1, 2, 3, 4]" },
+
+      ],
+      constraints: [
+       " 1 ≤ adj.size() ≤ 10^4",
+"1 ≤ adj[i][j] ≤ 10^4",
+      ],
+      difficulty: "easy",
+      averageTime: "10m",
+      testcases: [
+        {
+          input: "5\n2 3 1\n0\n0 4\n0\n2", // adj = [[2, 3, 1], [0], [0, 4], [0], [2]]
+          output: "[0, 2, 3, 1, 4]",
+        },
+        {
+          input: "6\n\n3\n3\n\n0 1\n0 2", // adj = [[], [3], [3], [], [0, 1], [0, 2]]
+          output: "[0, 1, 2, 3, 4]",
+        },
+        {
+          input: "5\n1\n0 2 3\n1\n1 4\n3", // adj = [[1], [0, 2, 3], [1], [1, 4], [3]]
+          output: "[0, 1, 2, 3, 4]",
+        },
+        {
+          input: "4\n\n0\n0\n0", // adj = [[], [0], [0], [0]]
+          output: "[0, 1, 2, 3]",
+        },
+        {
+          input: "5\n\n2\n3\n4\n", // adj = [[], [2], [3], [4], []]
+          output: "[0, 1, 2, 3, 4]",
+        },
+      ],
+    },
     working: {
       explanation:
         "BFS explores nodes level by level, visiting all adjacent nodes before moving deeper into the graph. It is implemented using a queue to store nodes to be visited next.",
@@ -102,52 +142,110 @@ export const bfsData = {
         {
           language: "C",
           code: `#include <stdio.h>
-  #include <stdlib.h>
-  
-  #define MAX 100
-  
-  int adj[MAX][MAX], visited[MAX];
-  
-  void bfs(int start, int n) {
-      int queue[MAX], front = 0, rear = 0;
-      queue[rear++] = start;
-      visited[start] = 1;
-  
-      while (front < rear) {
-          int node = queue[front++];
-          printf("%d ", node);
-  
-          for (int i = 0; i < n; i++) {
-              if (adj[node][i] && !visited[i]) {
-                  queue[rear++] = i;
-                  visited[i] = 1;
-              }
-          }
-      }
-  }
-  
-  int main() {
-      int n, edges, u, v;
-      printf("Enter number of vertices: ");
-      scanf("%d", &n);
-      printf("Enter number of edges: ");
-      scanf("%d", &edges);
-  
-      for (int i = 0; i < edges; i++) {
-          printf("Enter edge (U V): ");
-          scanf("%d %d", &u, &v);
-          adj[u][v] = adj[v][u] = 1;
-      }
-  
-      int start;
-      printf("Enter starting node: ");
-      scanf("%d", &start);
-  
-      printf("BFS Traversal: ");
-      bfs(start, n);
-  
-      return 0;
-  }`
+#include <stdlib.h>
+
+#define MAX_NODES 20
+
+// Function to perform BFS
+void bfs(int adj[MAX_NODES][MAX_NODES], int n, int start, int visited[MAX_NODES]) {
+    int queue[MAX_NODES];
+    int front = 0, rear = 0;
+
+    // Mark the start node as visited and enqueue it
+    queue[rear++] = start;
+    visited[start] = 1;
+
+    while (front < rear) {
+        int current = queue[front++];
+
+        // Explore all adjacent nodes
+        for (int i = 0; i < n; i++) {
+            if (adj[current][i] && !visited[i]) {
+                queue[rear++] = i;
+                visited[i] = 1;
+            }
+        }
+    }
+}
+
+// Function to print the reachable nodes
+void printReachableNodes(int visited[MAX_NODES], int n) {
+    printf("[");
+    int first = 1;
+    for (int i = 0; i < n; i++) {
+        if (visited[i]) {
+            if (!first) printf(", ");
+            printf("%d", i);
+            first = 0;
+        }
+    }
+    printf("]\n");
+}
+
+int main() {
+    // New test cases
+    int testCases[][MAX_NODES][MAX_NODES] = {
+        { // Test case 1: adj = [[2,3,1], [0], [0,4], [0], [2]]
+            {0, 0, 1, 1, 0},
+            {1, 0, 0, 0, 0},
+            {1, 0, 0, 0, 1},
+            {1, 0, 0, 0, 0},
+            {0, 0, 1, 0, 0}
+        },
+        { // Test case 2: adj = [[], [3], [3], [], [0,1], [0,2]]
+            {0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 1, 0, 0},
+            {0, 0, 0, 1, 0, 0},
+            {0, 0, 0, 0, 0, 0},
+            {1, 1, 0, 0, 0, 0},
+            {1, 0, 1, 0, 0, 0}
+        },
+        { // Test case 3: adj = [[1], [0,2,3], [1], [1,4], [3]]
+            {0, 1, 0, 0, 0},
+            {1, 0, 1, 1, 0},
+            {0, 1, 0, 0, 0},
+            {0, 1, 0, 0, 1},
+            {0, 0, 0, 1, 0}
+        },
+        { // Test case 4: adj = [[], [0], [0], [0]]
+            {0, 0, 0, 0},
+            {1, 0, 0, 0},
+            {1, 0, 0, 0},
+            {1, 0, 0, 0}
+        },
+        { // Test case 5: adj = [[], [2], [3], [4], []]
+            {0, 0, 0, 0, 0},
+            {0, 0, 1, 0, 0},
+            {0, 0, 0, 1, 0},
+            {0, 0, 0, 0, 1},
+            {0, 0, 0, 0, 0}
+        }
+    };
+
+    // Number of nodes for each test case
+    int testSizes[] = {5, 6, 5, 4, 5};
+
+    // Starting node for each test case
+    int testStarts[] = {0, 0, 0, 0, 0};
+
+    // Number of test cases
+    int numTests = sizeof(testSizes) / sizeof(testSizes[0]);
+
+    for (int t = 0; t < numTests; t++) {
+        int n = testSizes[t];
+        int start = testStarts[t];
+        int visited[MAX_NODES] = {0};
+
+        // Perform BFS
+        bfs(testCases[t], n, start, visited);
+
+        // Print reachable nodes
+        printReachableNodes(visited, n);
+    }
+
+    return 0;
+}
+`
         },
         {
           language: "Java",

@@ -891,4 +891,121 @@ int main() {
       },
     ],
   },
+  "Breadth-First Search (BFS)": {
+    "id": "bfs-algorithm",
+    "title": "Breadth-First Search (BFS)",
+    "description": "Implement Breadth-First Search (BFS) to traverse or search a graph represented as an adjacency matrix. BFS explores all the neighbors of a node before moving to the next level of nodes.",
+    "difficulty": "easy",
+    "languages": [
+      {
+        "language": "c",
+        "monacoLanguage": "c",
+        "defaultCode": `
+    #include <stdio.h>
+#include <stdlib.h>
+
+// BFS function for adjacency list
+int bfs(int n, int* adj[], int adjSize[], int startNode, int result[20]) {
+    int visited[20] = {0};
+    int queue[20];
+    int front = 0, rear = -1;
+    int resultIndex = 0;
+
+    queue[++rear] = startNode; // No need to adjust for 0-based indexing
+    visited[startNode] = 1;
+
+    while (front <= rear) {
+        int current = queue[front++];
+        result[resultIndex++] = current; // Store result
+
+        // Traverse all neighbors of the current node
+        for (int i = 0; i < adjSize[current]; i++) {
+            int neighbor = adj[current][i];
+            if (!visited[neighbor]) {
+                queue[++rear] = neighbor;
+                visited[neighbor] = 1;
+            }
+        }
+    }
+
+    return resultIndex;
+}
+
+// Function to print the result in a customizable way
+void printResult(int result[20], int count, const char* format) {
+    printf("[");
+    for (int i = 0; i < count; i++) {
+        printf(format, result[i]);
+        if (i < count - 1) {
+            printf(", ");
+        }
+    }
+    printf("]\\n");
+}
+
+int main() {
+    // Predefined test cases (adjacency lists)
+    int* adj1[] = {
+        (int[]){2, 3, 1},
+        (int[]){0},
+        (int[]){0, 4},
+        (int[]){0},
+        (int[]){2}
+    };
+    int adjSize1[] = {3, 1, 2, 1, 1}; // Sizes of each adjacency list
+
+    int* adj2[] = {
+        (int[]){1},
+        (int[]){0, 2, 3},
+        (int[]){1},
+        (int[]){1, 4},
+        (int[]){3}
+    };
+    int adjSize2[] = {1, 3, 1, 2, 1}; // Sizes of each adjacency list
+
+    // Number of nodes in each test case
+    int n1 = 5, n2 = 5;
+
+    // Starting nodes for each test case
+    int startNode1 = 0, startNode2 = 0;
+
+    // Results array
+    int result[20];
+
+    // Test Case 1
+    int count1 = bfs(n1, adj1, adjSize1, startNode1, result);
+    printResult(result, count1, "%d");
+
+    // Test Case 2
+    int count2 = bfs(n2, adj2, adjSize2, startNode2, result);
+    printResult(result, count2, "%d");
+
+    return 0;
+}
+    `
+      }
+    ]
+  },
+  "Depth-First Search (DFS)": {
+    "id": "bfs-algorithm",
+    "title": "Breadth-First Search (BFS)",
+    "description": "Implement Depth-First Search (BFS) to traverse or search a graph represented as an adjacency matrix. DFS explores all the nodes of the graph by traversing the graph/tree in depth going downward untill the leaf node or entire tree/graph is traversed.",
+    "difficulty": "easy",
+    "languages": [
+      {
+        "language": "c",
+        "monacoLanguage": "c",
+        "defaultCode": `#include <stdio.h>
+#include <stdlib.h>
+
+
+int main() {
+    printf("Hello world\\n");
+    
+    return 0;
+}
+    `
+      }
+    ]
+  }
 };
