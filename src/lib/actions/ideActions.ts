@@ -10,6 +10,8 @@
 // import { topologicalSortData } from "../data/(graph_algorithms)/topological";
 import { bfsData } from "../data/(graph_algorithms)/bfs";
 import { dfsData } from "../data/(graph_algorithms)/dfs";
+import { kruskalData } from "../data/(greedy_techniques)/krushkal";
+
 
 
 import prisma from "../prisma";
@@ -29,20 +31,20 @@ export async function getSolution({ contentId }: props) {
 export async function questions() {
   try {
     const program = await prisma.content.findUnique({
-      where: { id: "cm7lfha460039bu8okiox53xv" },
+      where: { id: "cm7lbpww20019bu8oima1tkih" },
     });
 
     if (!program) throw new Error("Id is incorrect");
 
     const questions = await prisma.questions.create({
       data: {
-        question: dfsData.questions.question,
-        examples: dfsData.questions.examples,
-        constraints: dfsData.questions.constraints,
-        difficulty: dfsData.questions.difficulty,
-        testcases: dfsData.questions.testcases,
-        averageTime: dfsData.questions.averageTime,
-        contentId: "cm7lfha460039bu8okiox53xv",
+        question: kruskalData.questions.question,
+        examples: kruskalData.questions.examples,
+        constraints: kruskalData.questions.constraints,
+        difficulty: kruskalData.questions.difficulty,
+        testcases: kruskalData.questions.testcases,
+        averageTime: kruskalData.questions.averageTime,
+        contentId: "cm7lbpww20019bu8oima1tkih",
       },
     });
     return questions;
@@ -57,12 +59,12 @@ export async function updateTestCases() {
     const updatedQuestion = await prisma.questions.update({
       where: { contentId: "cm7wx9udj0003bud004j1fycm" },
       data: {
-        question: dfsData.questions.question,
-        examples: dfsData.questions.examples,
-        constraints: dfsData.questions.constraints,
-        difficulty: dfsData.questions.difficulty,
-        testcases: dfsData.questions.testcases,
-        averageTime: dfsData.questions.averageTime,
+        question: kruskalData.questions.question,
+        examples: kruskalData.questions.examples,
+        constraints: kruskalData.questions.constraints,
+        difficulty: kruskalData.questions.difficulty,
+        testcases: kruskalData.questions.testcases,
+        averageTime: kruskalData.questions.averageTime,
       },
     });
 

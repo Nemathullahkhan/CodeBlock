@@ -1007,5 +1007,27 @@ int main() {
     `
       }
     ]
+  },
+  "Kruskal Algorithm (Minimum Spanning Tree)": {
+    "id": "bfs-algorithm",
+    "title": "Breadth-First Search (BFS)",
+    "description": "Kruskal Algorithm (Minimum Spanning Tree).",
+    "difficulty": "easy",
+    "languages": [
+      {
+        "language": "c",
+        "monacoLanguage": "c",
+        "defaultCode": `#include <stdio.h>
+#include <stdlib.h>
+
+
+int main() {
+    printf("Hello world\\n");
+    
+    return 0;
+}
+    `
+      }
+    ]
   }
 };
