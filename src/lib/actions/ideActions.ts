@@ -8,12 +8,11 @@
 
 // import { warshallData } from "../data/(graph_algorithms)/warshall";
 // import { topologicalSortData } from "../data/(graph_algorithms)/topological";
-import { bfsData } from "../data/(graph_algorithms)/bfs";
-import { dfsData } from "../data/(graph_algorithms)/dfs";
-import { kruskalData } from "../data/(greedy_techniques)/krushkal";
-
-
-
+// import { bfsData } from "../data/(graph_algorithms)/bfs";
+// import { dfsData } from "../data/(graph_algorithms)/dfs";
+// import { kruskalData } from "../data/(greedy_techniques)/krushkal";
+// import { primsData } from "../data/(greedy_techniques)/prims";
+import { nQueensData } from "../data/(backtracking)/nqueen";
 import prisma from "../prisma";
 
 interface props {
@@ -31,20 +30,20 @@ export async function getSolution({ contentId }: props) {
 export async function questions() {
   try {
     const program = await prisma.content.findUnique({
-      where: { id: "cm7lbpww20019bu8oima1tkih" },
+      where: { id: "cm7lgm7w7004jbu8ouk8n694l" },
     });
 
     if (!program) throw new Error("Id is incorrect");
 
     const questions = await prisma.questions.create({
       data: {
-        question: kruskalData.questions.question,
-        examples: kruskalData.questions.examples,
-        constraints: kruskalData.questions.constraints,
-        difficulty: kruskalData.questions.difficulty,
-        testcases: kruskalData.questions.testcases,
-        averageTime: kruskalData.questions.averageTime,
-        contentId: "cm7lbpww20019bu8oima1tkih",
+        question: nQueensData.questions.question,
+        examples: nQueensData.questions.examples,
+        constraints: nQueensData.questions.constraints,
+        difficulty: nQueensData.questions.difficulty,
+        testcases: nQueensData.questions.testcases,
+        averageTime: nQueensData.questions.averageTime,
+        contentId: "cm7lgm7w7004jbu8ouk8n694l",
       },
     });
     return questions;
@@ -59,12 +58,12 @@ export async function updateTestCases() {
     const updatedQuestion = await prisma.questions.update({
       where: { contentId: "cm7wx9udj0003bud004j1fycm" },
       data: {
-        question: kruskalData.questions.question,
-        examples: kruskalData.questions.examples,
-        constraints: kruskalData.questions.constraints,
-        difficulty: kruskalData.questions.difficulty,
-        testcases: kruskalData.questions.testcases,
-        averageTime: kruskalData.questions.averageTime,
+        question: nQueensData.questions.question,
+        examples: nQueensData.questions.examples,
+        constraints: nQueensData.questions.constraints,
+        difficulty: nQueensData.questions.difficulty,
+        testcases: nQueensData.questions.testcases,
+        averageTime: nQueensData.questions.averageTime,
       },
     });
 

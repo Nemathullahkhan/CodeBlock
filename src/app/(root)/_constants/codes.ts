@@ -1020,13 +1020,275 @@ int main() {
         "defaultCode": `#include <stdio.h>
 #include <stdlib.h>
 
+#define MAX 9
 
-int main() {
-    printf("Hello world\\n");
-    
+// Function prototypes
+int find(int i, int parent[]);
+int uni(int i, int j, int parent[]);
+int kruskal(int n, int cost[MAX][MAX]);
+
+// Kruskal's algorithm implementation
+int kruskal(int n, int cost[MAX][MAX]) {
+    int parent[MAX] = {0};
+    int mincost = 0;
+    int ne = 1;
+
+    while (ne < n) {
+        int min = 999;
+        int a = -1, b = -1;
+
+        // Find the minimum edge
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (cost[i][j] < min) {
+                    min = cost[i][j];
+                    a = i;
+                    b = j;
+                }
+            }
+        }
+
+        // Check if adding this edge forms a cycle
+        int u = find(a, parent);
+        int v = find(b, parent);
+
+        if (uni(u, v, parent)) {
+            mincost += min;
+            ne++;
+        }
+
+        // Mark the edge as used
+        cost[a][b] = cost[b][a] = 999;
+    }
+
+    return mincost;
+}
+
+// Find function to detect cycles
+int find(int i, int parent[]) {
+    while (parent[i]) {
+        i = parent[i];
+    }
+    return i;
+}
+
+// Union function to merge two sets
+int uni(int i, int j, int parent[]) {
+    if (i != j) {
+        parent[j] = i;
+        return 1;
+    }
     return 0;
 }
-    `
+
+// Main function
+int main() {
+    // Test Case 1
+    int n1 = 6; // Number of vertices
+    int cost1[MAX][MAX] = {
+        {0, 2, 3, 4, 5, 6},
+        {2, 0, 1, 1, 2, 4},
+        {3, 1, 0, 0, 7, 0},
+        {4, 1, 0, 0, 0, 2},
+        {5, 2, 7, 0, 0, 1},
+        {6, 4, 0, 2, 1, 0}
+    };
+
+    // Replace 0 with 999 (no edge)
+    for (int i = 0; i < n1; i++) {
+        for (int j = 0; j < n1; j++) {
+            if (cost1[i][j] == 0) {
+                cost1[i][j] = 999; // Represent no edge with a large number
+            }
+        }
+    }
+
+    // Call Kruskal's algorithm for Test Case 1
+    int mincost1 = kruskal(n1, cost1);
+    printf("%d\\n", mincost1);
+
+    // Test Case 2
+    int n2 = 4; // Number of vertices
+    int cost2[MAX][MAX] = {
+        {0, 10, 6, 5},
+        {10, 0, 0, 15},
+        {6, 0, 0, 4},
+        {5, 15, 4, 0}
+    };
+
+    // Replace 0 with 999 (no edge)
+    for (int i = 0; i < n2; i++) {
+        for (int j = 0; j < n2; j++) {
+            if (cost2[i][j] == 0) {
+                cost2[i][j] = 999; // Represent no edge with a large number
+            }
+        }
+    }
+
+    // Call Kruskal's algorithm for Test Case 2
+    int mincost2 = kruskal(n2, cost2);
+    printf("%d\\n", mincost2);
+
+    // Test Case 3
+    int n3 = 5; // Number of vertices
+    int cost3[MAX][MAX] = {
+        {0, 2, 0, 6, 0},
+        {2, 0, 3, 8, 5},
+        {0, 3, 0, 0, 7},
+        {6, 8, 0, 0, 9},
+        {0, 5, 7, 9, 0}
+    };
+
+    // Replace 0 with 999 (no edge)
+    for (int i = 0; i < n3; i++) {
+        for (int j = 0; j < n3; j++) {
+            if (cost3[i][j] == 0) {
+                cost3[i][j] = 999; // Represent no edge with a large number
+            }
+        }
+    }
+
+    // Call Kruskal's algorithm for Test Case 3
+    int mincost3 = kruskal(n3, cost3);
+    printf("%d\\n", mincost3);
+
+    return 0;
+} `
+      }
+    ]
+  },
+  "Prim Algorithm (Minimum Spanning Tree)": {
+    "id": "bfs-algorithm",
+    "title": "Breadth-First Search (BFS)",
+    "description": "Kruskal Algorithm (Minimum Spanning Tree).",
+    "difficulty": "easy",
+    "languages": [
+      {
+        "language": "c",
+        "monacoLanguage": "c",
+        "defaultCode": `#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX 10
+#define INF 9999999 // Use INF to represent no edge
+
+// Function prototypes
+int prim(int n, int cost[MAX][MAX]);
+
+// Prim's algorithm implementation
+int prim(int n, int cost[MAX][MAX]) {
+    int visited[MAX] = {0}; // Track visited nodes
+    int mincost = 0;        // Total minimum cost
+    int ne = 1;             // Number of edges in the MST
+
+    visited[0] = 1; // Start from the first node (0-indexed)
+
+    while (ne < n) {
+        int min = INF; // Initialize to a large value
+        int a = -1, b = -1;
+
+        // Find the minimum edge
+        for (int i = 0; i < n; i++) {
+            if (visited[i]) { // Only consider nodes already in the MST
+                for (int j = 0; j < n; j++) {
+                    if (!visited[j] && cost[i][j] < min) {
+                        min = cost[i][j];
+                        a = i;
+                        b = j;
+                    }
+                }
+            }
+        }
+
+        // If no valid edge is found, the graph is disconnected
+        if (a == -1 || b == -1) {
+            printf("Graph is disconnected. No valid MST.\\n");
+            return -1;
+        }
+
+        // Add the edge to the MST
+        mincost += min;
+        visited[b] = 1; // Mark the new node as visited
+        ne++;
+    }
+
+    return mincost;
+}
+
+// Main function
+int main() {
+    // Test Case 1
+    int n1 = 6; // Number of vertices
+    int cost1[MAX][MAX] = {
+        {0, 2, 3, 4, 5, 6},
+        {2, 0, 1, 1, 2, 4},
+        {3, 1, 0, 0, 7, 0},
+        {4, 1, 0, 0, 0, 2},
+        {5, 2, 7, 0, 0, 1},
+        {6, 4, 0, 2, 1, 0}
+    };
+
+    // Replace 0 with INF (no edge)
+    for (int i = 0; i < n1; i++) {
+        for (int j = 0; j < n1; j++) {
+            if (cost1[i][j] == 0) {
+                cost1[i][j] = INF;
+            }
+        }
+    }
+
+    // Call Prim's algorithm for Test Case 1
+    int mincost1 = prim(n1, cost1);
+    if (mincost1 != -1) {
+        printf("%d\\n", mincost1);
+    }
+
+
+    // Test Case 3
+    int n3 = 5; // Number of vertices
+    int cost3[MAX][MAX] = {
+        {0, 2, 0, 6, 0},
+        {2, 0, 3, 8, 5},
+        {0, 3, 0, 0, 7},
+        {6, 8, 0, 0, 9},
+        {0, 5, 7, 9, 0}
+    };
+
+    // Replace 0 with INF (no edge)
+    for (int i = 0; i < n3; i++) {
+        for (int j = 0; j < n3; j++) {
+            if (cost3[i][j] == 0) {
+                cost3[i][j] = INF;
+            }
+        }
+    }
+
+    // Call Prim's algorithm for Test Case 3
+    int mincost3 = prim(n3, cost3);
+    if (mincost3 != -1) {
+        printf("%d\\n", mincost3);
+    }
+
+    return 0;
+} `
+      }
+    ]
+  },
+  "N-Queens Problem": {
+    "id": "bfs-algorithm",
+    "title": "Breadth-First Search (BFS)",
+    "description": "Kruskal Algorithm (Minimum Spanning Tree).",
+    "difficulty": "easy",
+    "languages": [
+      {
+        "language": "c",
+        "monacoLanguage": "c",
+        "defaultCode": `#include <stdio.h>
+#include <stdlib.h>
+
+void main(){
+        printf("Hell\\n");
+}`
       }
     ]
   }

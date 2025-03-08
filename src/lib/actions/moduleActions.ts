@@ -6,7 +6,7 @@ import prisma from "@/lib/prisma";
 import { mergeSortData } from "../data/(divide_conquer)/mergesort";
 import { quickSortData } from "../data/(divide_conquer)/quicksort";
 import { knapSackData } from "../data/(dynamic_programming)/knapsack";
-import { floydsAlgorithmData } from "../data/(dynamic_programming)/floyd";
+// import { floydsAlgorithmData } from "../data/(dynamic_programming)/floyd";
 import { dijkstraData } from "../data/(graph_algorithms)/dijkstra";
 import { kruskalData } from "../data/(greedy_techniques)/krushkal";
 import { primsData } from "../data/(greedy_techniques)/prims";
