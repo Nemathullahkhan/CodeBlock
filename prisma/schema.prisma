@@ -64,7 +64,6 @@ model Module {
   createdAt    DateTime       @default(now())
   updatedAt    DateTime       @updatedAt
   topics       Topic[]
-  UserProgress UserProgress[]
 }
 
 model Topic {
@@ -166,15 +165,12 @@ model Questions {
 model UserProgress {
   id        String   @id @default(cuid())
   userId    String
-  moduleId  String
   contentId String
   completed Boolean  @default(false)
-  score     Int      @default(0)
   attempts  Int      @default(0)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   user      User     @relation(fields: [userId], references: [id])
-  module    Module   @relation(fields: [moduleId], references: [id])
   content   Content  @relation(fields: [contentId], references: [id])
 
   @@unique([userId, contentId])

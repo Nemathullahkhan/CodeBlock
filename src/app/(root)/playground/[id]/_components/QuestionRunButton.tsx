@@ -7,7 +7,13 @@ import { Play, Loader2 } from "lucide-react";
 import { useState } from "react";
 import { useCodeEditorStore } from "@/store/useCodeEditorStore";
 
-export default function QuestionRunButton({ id, programName }: { id: string; programName: string }) {
+type questionrunProps = {
+  id: string;
+  programName:string|null
+} 
+
+// export default function QuestionRunButton({ id, programName }: { id: string; programName: string | null })
+export default function QuestionRunButton({ id, programName }:questionrunProps) {
   const { runAndVerifyCode, isRunning, runfloydAndVerifyCode, runWarshallAndVerifyCode,runTopologicalSortAndVerifyCode, setTestCases } = useCodeEditorStore();
   const [open, setOpen] = useState(false);
   const [isLoadingTestCases, setIsLoadingTestCases] = useState(false);

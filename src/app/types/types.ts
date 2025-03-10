@@ -76,8 +76,10 @@ export interface TestCase {
   }
   
   export interface ExecutionResult {
-    output: string;
-    error: string | null;
+    type:"Success" | "Compile Error" | "Runtime Error" | "Error";
+    output?: string;
+    message?:string;
+    // error?: string | null;
   }
 
 export interface RuntimeConfig {
@@ -97,7 +99,6 @@ export interface RuntimeConfig {
     userInput: string;
     testCases: TestCase[];
     testCaseResults: TestCaseResult[];
-    progress:string;
   
     setEditor: (editor: Monaco) => void;
     getCode: () => string;
@@ -107,15 +108,14 @@ export interface RuntimeConfig {
     setUserInput: (input: string) => void;
     setTestCases: (testCases: TestCase[]) => void;
     runCode: () => Promise<void>;
-    executeCode: (runtime: RuntimeConfig, code: string, userInput: string) => Promise<string>;
+    executeCode: (runtime: RuntimeConfig, code: string, userInput: string) => Promise<ExecutionResult>; 
     runAndVerifyCode: () => Promise<void>;
     runfloydAndVerifyCode: () => Promise<void>;
     runWarshallAndVerifyCode: () => Promise<void>;
     runTopologicalSortAndVerifyCode: ()=> Promise<void>;
-    setProgress: (progress:string) => void;
   }
   
-
+ 
 export interface ModulesType{
     id:string;
     name:string;
@@ -128,4 +128,28 @@ export interface Topics{
     description:string;
     code:string;
     
+}
+
+import { z } from "zod";
+
+// Define the schema for an example
+export const ExampleSchema = z.object({
+  input: z.string(),
+  output: z.string(),
+});
+
+// Infer the type from the schema
+export type Example = z.infer<typeof ExampleSchema>;
+
+// Define the type for the data returned by fetchQuestionData
+export interface QuestionData {
+  id: string;
+  title: string;
+  Questions?: {
+    question: string;
+    examples: Example[];
+    constraints: string[];
+    difficulty: "Easy" | "Medium" | "Hard";
+    averageTime: string;
+  };
 }

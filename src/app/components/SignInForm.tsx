@@ -71,9 +71,9 @@ const SignInForm = (props: SignInProps) => {
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email</FormLabel>
-              <div className="flex items-center border rounded-md p-2 gap-2">
-                <FaEnvelope className="text-gray-500" />
+              <FormLabel className="text-[13px] px-1">Email</FormLabel>
+              <div className="flex items-center border-2 rounded-md px-4 gap-2">
+                <FaEnvelope className="text-zinc-200/90 w-4 h-4 " />
                 <FormControl>
                   <Input
                     type="email"
@@ -93,9 +93,9 @@ const SignInForm = (props: SignInProps) => {
           name="password"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Password</FormLabel>
-              <div className="flex items-center border rounded-md p-2 gap-2">
-                <FaLock className="text-gray-500" />
+              <FormLabel className="text-[13px] px-1">Password</FormLabel>
+              <div className="flex items-center border-2 rounded-md px-4 gap-2">
+                <FaLock className="text-zinc-200/90 w-4 h-4" />
                 <Input type={showPassword ? "text" : "password"} {...field} />
                 {showPassword ? (
                   <FaEyeSlash onClick={toggleView} />
@@ -107,8 +107,8 @@ const SignInForm = (props: SignInProps) => {
             </FormItem>
           )}
         />
-        <div className="flex justify-center">
-          <Button type="submit" className="w-48 ">
+        <div className="flex justify-center mt-4 mb-3">
+          <Button type="submit" className="w-32  rounded-lg h-5">
             Login
           </Button>
         </div>

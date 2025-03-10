@@ -114,9 +114,9 @@ export default function SignUpForm() {
           name="firstName"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>First Name</FormLabel>
-              <div className="flex items-center border rounded-md p-2 gap-2">
-                <FaUser className="text-gray-500" />
+              <FormLabel className="text-[13px] px-1">First Name</FormLabel>
+              <div className="flex items-center border-2 rounded-md px-2 gap-2">
+                <FaUser className="text-zinc-200/90 w-4 h-4 " />
                 <FormControl>
                   <Input placeholder="Enter your first name" {...field} />
                 </FormControl>
@@ -132,9 +132,9 @@ export default function SignUpForm() {
           name="lastName"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="ml-1 ">Last Name</FormLabel>
-              <div className="flex items-center border rounded-md p-2 gap-2">
-                <FaUser className="text-gray-500" />
+              <FormLabel className="text-[13px] px-1 ">Last Name</FormLabel>
+              <div className="flex items-center border-2 rounded-md px-2 gap-2">
+                <FaUser className="text-zinc-200/90 w-4 h-4" />
                 <FormControl>
                   <Input placeholder="Enter your last name" {...field} />
                 </FormControl>
@@ -150,9 +150,9 @@ export default function SignUpForm() {
           name="email"
           render={({ field }) => (
             <FormItem className="col-span-2">
-              <FormLabel>Email</FormLabel>
-              <div className="flex items-center border rounded-md p-2 gap-2">
-                <FaEnvelope className="text-gray-500" />
+              <FormLabel className="text-[13px] px-1 " >Email</FormLabel>
+              <div className="flex items-center border-2 rounded-md px-2 gap-2">
+                <FaEnvelope className="text-zinc-200/90 w-4 h-4" />
                 <FormControl>
                   <Input type="email" placeholder="Enter your email" {...field} />
                 </FormControl>
@@ -168,9 +168,9 @@ export default function SignUpForm() {
           name="phone"
           render={({ field }) => (
             <FormItem className="col-span-2">
-              <FormLabel>Phone</FormLabel>
-              <div className="flex items-center border rounded-md p-2 gap-2">
-                <FaPhone className="text-gray-500" />
+              <FormLabel  className="text-[13px] px-1 " >Phone</FormLabel>
+              <div className="flex items-center border-2 rounded-md px-2 gap-2">
+                <FaPhone className="text-zinc-200/90 w-4 h-4" />
                 <FormControl>
                   <Input type="tel" placeholder="Enter your phone number" {...field} />
                 </FormControl>
@@ -186,13 +186,13 @@ export default function SignUpForm() {
           name="password"
           render={({ field }) => (
             <FormItem className="col-span-2">
-              <FormLabel>Password</FormLabel>
-              <div className="flex items-center border rounded-md p-2 gap-2">
-                <FaLock className="text-gray-500" />
+              <FormLabel className="text-[13px] px-1 " >Password</FormLabel>
+              <div className="flex items-center border-2 rounded-md px-2 gap-2">
+                <FaLock className="text-zinc-200/90 w-4 h-4" />
                 <FormControl>
                   <Input type={showPassword ? "text" : "password"} placeholder="Enter password" {...field} />
                 </FormControl>
-                <button type="button" onClick={() => setShowPassword(!showPassword)} className="text-gray-500">
+                <button type="button" onClick={() => setShowPassword(!showPassword)} className="text-zinc-200/90 w-4 h-4">
                   {showPassword ? <FaEyeSlash /> : <FaEye />}
                 </button>
               </div>
@@ -211,13 +211,13 @@ export default function SignUpForm() {
           name="confirmPassword"
           render={({ field }) => (
             <FormItem className="col-span-2">
-              <FormLabel>Confirm Password</FormLabel>
-              <div className="flex items-center border rounded-md p-2 gap-1">
-                <FaLock className="text-gray-500" />
+              <FormLabel className="text-[13px] px-1 " >Confirm Password</FormLabel>
+              <div className="flex items-center border-2 rounded-md px-2 gap-2">
+                <FaLock className="text-zinc-200/90 w-4 h-4" />
                 <FormControl>
                   <Input type={showConfirmPassword ? "text" : "password"} placeholder="Confirm password" {...field} />
                 </FormControl>
-                <button type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)} className="text-gray-500">
+                <button type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)} className="text-zinc-200/90 w-4 h-4">
                   {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
                 </button>
               </div>
@@ -232,9 +232,9 @@ export default function SignUpForm() {
           control={form.control}
           name="accepted"
           render={({ field }) => (
-            <FormItem className="col-span-2 flex items-center gap-1">
+            <FormItem className="col-span-2 flex items-center gap-1 mt-1">
               <FormControl>
-                <Checkbox checked={field.value} onCheckedChange={field.onChange} />
+                <Checkbox checked={field.value} onCheckedChange={field.onChange} className="w-4 h-4 ml-1 mt-1 border-2" />
               </FormControl>
               <FormLabel className="flex items-center gap-2">
                 I accept the terms and conditions
@@ -246,195 +246,11 @@ export default function SignUpForm() {
         />
 
         {/* Submit Button */}
-        <div className="col-span-2 mt-2">
-          <Button type="submit" className="w-full">Submit</Button>
+        <div className="col-span-2 mt-2 flex justify-center  ">
+          <Button type="submit"  className="w-28 h-5 ">Submit</Button>
         </div>
       </form>
     </Form>
   );
 }
 
-
-
-// "use client";
-// import { Input } from "@/components/ui/input";
-// import { Label } from "@/components/ui/label";
-// import { FaUser } from "react-icons/fa";
-// import { IoMdMail } from "react-icons/io";
-// import { RiLockPasswordFill } from "react-icons/ri";
-// import { FaPhone } from "react-icons/fa6";
-// import { FaEye } from "react-icons/fa";
-// import { FaEyeSlash } from "react-icons/fa";
-// import { FaKey } from "react-icons/fa6";
-// import { Checkbox } from "@/components/ui/checkbox";
-// import { Button } from "@/components/ui/button";
-// import { useState } from "react";
-// import { Controller, SubmitHandler, useForm } from "react-hook-form";
-
-// const FormSchema = z
-//   .object({
-//     firstName: z
-//       .string()
-//       .min(2, { message: "First name must be atleast 2 characters" })
-//       .max(45, { message: "First name must be less than 45 characters" })
-//       .regex(new RegExp("^[a-zA-Z]+$"), "No special character allowed!"),
-//     lastName: z
-//       .string()
-//       .min(2, { message: "Last name must be atleast 2 characters" })
-//       .max(45, { message: "Last name must be less than 45 characters" })
-//       .regex(new RegExp("^[a-zA-Z]+$"), "No special character allowed!"),
-//     email: z.string().email("Please a valid email address"),
-//     phone: z
-//       .string()
-//       .refine(validator.isMobilePhone, "Please enter a valid phone number!"),
-//     password: z
-//       .string()
-//       .min(6, { message: "Password must be atleast 6 charactesr" })
-//       .max(50, "Password must be less than 50 characters"),
-//     confirmPassword: z
-//       .string()
-//       .min(6, { message: "Password must be atleast 6 charactesr" })
-//       .max(50, "Password must be less than 50 characters"),
-//     accepted: z.literal(true, {
-//       errorMap: () => ({
-//         message: "Please accept all terms",
-//       }),
-//     }),
-//   })
-//   .refine((data) => data.password === data.confirmPassword, {
-//     message: "Password and confirm password doesn't match!",
-//     path: ["confirmPassword"],
-//   });
-
-// type InputType = z.infer<typeof FormSchema>;
-
-// const SignUpForm = () => {
-//   const { register, handleSubmit, reset, control } = useForm<InputType>();
-//   const [isVisible, setVisible] = useState(true);
-//   const toggleView = () => {
-//     setVisible((prev) => !prev);
-//   };
-
-//   const saveUser: SubmitHandler<InputType> = async (data) => {
-//     console.log(data);
-//   };
-//   return (
-//     <>
-//       <form
-//         onSubmit={handleSubmit(saveUser)}
-//         className="grid grid-cols-2 gap-3 p-2 shadow border rounded-md place-items-stretch"
-//       >
-//         {/* First Name */}
-//         <div className="bg-zinc-800 px-2 rounded-lg">
-//           <Label className="text-xs text-zinc-300">First Name </Label>
-//           <div className="flex gap-2 items-center">
-//             <FaUser className="size-3" />
-//             <Input
-//               {...register("firstName")}
-//               className="flex w-full h-8 bg-transparent"
-//             />
-//           </div>
-//         </div>
-//         {/* Last Name */}
-//         <div className="bg-zinc-800 px-2 rounded-lg">
-//           <Label className="text-xs text-zinc-300">Last Name </Label>
-//           <div className="flex gap-2 items-center">
-//             <FaUser className="size-3" />
-//             <Input
-//               {...register("lastName")}
-//               className="flex w-full h-8 bg-transparent"
-//             />
-//           </div>
-//         </div>
-//         {/* Email */}
-//         <div className="bg-zinc-800 px-2 rounded-lg col-span-2">
-//           <Label className="text-xs text-zinc-300">Email </Label>
-//           <div className="flex gap-2 items-center">
-//             <IoMdMail className="size-4" />
-//             <Input
-//               {...register("email")}
-//               className="flex w-full h-8 bg-transparent focus-visible:outline-black"
-//             />
-//           </div>
-//         </div>
-
-//         {/* Phone */}
-//         <div className="bg-zinc-800 px-2 rounded-lg col-span-2">
-//           <Label className="text-xs text-zinc-300">Email </Label>
-//           <div className="flex gap-2 items-center">
-//             <FaPhone className="size-4" />
-//             <Input
-//               {...register("phone")}
-//               className="flex w-full h-8 bg-transparent focus-visible:outline-black"
-//             />
-//           </div>
-//         </div>
-
-//         {/* Password */}
-//         <div className="bg-zinc-800 px-2 rounded-lg col-span-2">
-//           <Label className="text-xs text-zinc-300">Password </Label>
-//           <div className="flex gap-2 items-center">
-//             <FaKey className="size-4" />
-//             <Input
-//               {...register("password")}
-//               type={isVisible ? "text" : "password"}
-//               className="flex w-full h-8 bg-transparent focus-visible:outline-black"
-//             />
-//             {isVisible ? (
-//               <FaEyeSlash
-//                 className="size-5 cursor-pointer"
-//                 onClick={toggleView}
-//               />
-//             ) : (
-//               <FaEye className="size-5 cursor-pointer" onClick={toggleView} />
-//             )}
-//           </div>
-//         </div>
-
-//         {/* Confirm Password */}
-//         <div className="bg-zinc-800 px-2 rounded-lg col-span-2">
-//           <Label className="text-xs text-zinc-300">Confirm Password </Label>
-//           <div className="flex gap-2 items-center">
-//             <RiLockPasswordFill className="size-4" />
-//             <Input
-//               type={isVisible ? "text" : "password"}
-//               {...register("confirmPassword")}
-//               className="flex w-full h-8 bg-transparent focus-visible:outline-black"
-//             />
-//           </div>
-//         </div>
-//         {/* Terms & conditions */}
-//         <div className="items-top flex space-x-2 mt-1 col-span-2">
-//           <Controller
-//             control={control}
-//             name="accepted"
-//             render={() => (
-//               <>
-//                 <Checkbox id="terms1" {...register("accepted")} />
-//                 <div className="grid gap-1.5 leading-none">
-//                   <label
-//                     htmlFor="terms1"
-//                     className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-//                   >
-//                     Accept terms and conditions
-//                   </label>
-//                   <p className="text-xs text-muted-foreground">
-//                     You agree to our Terms of Service and Privacy Policy.
-//                   </p>
-//                 </div>
-//               </>
-//             )}
-//           />
-//         </div>
-//         {/* SUbmit button */}
-//         <div className="flex justify-center col-span-2">
-//           <Button type="submit" className="mt-1 w-48">
-//             Submit{" "}
-//           </Button>
-//         </div>
-//       </form>
-//     </>
-//   );
-// };
-
-// export default SignUpForm;

@@ -135,10 +135,10 @@ export const useCodeEditorStore = create<CodeEditorState>((set, get) => ({
       }
   
       // Return the output if no errors
-      return { type: "Success", output: data.run.output.trim() };
+      return { type: "Success", output: data.run.output?.trim() };
     } catch (err) {
       console.error("Error executing code:", err);
-      return { type: "Error", message: "Unable to execute code. Please try again." };
+      return { type: "Error", message: "Unable to execute code. Please try again"};
     }
   },
   
@@ -177,7 +177,7 @@ export const useCodeEditorStore = create<CodeEditorState>((set, get) => ({
       console.log("Raw Output from Execution:", executionResult.output);
   
       // Split the output by spaces
-      const outputSections = executionResult.output.trim().split(/\s+/);
+      const outputSections:string[]  = executionResult.output?.trim().split(/\s+/) || [];
   
       // Compare each section with the corresponding test case
       for (let i = 0; i < testCases.length; i++) {
@@ -253,12 +253,12 @@ export const useCodeEditorStore = create<CodeEditorState>((set, get) => ({
         console.log("Raw Output from Execution:", executionResult.output);
 
         // Normalize the output by trimming and replacing multiple spaces with single spaces
-        const normalizedOutput = executionResult.output.trim().replace(/\s+/g, " ");
+        const normalizedOutput = executionResult.output?.trim().replace(/\s+/g, " ") ?? "";
 
         // Compare the normalized output with the expected output for each test case
         for (let i = 0; i < testCases.length; i++) {
             const testCase = testCases[i];
-            const normalizedExpected = testCase.expectedOutput.replace(/\s+/g, " ").trim();
+            const normalizedExpected = testCase.expectedOutput?.replace(/\s+/g, " ").trim();
 
             // Log the inputs and outputs for each test case
             console.log(`Test Case ${i + 1} Input:`, testCase.input);
@@ -319,7 +319,7 @@ runWarshallAndVerifyCode: async () => {
     console.log("Raw Output from Execution:", executionResult.output);
 
     // Split the output by lines
-    const outputLines = executionResult.output.trim().split("\n");
+    const outputLines:string[] = executionResult.output?.trim().split("\n") || [];
 
     // Compare each line with the corresponding test case
     for (let i = 0; i < testCases.length; i++) {
@@ -394,7 +394,7 @@ runTopologicalSortAndVerifyCode: async () => {
     console.log("Raw Output from Execution:", executionResult.output);
 
     // Split the output into individual lines
-    const outputLines = executionResult.output.trim().split("\n");
+    const outputLines:string[] = executionResult.output?.trim().split("\n") || [];
 
     // Compare each line with the corresponding test case's expected output
     for (let i = 0; i < testCases.length; i++) {

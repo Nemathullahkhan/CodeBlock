@@ -1,9 +1,8 @@
-"use client"
+"use client";
 
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "next-themes";
-import Appbar from "./components/Appbar";
 import { ToastContainer } from "react-toastify";
 import { SessionProvider } from "next-auth/react";
 
@@ -16,7 +15,6 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
-
 
 export default function RootLayout({
   children,
@@ -35,8 +33,9 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            {/* <Appbar /> */}
-            {children}
+            
+              {/* <Appbar /> */}
+              {children}
           </ThemeProvider>
           <ToastContainer position="top-right" theme="dark" />
         </SessionProvider>
