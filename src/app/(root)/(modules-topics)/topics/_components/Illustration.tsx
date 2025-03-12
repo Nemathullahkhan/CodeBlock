@@ -12,28 +12,6 @@ interface IllustrationProps {
 export default function Illustration({ illustration }: IllustrationProps) {
   if (!illustration) return null;
   return (
-    // Card design
-    // <Card className="bg-zinc-900 border-zinc-800">
-    //   <CardHeader>
-    //     <CardTitle className="text-gray-50">Illustration</CardTitle>
-    //   </CardHeader>
-    //   <CardContent className="space-y-6">
-    //     <div className="space-y-4">
-    //       <p className="text-gray-300 leading-7">{illustration.summary}</p>
-    //       <p className="text-gray-300 leading-7">{illustration.tips}</p>
-    //     </div>
-    //     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-    //       {illustration.images.map((image, index) => (
-    //         <img
-    //           key={index}
-    //           src={image || "/placeholder.svg"}
-    //           alt={`Illustration ${index + 1}`}
-    //           className="rounded-lg border border-zinc-800 w-full aspect-[2/1] object-cover"
-    //         />
-    //       ))}
-    //     </div>
-    //   </CardContent>
-    // </Card>
 
     <section className="space-y-6">
       <h2 className="text-2xl font-bold tracking-tight text-gray-50 px-6">

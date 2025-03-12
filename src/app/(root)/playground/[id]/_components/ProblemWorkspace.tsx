@@ -1,7 +1,6 @@
 "use client";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
 import { BookOpen, Code, FileCode } from "lucide-react";
 import { ProblemSidebar } from "./ProblemSidebar";
 import QuestionRunButton from "./QuestionRunButton";

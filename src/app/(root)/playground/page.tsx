@@ -96,7 +96,7 @@ function ResizeHandle({ horizontal = false }) {
   return (
     <PanelResizeHandle
       className={`
-        ${horizontal ? "h-1 my-0.5" : "border-[1px]"} 
+        ${horizontal && "h-1 my-0.5"} 
         flex items-center justify-center 
         transition-all duration-200 ease-in-out
         hover:bg-zinc-800/50 active:bg-zinc-700/70
@@ -106,7 +106,7 @@ function ResizeHandle({ horizontal = false }) {
       <div
         className={`
         flex items-center justify-center
-        ${horizontal ? "w-5 h-full" : "h-10 w-full"} 
+        ${horizontal ? "w-5 h-full" : "h-4 w-full"} 
         rounded-full
         transition-all duration-200
         group-hover:bg-zinc-800 group-active:bg-zinc-700
@@ -116,7 +116,7 @@ function ResizeHandle({ horizontal = false }) {
         {horizontal ? (
           <GripHorizontal className="w-6 h-6 text-zinc-500 group-hover:text-indigo-400 transition-colors" />
         ) : (
-          <GripVertical className="w-6 h-6   text-zinc-500 group-hover:text-indigo-400 transition-colors" />
+          <GripVertical className="w-4 h-10   text-zinc-500 group-hover:text-indigo-400 transition-colors" />
         )}
       </div>
     </PanelResizeHandle>

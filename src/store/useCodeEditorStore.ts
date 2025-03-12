@@ -95,7 +95,7 @@ export const useCodeEditorStore = create<CodeEditorState>((set, get) => ({
         return;
       }
 
-      if (data.run && data.run.code !== 0) {
+      if (data.run && data.run.code !== 0) {  
         set({ error: data.run.stderr || data.run.output });
         return;
       }

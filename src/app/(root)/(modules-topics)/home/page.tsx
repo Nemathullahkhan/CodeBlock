@@ -7,8 +7,9 @@ import Link from "next/link";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useSession } from "next-auth/react";
 import { Button } from "@/components/ui/button";
-import { Search, BookOpen } from "lucide-react";
+import { Search, BookOpen, Codesandbox } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import UserBadge from "../../playground/[id]/_components/UserBadge";
 
 interface ModuleType {
   id: string;
@@ -44,10 +45,28 @@ export default function Page() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-zinc-950 to-zinc-900 pb-16">
       {/* Header Section with Greeting */}
+
       <section className="relative overflow-hidden py-12 px-4 sm:px-6 lg:px-8">
         <div className="absolute inset-0 z-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-zinc-800/30 via-zinc-900 to-zinc-950"></div>
         <div className="absolute top-20 right-20 w-72 h-72 bg-primary/5 rounded-full blur-3xl"></div>
         <div className="absolute bottom-10 left-10 w-56 h-56 bg-primary/10 rounded-full blur-3xl"></div>
+
+        <section className="relative px-10 -mt-3 mb-4 bg-transparent">
+          <div className="flex items-center bg-transparent justify-between w-full">
+            {/* Left-aligned Codesandbox */}
+            <div className="flex justify-start items-center">
+              <Link href="/home" className="flex items-center gap-2">
+                <Codesandbox />
+                <span className="text-lg">CodeBlock</span>
+              </Link>
+            </div>
+            {/* Right-aligned UserBadge */}
+            <div className="flex justify-end items-center gap-4 ">
+              <Link href = {"/playground"} className="text-md text-pretty text-blue-400 font-semibold font-sans"> OnlineIDE</Link>
+              <UserBadge />
+            </div>
+          </div>
+        </section>
 
         <div className="relative z-10 mx-auto max-w-7xl">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
