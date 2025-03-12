@@ -6,6 +6,7 @@ import {
   BookOpen,
   CheckCircle,
   Circle,
+  Codesandbox,
   GraduationCap,
   Layout,
 } from "lucide-react";
@@ -15,6 +16,7 @@ import prisma from "@/lib/prisma";
 import StarterLinks from "../_components/StarterLinks";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import UserBadge from "@/app/(root)/playground/[id]/_components/UserBadge";
 
 export default async function MulePage({ params }: { params: { id: string } }) {
   const session = await getServerSession(authOptions);
@@ -23,8 +25,6 @@ export default async function MulePage({ params }: { params: { id: string } }) {
   }
 
   const userId = session.user.id;
-
-  // ✅ Fetch module details
 
   const mule = await prisma.module.findUnique({
     where: { id: params.id },
@@ -39,8 +39,6 @@ export default async function MulePage({ params }: { params: { id: string } }) {
 
   if (!mule) return notFound();
 
-  // ✅ Count total programs in module
-
   const totalPrograms = await prisma.content.count({
     where: {
       topic: {
@@ -49,8 +47,6 @@ export default async function MulePage({ params }: { params: { id: string } }) {
     },
   });
 
-  // ✅ Fetch user progress for all contents in the module
-  
   const userProgress = await prisma.userProgress.findMany({
     where: {
       userId,
@@ -64,33 +60,46 @@ export default async function MulePage({ params }: { params: { id: string } }) {
     },
   });
 
-  // Create a map of contentId to completion status
   const userProgressMap = new Map(
     userProgress.map((up) => [up.contentId, up.completed])
   );
 
-  // ✅ Count only completed programs by the logged-in user
   const completedPrograms = userProgress.filter((up) => up.completed).length;
 
-  // ✅ Calculate progress
   const progress = totalPrograms
     ? parseFloat(((completedPrograms / totalPrograms) * 100).toFixed(2))
     : 0;
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-background/95">
+      <div className="w-[1300px] sticky mx-auto flex justify-center border-b-4 border-zinc-800">
+        <div className="flex items-center justify-between px-10 py-2   m-3 w-full">
+          {/* Left-aligned Codesandbox */}
+          <div className="flex justify-start items-center">
+            <Link href="/home" className="flex items-center gap-2">
+              <Codesandbox />
+              <span className="text-lg">CodeBlock</span>
+            </Link>
+          </div>
+
+          {/* Right-aligned UserBadge */}
+          <div className="flex justify-end items-center">
+            <UserBadge />
+          </div>
+        </div>
+      </div>
       <div className="container mx-auto px-4 py-8">
         {/* Module Header */}
         <section className="space-y-6">
           <StarterLinks name={mule.name} />
-          <div className="space-y-4">
+          <div className="space-y-2">
             <div className="flex items-center gap-2">
               <GraduationCap className="h-8 w-8 text-primary" />
               <h1 className="text-4xl font-bold tracking-tight text-primary">
                 {mule.name}
               </h1>
             </div>
-            <p className="text-md text-muted-foreground max-w-2xl">
+            <p className="text-md text-muted-foreground max-w-3xl">
               {mule.description}
             </p>
           </div>
@@ -98,7 +107,7 @@ export default async function MulePage({ params }: { params: { id: string } }) {
           <div className="flex flex-wrap gap-6">
             <div className="flex items-center gap-2">
               <Layout className="h-5 w-5 text-primary" />
-              <span className="text-sm">
+              <span className="text-sm text-zinc-100">
                 <span className="text-primary font-semibold">
                   {mule.topics?.length}
                 </span>{" "}
@@ -107,7 +116,7 @@ export default async function MulePage({ params }: { params: { id: string } }) {
             </div>
             <div className="flex items-center gap-2">
               <BookOpen className="h-5 w-5 text-primary" />
-              <span className="text-sm">
+              <span className="text-sm text-zinc-100">
                 <span className="text-primary font-semibold">
                   {totalPrograms}
                 </span>{" "}
@@ -135,14 +144,13 @@ export default async function MulePage({ params }: { params: { id: string } }) {
         </section>
 
         {/* Curriculum Section */}
-        <section className="mt-12">
+        <section className="mt-10">
           <Card className="border-none bg-card/50 backdrop-blur">
             <CardContent className="p-6">
-              <div className="flex items-center gap-2 mb-8">
+              <div className="flex items-center gap-2 mb-4">
                 <BookOpen className="h-5 w-5 text-primary" />
                 <CardTitle>Course Curriculum</CardTitle>
               </div>
-
               <ScrollArea className="h-[600px] pr-4">
                 <div className="space-y-6">
                   {mule.topics.map((topic, topicIdx) => (
@@ -156,7 +164,7 @@ export default async function MulePage({ params }: { params: { id: string } }) {
                           {topicIdx + 1}
                         </div>
                         <div className="space-y-1">
-                          <h2 className="font-semibold tracking-tight text-lg">
+                          <h2 className="font-semibold tracking-tight text-xl">
                             {topic.name}
                           </h2>
                           {topic.description && (
@@ -180,13 +188,13 @@ export default async function MulePage({ params }: { params: { id: string } }) {
                             <Link
                               key={idx}
                               href={`/topics/${content.id}`}
-                              className="flex items-center gap-4 p-4 transition-colors hover:bg-muted"
+                              className="flex items-center gap-2 p-2 px-10 transition-colors hover:bg-muted border-b-2 border-zinc-400/10"
                             >
                               <div className="flex h-6 w-6 shrink-0 items-center justify-center">
                                 {isCompleted ? (
-                                  <CheckCircle className="h-5 w-5 text-primary" />
+                                  <CheckCircle className="h-4 w-4 text-primary" />
                                 ) : (
-                                  <Circle className="h-5 w-5 text-muted-foreground" />
+                                  <Circle className="h-4 w-4 text-muted-foreground" />
                                 )}
                               </div>
                               <span className="text-sm font-medium">

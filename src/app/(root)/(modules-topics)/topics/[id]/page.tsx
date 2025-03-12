@@ -174,9 +174,6 @@ export default async function TopicPage({
                     implementation={{
                       intuition: contents.implementation.intuition,
                       approach: contents.implementation.approach,
-                      // code: Array.isArray(contents.implementation.code)
-                      //   ? contents.implementation.code
-                      //   : null,
                       code: contents.implementation.code as { language: string; code: string }[] | null,
                     }}
                   />
