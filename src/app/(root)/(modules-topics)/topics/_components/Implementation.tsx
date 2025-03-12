@@ -153,7 +153,7 @@ export default function Implementation({ implementation }: implementProps) {
           </div>
 
           {/* Code Display */}
-          <div className="w-full  px-4">
+          <div className="w-full px-4">
             <SyntaxHighlighter
               language={language.toLowerCase()}
               style={atomDark}

@@ -1,3 +1,5 @@
+
+
 "use client";
 
 import {
@@ -10,7 +12,7 @@ import {
   GripVertical,
 } from "lucide-react";
 import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import QuestionRunButton from "./QuestionRunButton";
 import SubmitButton from "./SubmitButton";
@@ -21,7 +23,7 @@ import QuestionOutputPanel from "./QuestionOutputPanel";
 import Link from "next/link";
 import { ProblemSidebar } from "./ProblemSidebar";
 import { Button } from "@/components/ui/button";
-import { useCodeEditorStore } from "@/store/useCodeEditorStore";
+import UserBadge from "./UserBadge";
 
 type SomeProps = {
   id: string;
@@ -29,14 +31,28 @@ type SomeProps = {
 };
 
 export default function SomeComponent({ id, programName }: SomeProps) {
+  const containerRef = useRef(null);
   const [panelSizes, setPanelSizes] = useState({
     editor: 40,
     input: 60,
     output: 40,
   });
   const [isSidebarVisible, setSidebarVisible] = useState(false);
-  const [hasCodeRun, setHasCodeRun] = useState(false);
-  const { output, error } = useCodeEditorStore();
+  const [containerWidth, setContainerWidth] = useState(0);
+
+  // Track container width using ResizeObserver
+  useEffect(() => {
+    if (!containerRef.current) return;
+    
+    const observer = new ResizeObserver(entries => {
+      for (const entry of entries) {
+        setContainerWidth(entry.contentRect.width);
+      }
+    });
+    
+    observer.observe(containerRef.current);
+    return () => observer.disconnect();
+  }, []);
 
   const toggleSidebar = () => {
     setSidebarVisible(!isSidebarVisible);
@@ -50,6 +66,18 @@ export default function SomeComponent({ id, programName }: SomeProps) {
     localStorage.setItem(`panel-size-${id}`, size.toString());
   };
 
+  // Enforce panel size limits during drag
+  const handlePanelResize = (panelId, size) => {
+    if (panelId === "left-panel") {
+      // Limit left panel to 60% of container width
+      const maxSize = 50;
+      if (size > maxSize) {
+        return maxSize;
+      }
+    }
+    return size;
+  };
+
   useEffect(() => {
     const savedEditorSize = localStorage.getItem("panel-size-editor");
     const savedInputSize = localStorage.getItem("panel-size-input");
@@ -57,17 +85,12 @@ export default function SomeComponent({ id, programName }: SomeProps) {
 
     if (savedEditorSize || savedInputSize || savedOutputSize) {
       setPanelSizes({
-        editor: savedEditorSize ? parseFloat(savedEditorSize) : 40,
+        editor: savedEditorSize ? Math.min(50, parseFloat(savedEditorSize)) : 40,
         input: savedInputSize ? parseFloat(savedInputSize) : 60,
         output: savedOutputSize ? parseFloat(savedOutputSize) : 40,
       });
     }
   }, []);
-  useEffect(() => {
-    if (output || error) {
-      setHasCodeRun(true);
-    }
-  }, [output, error]);
 
   return (
     <div className="h-screen flex flex-col overflow-hidden bg-black">
@@ -79,58 +102,72 @@ export default function SomeComponent({ id, programName }: SomeProps) {
             <Codesandbox />
           </Link>
           <div className="mx-10">
-            <Button onClick={toggleSidebar}  variant = "link" className="w-32 h-4 text-lg font-semibold tracking-tight font-sans">Problem List 
+            <Button onClick={toggleSidebar} variant="link" className="w-32 h-4 text-lg font-semibold tracking-tight font-sans">Problem List 
               <span><ChevronDown className="w-4 h-4"/></span>
             </Button>
           </div>
         </div>
 
         {/* Centered Buttons */}
-        <div className="absolute left-1/2 transform -translate-x-1/2 flex justify-center items-center gap-2 bg-stone-800/70 p-1 rounded-lg">
+        <div className="absolute left-1/2 transform -translate-x-1/2 flex justify-center items-center gap-2 rounded-lg">
           <QuestionRunButton id={id} programName={programName} />
-          <SubmitButton id={id} disabled={!hasCodeRun} />
+          <SubmitButton id={id} />
         </div>
 
         {/* Spacer to balance the flex layout */}
-        <div className="flex-1"></div>
+        <div className="mx-10">
+          <UserBadge/>
+        </div>
       </div>
 
       {/* Main content area */}
-      <div className="flex-1 overflow-hidden flex">
+      <div className="flex-1 overflow-hidden flex" ref={containerRef}>
         {/* Conditionally render the sidebar */}
         <ProblemSidebar isVisible={isSidebarVisible} onClose={() => setSidebarVisible(false)} />
 
         {/* Resizable panels */}
-        <div className="flex-1">
-          <PanelGroup direction="horizontal" className="h-full">
+        <div className="flex-1 overflow-hidden">
+          <PanelGroup 
+            direction="horizontal" 
+            className="h-full"
+            onLayout={(sizes) => {
+              // Ensure left panel never exceeds 60%
+              if (sizes[0] > 60) {
+                return [50, 40];
+              }
+              return sizes;
+            }}
+          >
             {/* Left Panel (Problem, Solution, Submissions, Test Cases) */}
             <Panel
               id="left-panel"
               defaultSize={panelSizes.editor}
               minSize={20}
+              maxSize={50}  // Hard limit to 60% of container width
               onResize={(size) => handleResizeEnd("editor", size)}
+              className="overflow-hidden max-w-6xl"  // Tailwind 6xl limit (72rem)
             >
               <div className="h-full bg-black rounded-xl border-2 border-zinc-900 overflow-hidden flex flex-col">
                 <div className="border-b border-zinc-500">
-                  <Tabs defaultValue="problem" className="w-full ">
+                  <Tabs defaultValue="problem" className="w-full">
                     <TabsList className="bg-zinc-900/40 border-b-4 flex justify-start relative gap-1">
                       <TabsTrigger
                         value="problem"
-                        className="data-[state=active]:bg-zinc-300 data-[state=active]:text-black flex items-center px-4 h-5  transition-colors border-r-2 bg-zinc-800"
+                        className="data-[state=active]:bg-zinc-300 data-[state=active]:text-black flex items-center px-4 h-5 transition-colors border-r-2 bg-zinc-800"
                       >
                         <FileCode className="w-4 h-5 mr-2" />
                         Problem
                       </TabsTrigger>
                       <TabsTrigger
                         value="editorial"
-                        className="data-[state=active]:bg-zinc-300 data-[state=active]:text-black flex items-center px-4  h-5 rounded-md transition-colors  bg-zinc-800"
+                        className="data-[state=active]:bg-zinc-300 data-[state=active]:text-black flex items-center px-4 h-5 rounded-md transition-colors bg-zinc-800"
                       >
                         <BookOpen className="w-4 h-4 mr-2" />
                         Solution
                       </TabsTrigger>
                       <TabsTrigger
                         value="submissions"
-                        className="data-[state=active]:bg-zinc-300 data-[state=active]:text-black flex items-center px-4 h-5 rounded-md transition-colors  bg-zinc-800"
+                        className="data-[state=active]:bg-zinc-300 data-[state=active]:text-black flex items-center px-4 h-5 rounded-md transition-colors bg-zinc-800"
                       >
                         <Code className="w-4 h-4 mr-2" />
                         Submissions
@@ -141,7 +178,7 @@ export default function SomeComponent({ id, programName }: SomeProps) {
                       className="mt-0 flex-1 h-[calc(100vh-120px)] overflow-hidden"
                     >
                       <div
-                        className="h-full overflow-y-auto scrollbar-thin scrollbar-thumb-zinc-700 hover:scrollbar-thumb-gray-400 scrollbar-track-black scrollbar-thumb-rounded-md"
+                        className="h-full overflow-y-auto scrollbar-thin scrollbar-thumb-zinc-700 hover:scrollbar-thumb-gray-400 scrollbar-track-black scrollbar-thumb-rounded-md p-2"
                       >
                         <Questionaire id={id} />
                       </div>
@@ -156,14 +193,14 @@ export default function SomeComponent({ id, programName }: SomeProps) {
                     </TabsContent>
                     <TabsContent
                       value="submissions"
-                      className="mt-0 h-[calc(100vh-120px)] overflow-auto"
+                      className="mt-0 h-[calc(100vh-120px)] overflow-auto w-full"
                     >
-                      <div className="p-4 text-gray-300">
+                      <div className="p-4 text-gray-300 w-full">
                         <h3 className="text-xl font-bold mb-4">
                           Your Submissions
                         </h3>
-                        <div className="bg-black rounded-md p-4 border border-[#30363d]">
-                          <p className="text-center text-gray-400">
+                        <div className="bg-black rounded-md p-4 border border-[#30363d] w-full">
+                          <p className="text-center text-gray-400 w-5xl">
                             No submissions yet
                           </p>
                         </div>
@@ -177,16 +214,24 @@ export default function SomeComponent({ id, programName }: SomeProps) {
             <ResizeHandle />
 
             {/* Right Panel (Editor and Output) */}
-            <Panel id="right-panel" minSize={20}>
-              <PanelGroup direction="vertical">
+            <Panel 
+              id="right-panel" 
+              minSize={40}  // Ensure right panel has minimum width
+              className="overflow-hidden w-full"
+            >
+              <PanelGroup direction="vertical" className="h-full">
                 {/* Editor Panel */}
                 <Panel
                   id="editor"
                   defaultSize={panelSizes.input}
                   minSize={15}
+                  maxSize={85}
                   onResize={(size) => handleResizeEnd("input", size)}
+                  className="overflow-hidden"
                 >
-                  <QuestionEditorPanel programName={programName} id={id} />
+                  <div className="h-full w-full">
+                    <QuestionEditorPanel programName={programName} id={id} />
+                  </div>
                 </Panel>
 
                 <ResizeHandle horizontal />
@@ -196,9 +241,13 @@ export default function SomeComponent({ id, programName }: SomeProps) {
                   id="output"
                   defaultSize={panelSizes.output}
                   minSize={15}
+                  maxSize={85}
                   onResize={(size) => handleResizeEnd("output", size)}
+                  className="overflow-hidden"
                 >
-                  <QuestionOutputPanel questionId={id} />
+                  <div className="h-full w-full">
+                    <QuestionOutputPanel questionId={id} />
+                  </div>
                 </Panel>
               </PanelGroup>
             </Panel>
@@ -238,4 +287,4 @@ function ResizeHandle({ horizontal = false }) {
       </div>
     </PanelResizeHandle>
   );
-}
+} 

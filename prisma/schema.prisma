@@ -58,12 +58,12 @@ model VerificationToken {
 }
 
 model Module {
-  id           String         @id @default(cuid())
-  name         String         @unique
-  description  String
-  createdAt    DateTime       @default(now())
-  updatedAt    DateTime       @updatedAt
-  topics       Topic[]
+  id          String   @id @default(cuid())
+  name        String   @unique
+  description String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  topics      Topic[]
 }
 
 model Topic {
@@ -84,6 +84,8 @@ model Content {
   brief              String
   photos             String[] // Array of image URLs
   complexityAnalysis String?
+  timeComplexity     String          @default("O(1)")
+  spaceComplexity    String?
   applications       String[]
   advantages         String[]
   disadvantages      String[]

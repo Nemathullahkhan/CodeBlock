@@ -1,25 +1,4 @@
-// import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
-// interface props {
-//   videos?: string[];
-// }
-
-// export default function Video({ videos }: props) {
-//   return (
-//     <Card className="bg-zinc-900 border-zinc-800">
-//       <CardHeader>
-//         <CardTitle className="text-gray-50">Related Videos</CardTitle>
-//       </CardHeader>
-//       <CardContent className="grid grid-cols-4 gap-6">
-//         {videos.map((vid, idx) => (
-//           <div key={idx} className="aspect-video ">
-//             <iframe src={vid} className="w-[500px] h-[250px] rounded-lg" allowFullScreen />
-//           </div>
-//         ))}
-//       </CardContent>
-//     </Card>
-//   );
-// }
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 interface Props {

@@ -1,15 +1,31 @@
-
-import { Card, CardContent, CardTitle } from "@/components/ui/card"
-import { ScrollArea } from "@/components/ui/scroll-area"
-import { Badge } from "@/components/ui/badge"
-import { Progress } from "@/components/ui/progress"
-import { BookOpen, CheckCircle, Circle, GraduationCap, Layout } from "lucide-react"
-import Link from "next/link"
-import { notFound } from "next/navigation"
-import prisma from "@/lib/prisma"
-import StarterLinks from "../_components/StarterLinks"
+import { Card, CardContent, CardTitle } from "@/components/ui/card";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Badge } from "@/components/ui/badge";
+import { Progress } from "@/components/ui/progress";
+import {
+  BookOpen,
+  CheckCircle,
+  Circle,
+  GraduationCap,
+  Layout,
+} from "lucide-react";
+import Link from "next/link";
+import { notFound, redirect } from "next/navigation";
+import prisma from "@/lib/prisma";
+import StarterLinks from "../_components/StarterLinks";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 export default async function MulePage({ params }: { params: { id: string } }) {
+  const session = await getServerSession(authOptions);
+  if (!session || !session.user?.id) {
+    redirect("/auth/signin"); // Or redirect to login page
+  }
+
+  const userId = session.user.id;
+
+  // ✅ Fetch module details
+
   const mule = await prisma.module.findUnique({
     where: { id: params.id },
     include: {
@@ -19,9 +35,11 @@ export default async function MulePage({ params }: { params: { id: string } }) {
         },
       },
     },
-  })
+  });
 
-  if (!mule) return notFound()
+  if (!mule) return notFound();
+
+  // ✅ Count total programs in module
 
   const totalPrograms = await prisma.content.count({
     where: {
@@ -29,51 +47,71 @@ export default async function MulePage({ params }: { params: { id: string } }) {
         moduleId: params.id,
       },
     },
-  })
+  });
 
-  // Assuming we track progress (you can modify this based on your data model)
-  const completedPro = await prisma.content.findMany({
+  // ✅ Fetch user progress for all contents in the module
+  
+  const userProgress = await prisma.userProgress.findMany({
     where: {
-      topic: {
-        moduleId: params.id,
+      userId,
+      content: {
+        topic: { moduleId: params.id },
       },
     },
+    select: {
+      contentId: true,
+      completed: true,
+    },
   });
-  
-  // Calculate the number of completed programs
-  const completedPrograms = completedPro.filter((completed) => completed.iscompleted === true).length;
- 
-  const progressRounded = (completedPrograms/totalPrograms)*100;
-  
-  const progress = parseFloat(progressRounded.toFixed(2));
 
+  // Create a map of contentId to completion status
+  const userProgressMap = new Map(
+    userProgress.map((up) => [up.contentId, up.completed])
+  );
+
+  // ✅ Count only completed programs by the logged-in user
+  const completedPrograms = userProgress.filter((up) => up.completed).length;
+
+  // ✅ Calculate progress
+  const progress = totalPrograms
+    ? parseFloat(((completedPrograms / totalPrograms) * 100).toFixed(2))
+    : 0;
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-background/95">
       <div className="container mx-auto px-4 py-8">
         {/* Module Header */}
         <section className="space-y-6">
-        <StarterLinks name = {mule.name}/>
+          <StarterLinks name={mule.name} />
           <div className="space-y-4">
-
             <div className="flex items-center gap-2">
               <GraduationCap className="h-8 w-8 text-primary" />
-              <h1 className="text-4xl font-bold tracking-tight text-primary">{mule.name}</h1>
+              <h1 className="text-4xl font-bold tracking-tight text-primary">
+                {mule.name}
+              </h1>
             </div>
-            <p className="text-lg text-muted-foreground max-w-3xl">{mule.description}</p>
+            <p className="text-md text-muted-foreground max-w-2xl">
+              {mule.description}
+            </p>
           </div>
 
           <div className="flex flex-wrap gap-6">
             <div className="flex items-center gap-2">
               <Layout className="h-5 w-5 text-primary" />
               <span className="text-sm">
-                <span className="text-primary font-semibold">{mule.topics?.length}</span> Topics
+                <span className="text-primary font-semibold">
+                  {mule.topics?.length}
+                </span>{" "}
+                Topics
               </span>
             </div>
             <div className="flex items-center gap-2">
               <BookOpen className="h-5 w-5 text-primary" />
               <span className="text-sm">
-                <span className="text-primary font-semibold">{totalPrograms}</span> Programs
+                <span className="text-primary font-semibold">
+                  {totalPrograms}
+                </span>{" "}
+                Programs
               </span>
             </div>
           </div>
@@ -83,9 +121,16 @@ export default async function MulePage({ params }: { params: { id: string } }) {
             <div className="flex justify-between text-sm">
               <span className="text-muted-foreground">Course Progress</span>
               <span className="text-primary font-medium">
-                <span className={`text-xl font-semibold ${progress === 0 ? 'text-zinc-300' : 'text-emerald-500'}`}>{progress}%</span></span>
+                <span
+                  className={`text-xl font-semibold ${
+                    progress === 0 ? "text-zinc-300" : "text-emerald-500"
+                  }`}
+                >
+                  {progress}%
+                </span>
+              </span>
             </div>
-            <Progress value={progress}  className="h-1" />
+            <Progress value={progress} className="h-1" />
           </div>
         </section>
 
@@ -101,15 +146,24 @@ export default async function MulePage({ params }: { params: { id: string } }) {
               <ScrollArea className="h-[600px] pr-4">
                 <div className="space-y-6">
                   {mule.topics.map((topic, topicIdx) => (
-                    <div key={topic.id} className="group rounded-lg border bg-card/50 transition-colors hover:bg-card">
+                    <div
+                      key={topic.id}
+                      className="group rounded-lg border bg-card/50 transition-colors hover:bg-card"
+                    >
                       {/* Topic Header */}
                       <div className="p-4 flex items-start gap-4">
                         <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
                           {topicIdx + 1}
                         </div>
                         <div className="space-y-1">
-                          <h2 className="font-semibold tracking-tight text-lg">{topic.name}</h2>
-                          {topic.description && <p className="text-sm text-muted-foreground mr-10 ml-4">{topic.description}</p>}
+                          <h2 className="font-semibold tracking-tight text-lg">
+                            {topic.name}
+                          </h2>
+                          {topic.description && (
+                            <p className="text-sm text-muted-foreground mr-10 ml-4">
+                              {topic.description}
+                            </p>
+                          )}
                         </div>
                         <Badge variant="outline" className="ml-auto ">
                           {topic.contents.length} Lessons
@@ -118,23 +172,29 @@ export default async function MulePage({ params }: { params: { id: string } }) {
 
                       {/* Content List */}
                       <div className="border-t bg-muted/50">
-                        {topic.contents.map((content, idx) => (
-                          <Link
-                            key={idx}
-                            href={`/topics/${content.id}`}
-                            className="flex items-center gap-4 p-4 transition-colors hover:bg-muted"
-                          >
-                            <div className="flex h-6 w-6 shrink-0 items-center justify-center">
-                              
-                              {content.iscompleted === true ? (
-                                <CheckCircle className="h-5 w-5 text-primary" />
-                              ) : (
-                                <Circle className="h-5 w-5 text-muted-foreground" />
-                              )}
-                            </div>
-                            <span className="text-sm font-medium">{content.title}</span>
-                          </Link>
-                        ))}
+                        {topic.contents.map((content, idx) => {
+                          const isCompleted =
+                            userProgressMap.get(content.id) || false;
+
+                          return (
+                            <Link
+                              key={idx}
+                              href={`/topics/${content.id}`}
+                              className="flex items-center gap-4 p-4 transition-colors hover:bg-muted"
+                            >
+                              <div className="flex h-6 w-6 shrink-0 items-center justify-center">
+                                {isCompleted ? (
+                                  <CheckCircle className="h-5 w-5 text-primary" />
+                                ) : (
+                                  <Circle className="h-5 w-5 text-muted-foreground" />
+                                )}
+                              </div>
+                              <span className="text-sm font-medium">
+                                {content.title}
+                              </span>
+                            </Link>
+                          );
+                        })}
                       </div>
                     </div>
                   ))}
@@ -145,6 +205,5 @@ export default async function MulePage({ params }: { params: { id: string } }) {
         </section>
       </div>
     </div>
-  )
+  );
 }
-

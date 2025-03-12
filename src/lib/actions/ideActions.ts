@@ -104,3 +104,87 @@ export async function questionCompleted({ id }: { id: string }) {
     throw new Error(`Server Error: ${err.message}`);
   }
 }
+
+
+// export async function questionUserProgress({ id, userId, completed }: { id: string, userId: string, completed: boolean }) {
+//   try {
+//     // Find the Content record with the associated UserProgress
+//     const content = await prisma.content.findUnique({
+//       where: { id },
+//       include: { UserProgress: true },
+//     });
+
+//     if (!content) {
+//       throw new Error("Content not found");
+//     }
+
+//     // Find the specific UserProgress record for the given userId and contentId
+//     const userProgress = content.UserProgress.find((up) => up.userId === userId);
+
+//     if (!userProgress) {
+//       throw new Error("UserProgress not found for the given user and content");
+//     }
+
+//     // Update the UserProgress record
+//     const updatedUserProgress = await prisma.userProgress.update({
+//       where: { id: userProgress.id },
+//       data: { completed }, // Update the `completed` field
+//     });
+
+//     return updatedUserProgress;
+//   } catch (err: any) {
+//     console.error("Prisma Error:", err);
+//     throw new Error(`Server Error: ${err.message}`);
+//   }
+// }
+
+export async function questionUserProgress({ id, userId, completed }: { id: string, userId: string, completed: boolean }) {
+  try {
+    // First check if a UserProgress record already exists
+    const existingProgress = await prisma.userProgress.findFirst({
+      where: {
+        contentId: id,
+        userId: userId,
+      },
+    });
+
+    if (existingProgress) {
+      // Update existing record
+      const updatedUserProgress = await prisma.userProgress.update({
+        where: { id: existingProgress.id },
+        data: { completed },
+      });
+      return updatedUserProgress;
+    } else {
+      // Create new record if it doesn't exist
+      const newUserProgress = await prisma.userProgress.create({
+        data: {
+          contentId: id,
+          userId: userId,
+          completed,
+        },
+      });
+      return newUserProgress;
+    }
+  } catch (err: any) {
+    console.error("Prisma Error:", err);
+    throw new Error(`Server Error: ${err.message}`);
+  }
+}
+
+// Add this to your ideActions.js/ts file
+export async function checkUserProgress({ id, userId }: { id: string, userId: string }) {
+  try {
+    const userProgress = await prisma.userProgress.findFirst({
+      where: {
+        contentId: id,
+        userId: userId,
+      },
+    });
+    
+    return userProgress;
+  } catch (err: any) {
+    console.error("Prisma Error:", err);
+    throw new Error(`Server Error: ${err.message}`);
+  }
+}

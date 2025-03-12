@@ -12,8 +12,8 @@ export default function Working({working}:{working?: {explanation:string} | null
     //     <p className="text-gray-300 leading-7">{working.explanation}</p>
     //   </CardContent>
     // </Card>
-    <section className="space-y-4">
-      <h2 className="text-2xl font-bold tracking-tight text-gray-50 px-6">Working (later we will update this) </h2>
+    <section className="space-y-12">
+      <h2 className="text-2xl font-bold tracking-tight text-gray-50 px-6 mt-10">Working (later we will update this) </h2>
     <p className="text-gray-300 leading-7 px-10">{working.explanation}</p>
     </section>
   )

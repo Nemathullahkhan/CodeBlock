@@ -1,3 +1,5 @@
+
+
 "use client";
 
 import { motion } from "framer-motion";
@@ -7,20 +9,24 @@ import { Play, Loader2 } from "lucide-react";
 import { useState } from "react";
 import { useCodeEditorStore } from "@/store/useCodeEditorStore";
 
-type questionrunProps = {
-  id: string;
-  programName:string|null
-} 
+type TestCase = {
+  input: string;
+  output: string;
+};
 
-// export default function QuestionRunButton({ id, programName }: { id: string; programName: string | null })
-export default function QuestionRunButton({ id, programName }:questionrunProps) {
-  const { runAndVerifyCode, isRunning, runfloydAndVerifyCode, runWarshallAndVerifyCode,runTopologicalSortAndVerifyCode, setTestCases } = useCodeEditorStore();
+type QuestionRunButtonProps = {
+  id: string;
+  programName: string | null;
+};
+
+export default function QuestionRunButton({ id, programName }: QuestionRunButtonProps) {
+  const { runAndVerifyCode, isRunning, runfloydAndVerifyCode, runWarshallAndVerifyCode, runTopologicalSortAndVerifyCode, setTestCases } = useCodeEditorStore();
   const [open, setOpen] = useState(false);
   const [isLoadingTestCases, setIsLoadingTestCases] = useState(false);
   const [testCaseError, setTestCaseError] = useState<string | null>(null);
 
   // Fetch test cases from the API
-  const fetchTestCases = async () => {
+  const fetchTestCases = async (): Promise<TestCase[]> => {
     try {
       const response = await fetch(`/api/testcases/${id}`);
       if (!response.ok) {
@@ -36,7 +42,7 @@ export default function QuestionRunButton({ id, programName }:questionrunProps) 
   };
 
   // Transform test cases into the required format
-  const transformTestCases = (testCases) => {
+  const transformTestCases = (testCases: TestCase[]) => {
     return testCases.map((testCase) => ({
       input: testCase.input,
       expectedOutput: testCase.output,
@@ -60,23 +66,26 @@ export default function QuestionRunButton({ id, programName }:questionrunProps) 
 
   // Handle running and verifying the code
   const handleRun = async () => {
+    if (!programName) {
+      console.error("Program name is required");
+      return;
+    }
+
     setOpen(true); // Open dialog when execution starts
     try {
       await loadTestCases(); // Load test cases before running
-      if (["0/1 Knapsack Problem", "Merge Sort", "Quick Sort","Depth-First Search (DFS)","Kruskal Algorithm (Minimum Spanning Tree)","Prim Algorithm (Minimum Spanning Tree)"].includes(programName)) {
+      if (["0/1 Knapsack Problem", "Merge Sort", "Quick Sort", "Depth-First Search (DFS)", "Kruskal Algorithm (Minimum Spanning Tree)", "Prim Algorithm (Minimum Spanning Tree)"].includes(programName)) {
         await runAndVerifyCode(); // Run and verify the code
-      }
-      else if (["Warshall Algorithm (Transitive Closure)","Dijkstra Algorithm (Single-Source Shortest Path)","Breadth-First Search (BFS)"].includes(programName)){
-        await runWarshallAndVerifyCode(); 
-      }
-      else if (["Topological Sorting"].includes(programName)){
-        await runTopologicalSortAndVerifyCode(); 
-      }
-       else {
-        await runfloydAndVerifyCode(); 
+      } else if (["Warshall Algorithm (Transitive Closure)", "Dijkstra Algorithm (Single-Source Shortest Path)", "Breadth-First Search (BFS)"].includes(programName)) {
+        await runWarshallAndVerifyCode();
+      } else if (["Topological Sorting"].includes(programName)) {
+        await runTopologicalSortAndVerifyCode();
+      } else {
+        await runfloydAndVerifyCode();
       }
     } catch (error) {
       console.error("Error running code:", error);
+      console.error("Testcases",testCaseError);
     } finally {
       setOpen(false); // Close dialog when execution finishes
     }
@@ -87,8 +96,8 @@ export default function QuestionRunButton({ id, programName }:questionrunProps) 
       <Button
         onClick={handleRun}
         disabled={isRunning || isLoadingTestCases}
-        variant={"ghost"}
-        className="text-zinc-300 hover:bg-zinc-900 border-2 border-zinc-950 hover:text-white hover:scale-103 transition-all w-32 transition-colors"
+        variant={"outline"}
+        className="text-zinc-300 hover:bg-zinc-900 border-y-0 border-x-4  border-zinc-500 h-8 hover:text-white hover:scale-105 transition-all w-32 transition-colors "
       >
         {isRunning || isLoadingTestCases ? (
           <Loader2 className="w-4 h-4 animate-spin" />

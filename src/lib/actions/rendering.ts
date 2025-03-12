@@ -86,3 +86,20 @@ export async function fetchProblemList () {
   if (!topics) return [];
   return topics;
 }
+
+export async function renderTimenSpace({id}:{id:string}){
+  try{
+    const result = await prisma.content.findUnique({
+      where:{id},
+      select:{
+        timeComplexity:true,
+        spaceComplexity:true,
+      }
+    })
+    return result;
+
+  }catch(err){
+    console.error("Error occured at the renderTimenSpace",err);
+  }
+
+}

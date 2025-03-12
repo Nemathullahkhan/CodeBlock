@@ -1,5 +1,3 @@
-
-
 // import {
 //   Card,
 //   CardHeader,
@@ -28,13 +26,20 @@
 //   );
 // }
 
-
 "use client";
 
 import { useEffect, useState } from "react";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+} from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Skeleton } from "@/components/ui/skeleton";
+import Image from "next/image";
+import { Fullscreen } from "lucide-react";
 
 interface ModuleType {
   id: string;
@@ -63,24 +68,35 @@ export default function ModuleCard({ id, name, description }: ModuleType) {
   }, [id]);
 
   return (
-    <Card className="w-full h-full flex flex-col justify-between p-4 bg-gradient-to-br from-zinc-950/30 to-zinc-600/20 border border-x-transparent hover:shadow-lg transition hover:scale-110">
-      <div className="text-center  border-2 border-double h-[200px] ">SOMEIMGAE</div>
+    <Card className="w-full h-full flex flex-col justify-between p-4 bg-gradient-to-br from-zinc-950/30 to-zinc-600/20 border border-x-transparent hover:shadow-lg transition hover:scale-95">
+      {/* <div className="text-center  border-2 border-double h-[200px] items-center flex justify-center "> */}
+        <Image src="/c.png" alt="image" width={"300"} height={"200"} className="flex justify-center items-center mx-auto border-2 p-10" />
+      {/* </div> */}
       <CardHeader className="pb-2">
-        <CardTitle className="text-xl font-semibold text-white">{name}</CardTitle>
+        <CardTitle className="text-xl font-semibold text-white">
+          {name}
+        </CardTitle>
       </CardHeader>
       <CardContent className="text-gray-400 text-sm mt-2">
         <CardDescription>{description}</CardDescription>
       </CardContent>
 
       {/* ✅ Only show progress bar if progress has started */}
-      {progress === null ?
-      (
-        <Skeleton  className="h-10 rounded-lg bg-zinc-900/90" />
-      ): progress > 0 && (
-        <div className="mt-4 mx-5">
-          <p className="text-xs text-gray-300 mb-1">Progress: <span className="font-semibold text-xl">{progress}%</span></p>
-          <Progress value={progress} className="h-1 w-40 [&>div]:bg-green-500" />
-        </div>
+      {progress === null ? (
+        <Skeleton className="h-10 rounded-lg bg-zinc-900/90" />
+      ) : (
+        progress > 0 && (
+          <div className="mt-4 mx-5">
+            <p className="text-xs text-gray-300 mb-1">
+              Progress:{" "}
+              <span className="font-semibold text-xl">{progress}%</span>
+            </p>
+            <Progress
+              value={progress}
+              className="h-1 w-40 [&>div]:bg-green-500"
+            />
+          </div>
+        )
       )}
     </Card>
   );
