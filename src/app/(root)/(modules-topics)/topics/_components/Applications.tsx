@@ -13,10 +13,10 @@ export default function Applications({ applications }: props) {
         {applications?.map((app, index) => {
           const [boldText, ...normalText] = app.split("-");
           return (
-            <p key={index} className="flex gap-1 text-gray-300">
+            <span key={index} className="flex gap-1 text-gray-300">
               <p className=" text-gray-400 hover:text-gray-50 transition-colors">{boldText} – </p>
               {normalText.join(" – ")}
-            </p>
+            </span>
           );
         })}
       </ul>

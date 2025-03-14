@@ -172,7 +172,7 @@ export default async function MulePage({ params }: { params: { id: string } }) {
                   {mule.topics.map((topic, topicIdx) => (
                     <div
                       key={topic.id}
-                      className="group rounded-lg border bg-card/50 transition-colors hover:bg-card"
+                      className="group rounded-lg border border-zinc-700 bg-card/50 transition-colors hover:bg-card"
                     >
                       {/* Topic Header */}
                       <div className="p-4 flex items-start gap-4">
@@ -189,13 +189,13 @@ export default async function MulePage({ params }: { params: { id: string } }) {
                             </p>
                           )}
                         </div>
-                        <Badge variant="outline" className="ml-auto ">
+                        <Badge variant="outline" className="ml-auto border-zinc-700 border ">
                           {topic.contents.length} Lessons
                         </Badge>
                       </div>
 
                       {/* Content List */}
-                      <div className="border-t bg-muted/50">
+                      <div className="border-t border-zinc-700 bg-muted/50">
                         {topic.contents.map((content, idx) => {
                           const isCompleted =
                             userProgressMap.get(content.id) || false;

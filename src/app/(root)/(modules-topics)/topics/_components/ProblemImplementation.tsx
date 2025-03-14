@@ -1,36 +1,3 @@
-// import { CheckCircle, Circle } from "lucide-react";
-// import Link from "next/link";
-
-// export default function ProblemImplementation({ id,completedPrograms}: { id: string, completedPrograms:boolean }) {
-//   return (
-//     <section id="problems" className="space-y-6">
-//       <h1 className="text-2xl font-semibold leading-none tracking-tight text-gray-50">Problem and Implmentation</h1>
-//       <p className="mt-10 text-zinc-500">Utilize the online IDE to practice and implement the solution for this problem. Try
-//         <Link href = {`/playground`} className="text-blue-500 mx-2 hover:border-b-2 hover:border-blue-300">
-
-//         Playground
-//         </Link>
-//       </p>
-//       <Link
-//         href={`/playground/${id}`}
-//         className="block mt-6 text-blue-500 hover:text-blue-400"
-//       >
-//         {completedPrograms === true ? (
-//             <div className="">
-//                 <CheckCircle className="w-4 h-4"/>
-//             </div>
-//         )
-//             : (
-//                 <div className="">
-//                     <Circle className = "w-4 h-4"/>
-//                 </div>
-//             )}
-//             Questions
-//       </Link>
-//     </section>
-//   );
-// }
-
 import { Button } from "@/components/ui/button";
 import { CheckCircle, Circle } from "lucide-react";
 import Link from "next/link";

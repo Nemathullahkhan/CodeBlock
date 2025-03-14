@@ -38,6 +38,7 @@ def printArray(A, size):
           if i < size - 1:
               print(",", end="")
       print("]")
+      
   
 # Test cases
 testCases = [
@@ -68,7 +69,13 @@ for i in range(numTests):
           // Implement the mergeSort function here
       }
 
-  
+  // Ignore the below code implementation
+
+/*-----------------XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+----------------XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+---------------------------------------------XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+--------------------------------------------XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+*/
   
       public static void printArray(int A[], int size) {
           System.out.print("[");
@@ -125,7 +132,14 @@ for i in range(numTests):
       }
       cout << "]" << endl;
   }
-  
+  // Ignore the below code implementation
+
+/*-----------------XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+----------------XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+---------------------------------------------XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+--------------------------------------------XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+*/
+
   int main() {
       // Test cases
       int testCases[][10] = {
@@ -171,6 +185,13 @@ for i in range(numTests):
       printf("] ");
   }
   
+  // Ignore the below code implementation
+
+/*-----------------XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+----------------XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+---------------------------------------------XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+--------------------------------------------XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+*/
   int main() {
       // Test cases
       int testCases[][10] = {
@@ -448,7 +469,14 @@ for i in range(numTests):
       }
       printf("] ");
   }
-  
+  // Ignore the below code implementation
+
+/*-----------------XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+----------------XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+---------------------------------------------XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+--------------------------------------------XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+*/
+
   int main() {
       // Test cases
       int testCases[][10] = {
@@ -488,27 +516,12 @@ for i in range(numTests):
 
 // Function to initialize the distance matrix
 void initializeDistanceMatrix(int **graph, int **dist, int V) {
-    for (int i = 0; i < V; i++) {
-        for (int j = 0; j < V; j++) {
-            dist[i][j] = graph[i][j];
-        }
-    }
+    // write your code
 }
 
 // Function to perform the Floyd-Warshall algorithm
 void floydWarshallAlgorithm(int **dist, int V) {
-    for (int k = 0; k < V; k++) {
-        for (int i = 0; i < V; i++) {
-            for (int j = 0; j < V; j++) {
-                if (dist[i][k] != INF && dist[k][j] != INF) {
-                    int through_k_dist = dist[i][k] + dist[k][j];
-                    if (through_k_dist < dist[i][j]) {
-                        dist[i][j] = through_k_dist;
-                    }
-                }
-            }
-        }
-    }
+    // write your code 
 }
 
 // Function to print the distance matrix
@@ -524,6 +537,13 @@ void printDistanceMatrix(int **dist, int V) {
         printf("\n");
     }
 }
+// Ignore the below code implementation
+
+/*-----------------XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+----------------XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+---------------------------------------------XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+--------------------------------------------XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+*/
 
 // Main function
 int main() {
@@ -591,14 +611,16 @@ void warshall(int graph[10][10], int n) {
     int i, j, k;
     
     // Warshall's algorithm for transitive closure
-    for (k = 0; k < n; k++) {
-        for (i = 0; i < n; i++) {
-            for (j = 0; j < n; j++) {
-                graph[i][j] = graph[i][j] || (graph[i][k] && graph[k][j]);
-            }
-        }
-    }
 }
+
+
+// Ignore the below code implementation
+
+/*-----------------XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+----------------XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+---------------------------------------------XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+--------------------------------------------XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+*/
 
 void printMatrix(int graph[10][10], int n) {
     for (int i = 0; i < n; i++) {
@@ -681,46 +703,20 @@ int main() {
 #define INF INT_MAX
 
 void dijkstra(int n, int src, int cost[10][10], int dist[10]) {
-    int visited[10] = {0};
-    for (int i = 0; i < n; i++) {
-        dist[i] = INF;
-    }
-    dist[src] = 0;
-
-    for (int count = 0; count < n - 1; count++) {
-        int u = -1;
-        for (int v = 0; v < n; v++) {
-            if (!visited[v] && (u == -1 || dist[v] < dist[u])) {
-                u = v;
-            }
-        }
-        if (dist[u] == INF) break; // No more reachable vertices
-        visited[u] = 1;
-
-        for (int v = 0; v < n; v++) {
-            if (!visited[v] && cost[u][v] != INF && dist[u] != INF && dist[u] + cost[u][v] < dist[v]) {
-                dist[v] = dist[u] + cost[u][v];
-            }
-        }
-    }
+    // start writing from here
 }
 
 void printShortestDistances(int dist[], int n, int src) {
-    printf("[");
-    for (int i = 0; i < n; i++) {
-        if (i == src) {
-            printf("0");
-        } else if (dist[i] == INF) {
-            printf("INF");
-        } else {
-            printf("%d", dist[i]);
-        }
-        if (i < n - 1) {
-            printf(", ");
-        }
-    }
-    printf("]\\n");
+    // start writing from here
 }
+
+// Ignore the below code implementation
+
+/*-----------------XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+----------------XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+---------------------------------------------XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+--------------------------------------------XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+*/
 
 int main() {
     int n, src;
@@ -795,30 +791,16 @@ int main() {
 #define INF INT_MAX
 
 void dijkstra(int n, int src, int cost[10][10], int dist[10]) {
-    int visited[10] = {0};
-    for (int i = 0; i < n; i++) {
-        dist[i] = INF;
-    }
-    dist[src] = 0;
-
-    for (int count = 0; count < n - 1; count++) {
-        int u = -1;
-        for (int v = 0; v < n; v++) {
-            if (!visited[v] && (u == -1 || dist[v] < dist[u])) {
-                u = v;
-            }
-        }
-        if (dist[u] == INF) break; // No more reachable vertices
-        visited[u] = 1;
-
-        for (int v = 0; v < n; v++) {
-            if (!visited[v] && cost[u][v] != INF && dist[u] != INF && dist[u] + cost[u][v] < dist[v]) {
-                dist[v] = dist[u] + cost[u][v];
-            }
-        }
-    }
+    // start writing from here
 }
 
+// Ignore the below code implementation
+
+/*-----------------XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+----------------XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+---------------------------------------------XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+--------------------------------------------XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+*/
 void printShortestDistances(int dist[], int n, int src) {
     printf("[");
     for (int i = 0; i < n; i++) {
@@ -906,30 +888,20 @@ int main() {
 
 // BFS function for adjacency list
 int bfs(int n, int* adj[], int adjSize[], int startNode, int result[20]) {
-    int visited[20] = {0};
-    int queue[20];
-    int front = 0, rear = -1;
-    int resultIndex = 0;
-
-    queue[++rear] = startNode; // No need to adjust for 0-based indexing
-    visited[startNode] = 1;
-
-    while (front <= rear) {
-        int current = queue[front++];
-        result[resultIndex++] = current; // Store result
-
-        // Traverse all neighbors of the current node
-        for (int i = 0; i < adjSize[current]; i++) {
-            int neighbor = adj[current][i];
-            if (!visited[neighbor]) {
-                queue[++rear] = neighbor;
-                visited[neighbor] = 1;
-            }
-        }
-    }
-
-    return resultIndex;
+//    start writing from here
 }
+
+
+// Ignore the below code implementation
+
+/*-----------------XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+----------------XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+---------------------------------------------XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+--------------------------------------------XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+*/
+
+
+
 
 // Function to print the result in a customizable way
 void printResult(int result[20], int count, const char* format) {
@@ -998,13 +970,58 @@ int main() {
         "defaultCode": `#include <stdio.h>
 #include <stdlib.h>
 
-
-int main() {
-    printf("Hello world\\n");
-    
-    return 0;
+// DFS function for adjacency list
+void dfs(int n, int* adj[], int adjSize[], int startNode, int visited[]) {
+    // start writing from here
 }
-    `
+
+// Function to check if the graph is connected
+int isConnected(int n, int* adj[], int adjSize[]) {
+    // start writing from here
+}
+
+
+
+
+// Ignore the below Driver code
+int main() {
+    // Predefined test cases (adjacency lists)
+    int* adj1[] = {
+        (int[]){1, 2},    // Node 0 is connected to nodes 1 and 2
+        (int[]){0, 3},    // Node 1 is connected to nodes 0 and 3
+        (int[]){0, 3},    // Node 2 is connected to nodes 0 and 3
+        (int[]){1, 2}     // Node 3 is connected to nodes 1 and 2
+    };
+    int adjSize1[] = {2, 2, 2, 2}; // Sizes of each adjacency list
+
+    int* adj2[] = {
+        (int[]){1},       // Node 0 is connected to node 1
+        (int[]){0, 2},     // Node 1 is connected to nodes 0 and 2
+        (int[]){1},        // Node 2 is connected to node 1
+        (int[]){4},        // Node 3 is connected to node 4
+        (int[]){3}         // Node 4 is connected to node 3
+    };
+    int adjSize2[] = {1, 2, 1, 1, 1}; // Sizes of each adjacency list
+
+    // Number of nodes in each test case
+    int n1 = 4, n2 = 5;
+
+    // Test Case 1
+    if (isConnected(n1, adj1, adjSize1)) {
+        printf("1 ");
+    } else {
+        printf("0 ");
+    }
+
+    // Test Case 2
+    if (isConnected(n2, adj2, adjSize2)) {
+        printf("1 ");
+    } else {
+        printf("0 ");
+    }
+
+    return 0;
+} `
       }
     ]
   },
@@ -1029,58 +1046,21 @@ int kruskal(int n, int cost[MAX][MAX]);
 
 // Kruskal's algorithm implementation
 int kruskal(int n, int cost[MAX][MAX]) {
-    int parent[MAX] = {0};
-    int mincost = 0;
-    int ne = 1;
-
-    while (ne < n) {
-        int min = 999;
-        int a = -1, b = -1;
-
-        // Find the minimum edge
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                if (cost[i][j] < min) {
-                    min = cost[i][j];
-                    a = i;
-                    b = j;
-                }
-            }
-        }
-
-        // Check if adding this edge forms a cycle
-        int u = find(a, parent);
-        int v = find(b, parent);
-
-        if (uni(u, v, parent)) {
-            mincost += min;
-            ne++;
-        }
-
-        // Mark the edge as used
-        cost[a][b] = cost[b][a] = 999;
-    }
-
-    return mincost;
+    // start writing from here
 }
 
 // Find function to detect cycles
 int find(int i, int parent[]) {
-    while (parent[i]) {
-        i = parent[i];
-    }
-    return i;
+    // write the function
 }
 
 // Union function to merge two sets
 int uni(int i, int j, int parent[]) {
-    if (i != j) {
-        parent[j] = i;
-        return 1;
-    }
-    return 0;
+    // write the function
 }
 
+
+// Ignore the driver code
 // Main function
 int main() {
     // Test Case 1
@@ -1177,44 +1157,10 @@ int prim(int n, int cost[MAX][MAX]);
 
 // Prim's algorithm implementation
 int prim(int n, int cost[MAX][MAX]) {
-    int visited[MAX] = {0}; // Track visited nodes
-    int mincost = 0;        // Total minimum cost
-    int ne = 1;             // Number of edges in the MST
-
-    visited[0] = 1; // Start from the first node (0-indexed)
-
-    while (ne < n) {
-        int min = INF; // Initialize to a large value
-        int a = -1, b = -1;
-
-        // Find the minimum edge
-        for (int i = 0; i < n; i++) {
-            if (visited[i]) { // Only consider nodes already in the MST
-                for (int j = 0; j < n; j++) {
-                    if (!visited[j] && cost[i][j] < min) {
-                        min = cost[i][j];
-                        a = i;
-                        b = j;
-                    }
-                }
-            }
-        }
-
-        // If no valid edge is found, the graph is disconnected
-        if (a == -1 || b == -1) {
-            printf("Graph is disconnected. No valid MST.\\n");
-            return -1;
-        }
-
-        // Add the edge to the MST
-        mincost += min;
-        visited[b] = 1; // Mark the new node as visited
-        ne++;
-    }
-
-    return mincost;
+    // start writing from here    
 }
 
+// Ignore the Driver Code
 // Main function
 int main() {
     // Test Case 1

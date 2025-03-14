@@ -19,7 +19,6 @@ import {
 import Link from "next/link";
 import { renderTimenSpace } from "@/lib/actions/rendering";
 
-
 export default function SubmitButton({
   id,
   disabled,
@@ -108,19 +107,24 @@ export default function SubmitButton({
 
         if (allPassed) {
           // Save progress if all test cases passed
+          const userId = session?.user?.id;
+          if (!userId) {
+            throw new Error("User ID is undefined.");
+          }
           await questionUserProgress({
             id: id,
-            userId: session?.user.id,
+            userId: userId,
             completed: true,
           });
 
           setIsCompleted(true);
         }
-      } catch (error: any) {
+      } catch (error) {
         console.error("Error updating progress:", error);
         setDialogContent({
           title: "Error",
-          description: "An error occurred while running your code. Please try again.",
+          description:
+            "An error occurred while running your code. Please try again.",
           passedTestCases: 0,
           totalTestCases: 0,
           timeComplexity: "N/A",
@@ -157,18 +161,27 @@ export default function SubmitButton({
       <Dialog open={isDialogOpen} onOpenChange={setDialogOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle className={dialogContent?.title === "Success!" ? "text-emerald-600":"text-rose-800"}>{dialogContent?.title}</DialogTitle>
-            <DialogDescription>
-              {dialogContent?.description}
-            </DialogDescription>
+            <DialogTitle
+              className={
+                dialogContent?.title === "Success!"
+                  ? "text-emerald-600"
+                  : "text-rose-800"
+              }
+            >
+              {dialogContent?.title}
+            </DialogTitle>
+            <DialogDescription>{dialogContent?.description}</DialogDescription>
           </DialogHeader>
           <div className="space-y-4">
             <div className="f">
               <p className="font-medium">Test Cases:</p>
               <p>
-                {dialogContent?.passedTestCases} / {dialogContent?.totalTestCases} passed
+                {dialogContent?.passedTestCases} /{" "}
+                {dialogContent?.totalTestCases} passed
               </p>
-              <span className="text-xs text-zinc-600">Run the code before submission to get accurate results</span>
+              <span className="text-xs text-zinc-600">
+                Run the code before submission to get accurate results
+              </span>
             </div>
             <div>
               <p className="font-medium">Time Complexity:</p>
@@ -187,10 +200,7 @@ export default function SubmitButton({
                 </Button>
               </Link>
             )}
-            <Button
-              variant="secondary"
-              onClick={() => setDialogOpen(false)}
-            >
+            <Button variant="secondary" onClick={() => setDialogOpen(false)}>
               Close
             </Button>
           </DialogFooter>
@@ -199,10 +209,6 @@ export default function SubmitButton({
     </>
   );
 }
-
-
-
-
 
 // "use client";
 

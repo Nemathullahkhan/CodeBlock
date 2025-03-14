@@ -248,54 +248,54 @@
 // }
 
 
-"use client";
+// "use client";
 
-import { useState, useTransition } from "react";
-import { Button } from "@/components/ui/button";
-import { questionUserProgress } from "@/lib/actions/ideActions";
-import { useSession } from "next-auth/react";
+// import { useState, useTransition } from "react";
+// import { Button } from "@/components/ui/button";
+// import { questionUserProgress } from "@/lib/actions/ideActions";
+// import { useSession } from "next-auth/react";
 
-export default function CreationMod({ contentId }: { contentId: string }) {
-  const [isPending, startTransition] = useTransition();
-  const [error, setError] = useState<string | null>(null);
-  const { data: session } = useSession();
+// export default function CreationMod({ contentId }: { contentId: string }) {
+//   const [isPending, startTransition] = useTransition();
+//   const [error, setError] = useState<string | null>(null);
+//   const { data: session } = useSession();
   
-  const handleUserProgress = () => {
-    if (!session?.user?.id) {
-      setError("You must be logged in to track progress");
-      return;
-    }
+//   const handleUserProgress = () => {
+//     if (!session?.user?.id) {
+//       setError("You must be logged in to track progress");
+//       return;
+//     }
     
-    startTransition(async () => {
-      try {
-        const result = await questionUserProgress({
-          id: contentId,
-          userId: session.user.id,
-          completed: true // You can toggle this based on current state if needed
-        });
+//     startTransition(async () => {
+//       try {
+//         const result = await questionUserProgress({
+//           id: contentId,
+//           userId: session.user.id,
+//           completed: true // You can toggle this based on current state if needed
+//         });
         
-        console.log("User progress updated:", result);
-        // Optional: Add success message or UI update here
-      } catch (err: any) {
-        setError(err.message);
-        console.error("Failed to update user progress", err);
-      }
-    });
-  };
+//         console.log("User progress updated:", result);
+//         // Optional: Add success message or UI update here
+//       } catch (err: any) {
+//         setError(err.message);
+//         console.error("Failed to update user progress", err);
+//       }
+//     });
+//   };
   
-  return (
-    <div>
-      {error && <p className="text-red-500">{error}</p>}
-      <div className="max-w-md grid grid-cols-2 ml-10 gap-2">
-        <Button
-          onClick={handleUserProgress}
-          disabled={isPending || !session?.user}
-          className="w-36 h-10 text-xs"
-          variant={"outline"}
-        >
-          {isPending ? "Updating..." : "Mark as Completed"}
-        </Button>
-      </div>
-    </div>
-  );
-}
+//   return (
+//     <div>
+//       {error && <p className="text-red-500">{error}</p>}
+//       <div className="max-w-md grid grid-cols-2 ml-10 gap-2">
+//         <Button
+//           onClick={handleUserProgress}
+//           disabled={isPending || !session?.user}
+//           className="w-36 h-10 text-xs"
+//           variant={"outline"}
+//         >
+//           {isPending ? "Updating..." : "Mark as Completed"}
+//         </Button>
+//       </div>
+//     </div>
+//   );
+// }

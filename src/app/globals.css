@@ -2,10 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Global body styles */
 body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+/* Custom color variables for light and dark themes */
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -42,6 +44,7 @@ body {
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
+
   .dark {
     --background: 0 0% 3.9%;
     --foreground: 0 0% 98%;
@@ -77,6 +80,7 @@ body {
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 }
+
 /* Modern Intro.js Dark Theme with Compact Tooltip and Clear Buttons */
 .introjs-overlay {
   background-color: rgba(0, 0, 0, 0.9) !important;
@@ -93,66 +97,65 @@ body {
 .introjs-tooltip {
   background-color: #1a1a1a !important;
   color: #ffffff !important;
-  border-radius: 12px !important; /* Slightly smaller radius */
+  border-radius: 12px !important;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.8) !important;
-  border: 1px solid #444 !important; /* Thinner border */
-  padding: 12px !important; /* Reduced padding */
-  max-width: 140px; /* Smaller max width */
+  border: 1px solid #444 !important;
+  padding: 12px !important;
+  max-width: 140px;
 }
 
 .introjs-tooltip-header {
   background-color: transparent !important;
   border-bottom: 1px solid #444 !important;
-  padding-bottom: 8px !important; /* Reduced padding */
+  padding-bottom: 8px !important;
 }
 
 .introjs-tooltip-title {
   color: #ffffff !important;
   font-weight: 600 !important;
-  font-size: 14px !important; /* Smaller font size */
-  margin-bottom: 4px !important; /* Reduced margin */
+  font-size: 14px !important;
+  margin-bottom: 4px !important;
 }
 
 .introjs-tooltiptext {
   color: #e0e0e0 !important;
-  font-size: 11px !important; /* Smaller font size */
-  line-height: 1.4 !important; /* Tighter line height */
+  font-size: 11px !important;
+  line-height: 1.4 !important;
 }
 
-/* Clear and Prominent Buttons */
 .introjs-button {
-  background-color: #444 !important; /* Slightly lighter background */
+  background-color: #444 !important;
   color: #ffffff !important;
-  border: 1px solid #666 !important; /* Brighter border */
-  border-radius: 6px !important; /* Slightly rounded corners */
-  padding: 6px 12px !important; /* Slightly larger padding */
+  border: 1px solid #666 !important;
+  border-radius: 6px !important;
+  padding: 6px 12px !important;
   transition: all 0.3s ease !important;
-  font-size: 12px !important; /* Slightly larger font size */
-  margin: 0 4px !important; /* Slightly larger margin */
-  font-weight: 500; /* Medium font weight */
+  font-size: 12px !important;
+  margin: 0 4px !important;
+  font-weight: 500;
 }
 
 .introjs-button:hover {
-  background-color: #555 !important; /* Brighter hover */
-  transform: translateY(-1px); /* Slight lift on hover */
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4); /* Add shadow on hover */
+  background-color: #555 !important;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
 }
 
 .introjs-button.introjs-skipbutton {
-  background-color: transparent !important; /* Transparent background */
-  color: #ff5555 !important; /* Red color for skip */
-  border: 1px solid #ff5555 !important; /* Red border */
+  background-color: transparent !important;
+  color: #ff5555 !important;
+  border: 1px solid #ff5555 !important;
 }
 
 .introjs-button.introjs-skipbutton:hover {
-  background-color: rgba(255, 85, 85, 0.1) !important; /* Light red hover */
+  background-color: rgba(255, 85, 85, 0.1) !important;
 }
 
 .introjs-progress {
   background-color: #333 !important;
   border-radius: 4px !important;
-  height: 4px !important; /* Thinner progress bar */
-  margin: 8px 0 !important; /* Reduced margin */
+  height: 4px !important;
+  margin: 8px 0 !important;
 }
 
 .introjs-progressbar {
@@ -163,14 +166,14 @@ body {
 .introjs-bullets ul li a {
   background-color: #555 !important;
   border-radius: 50% !important;
-  width: 6px !important; /* Smaller bullets */
-  height: 6px !important; /* Smaller bullets */
-  margin: 0 3px !important; /* Reduced margin */
+  width: 6px !important;
+  height: 6px !important;
+  margin: 0 3px !important;
 }
 
 .introjs-bullets ul li a.active {
   background-color: #ffffff !important;
-  transform: scale(1.1); /* Slightly enlarge active bullet */
+  transform: scale(1.1);
 }
 
 /* Add animations */
@@ -186,9 +189,9 @@ body {
 }
 
 .introjs-tooltip {
-  animation: fadeIn 0.3s ease-out; /* Fade-in animation for tooltips */
+  animation: fadeIn 0.3s ease-out;
 }
 
 .introjs-helperLayer {
-  animation: fadeIn 0.3s ease-out; /* Fade-in animation for highlights */
+  animation: fadeIn 0.3s ease-out;
 }

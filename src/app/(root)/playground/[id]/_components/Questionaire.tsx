@@ -1,19 +1,55 @@
+
+
 "use client";
 
 import React, { useEffect, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { notFound } from "next/navigation";
 import { fetchQuestionData } from "@/lib/actions/rendering";
+import { Example, QuestionData } from "@/app/types/types";
+import { JsonValue } from "@prisma/client/runtime/library"; // Adjust the import based on your project
+
+// Define a new type for the result object
+interface FetchQuestionDataResponse {
+  id: string;
+  title: string;
+  validatedExamples: Example[];
+  Questions?: {
+    id: string;
+    contentId: string;
+    question: string;
+    examples: JsonValue; // Use JsonValue since the structure might not match Example[]
+    constraints: string[];
+    difficulty: string; // Allow any string for flexibility
+    averageTime: string;
+    testcases: JsonValue; // Use JsonValue since the structure is unknown
+  } | null;
+  // Add other fields if necessary
+}
 
 export default function Questionaire({ id }: { id: string }) {
-  const [data, setData] = useState<any>(null);
-  const [validatedExamples, setValidatedExamples] = useState<any[]>([]);
+  const [data, setData] = useState<QuestionData | null>(null);
+  const [validatedExamples, setValidatedExamples] = useState<Example[]>([]);
 
   useEffect(() => {
     async function loadData() {
-      const result = await fetchQuestionData(id);
+      const result: FetchQuestionDataResponse = await fetchQuestionData(id);
       if (result) {
-        setData(result);
+        // Transform the result into QuestionData
+        const transformedData: QuestionData = {
+          id: result.id,
+          title: result.title,
+          Questions: result.Questions
+            ? {
+                question: result.Questions.question,
+                examples: result.Questions.examples as Example[], // Cast to Example[]
+                constraints: result.Questions.constraints,
+                difficulty: result.Questions.difficulty as "Easy" | "Medium" | "Hard", // Cast to the expected type
+                averageTime: result.Questions.averageTime,
+              }
+            : undefined,
+        };
+        setData(transformedData);
         setValidatedExamples(result.validatedExamples);
       } else {
         notFound();
@@ -56,10 +92,8 @@ export default function Questionaire({ id }: { id: string }) {
 
           {/* Question */}
           <section className="flex flex-col gap-4 text-zinc-300">
-            {/* <p className="leading-7">{data.Questions?.question}</p> */}
-
             <p className="leading-7">
-              {data.Questions?.question.split("\n").map((line:string, index:number) => (
+              {data.Questions?.question.split("\n").map((line: string, index: number) => (
                 <React.Fragment key={index}>
                   {line}
                   <div className="h-1"></div>
@@ -71,10 +105,10 @@ export default function Questionaire({ id }: { id: string }) {
               {validatedExamples.map((ex, idx) => (
                 <div
                   key={idx}
-                  className="border rounded-md m-2 bg-zinc-900/90 "
+                  className="border border-zinc-800 rounded-md m-2 bg-zinc-900/90 "
                 >
                   <div className="">
-                    <div className="text-sm py-1 px-2  bg-gradient-to-br from-zinc-800/70 to-zinc-900 border-b border-zinc-700/50 ">
+                    <div className="text-sm py-1 px-2  bg-gradient-to-br from-zinc-800/70 to-zinc-900 border-b border-zinc-700/50">
                       <p className="text-zinc-200 font-extralight tracking-tight px-4 ">
                         Example - {idx + 1}
                       </p>
@@ -100,17 +134,16 @@ export default function Questionaire({ id }: { id: string }) {
                 </div>
               ))}
             </div>
+
             {/* Constraints */}
             <div className="text-zinc-300 text-muted-foreground">
               <h1 className="font-bold text-md text-primary ">Constraints:</h1>
               <div className="mx-2">
-                {data?.Questions?.constraints.map(
-                  (cons: string, idx: number) => (
-                    <p key={idx} className="font-medium text-sm">
-                      • {cons}
-                    </p>
-                  )
-                )}
+                {data?.Questions?.constraints.map((cons: string, idx: number) => (
+                  <p key={idx} className="font-medium text-sm">
+                    • {cons}
+                  </p>
+                ))}
               </div>
             </div>
           </section>
