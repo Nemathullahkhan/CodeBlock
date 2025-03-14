@@ -32,7 +32,7 @@ type SomeProps = {
 };
 
 export default function SomeComponent({ id, programName }: SomeProps) {
-  const { status, data: session } = useSession(); 
+  const { status} = useSession(); 
   const router = useRouter(); 
   const containerRef = useRef(null);
   const [panelSizes, setPanelSizes] = useState({
@@ -50,6 +50,7 @@ export default function SomeComponent({ id, programName }: SomeProps) {
     }
   }, [status, router]);
 
+  console.log(containerWidth)
   // Track container width using ResizeObserver
   useEffect(() => {
     if (!containerRef.current) return;
@@ -77,16 +78,16 @@ export default function SomeComponent({ id, programName }: SomeProps) {
   };
 
   // Enforce panel size limits during drag
-  const handlePanelResize = (panelId: string, size: number) => {
-    if (panelId === "left-panel") {
-      // Limit left panel to 60% of container width
-      const maxSize = 50;
-      if (size > maxSize) {
-        return maxSize;
-      }
-    }
-    return size;
-  };
+  // const handlePanelResize = (panelId: string, size: number) => {
+  //   if (panelId === "left-panel") {
+  //     // Limit left panel to 60% of container width
+  //     const maxSize = 50;
+  //     if (size > maxSize) {
+  //       return maxSize;
+  //     }
+  //   }
+  //   return size;
+  // };
 
   useEffect(() => {
     const savedEditorSize = localStorage.getItem("panel-size-editor");
@@ -105,7 +106,7 @@ export default function SomeComponent({ id, programName }: SomeProps) {
   // Render loading state
   if (status === "loading") {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-zinc-950 to-zinc-900 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-b w-full from-zinc-950 to-zinc-900 flex items-center justify-center">
       <LoaderCircle className="w-12 h-12 text-white animate-spin"/>
     </div>
     );

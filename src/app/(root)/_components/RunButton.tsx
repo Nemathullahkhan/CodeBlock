@@ -41,7 +41,7 @@ export default function RunButton() {
 
       {/* Dialog for Execution Animation */}
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="bg-black text-white border-none shadow-xl">
+        <DialogContent className="bg-black text-white border-2 border-zinc-600/20 shadow-xl">
           <div className="flex flex-col items-center justify-center gap-4">
             <span className="text-lg font-medium text-gray-300">Executing...</span>
             <div className="flex gap-2">

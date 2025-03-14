@@ -77,30 +77,118 @@ body {
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 }
+/* Modern Intro.js Dark Theme with Compact Tooltip and Clear Buttons */
+.introjs-overlay {
+  background-color: rgba(0, 0, 0, 0.9) !important;
+  backdrop-filter: blur(6px); /* Add a blur effect for depth */
+}
 
+.introjs-helperLayer {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  border: 2px solid rgba(255, 255, 255, 0.7) !important;
+  border-radius: 12px; /* Rounded corners for highlighted elements */
+  box-shadow: 0 0 24px rgba(255, 255, 255, 0.4); /* Glow effect */
+}
 
+.introjs-tooltip {
+  background-color: #1a1a1a !important;
+  color: #ffffff !important;
+  border-radius: 12px !important; /* Slightly smaller radius */
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.8) !important;
+  border: 1px solid #444 !important; /* Thinner border */
+  padding: 12px !important; /* Reduced padding */
+  max-width: 140px; /* Smaller max width */
+}
 
-@layer base {
-  * {
-    @apply border-border outline-ring/50;
+.introjs-tooltip-header {
+  background-color: transparent !important;
+  border-bottom: 1px solid #444 !important;
+  padding-bottom: 8px !important; /* Reduced padding */
+}
+
+.introjs-tooltip-title {
+  color: #ffffff !important;
+  font-weight: 600 !important;
+  font-size: 14px !important; /* Smaller font size */
+  margin-bottom: 4px !important; /* Reduced margin */
+}
+
+.introjs-tooltiptext {
+  color: #e0e0e0 !important;
+  font-size: 11px !important; /* Smaller font size */
+  line-height: 1.4 !important; /* Tighter line height */
+}
+
+/* Clear and Prominent Buttons */
+.introjs-button {
+  background-color: #444 !important; /* Slightly lighter background */
+  color: #ffffff !important;
+  border: 1px solid #666 !important; /* Brighter border */
+  border-radius: 6px !important; /* Slightly rounded corners */
+  padding: 6px 12px !important; /* Slightly larger padding */
+  transition: all 0.3s ease !important;
+  font-size: 12px !important; /* Slightly larger font size */
+  margin: 0 4px !important; /* Slightly larger margin */
+  font-weight: 500; /* Medium font weight */
+}
+
+.introjs-button:hover {
+  background-color: #555 !important; /* Brighter hover */
+  transform: translateY(-1px); /* Slight lift on hover */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4); /* Add shadow on hover */
+}
+
+.introjs-button.introjs-skipbutton {
+  background-color: transparent !important; /* Transparent background */
+  color: #ff5555 !important; /* Red color for skip */
+  border: 1px solid #ff5555 !important; /* Red border */
+}
+
+.introjs-button.introjs-skipbutton:hover {
+  background-color: rgba(255, 85, 85, 0.1) !important; /* Light red hover */
+}
+
+.introjs-progress {
+  background-color: #333 !important;
+  border-radius: 4px !important;
+  height: 4px !important; /* Thinner progress bar */
+  margin: 8px 0 !important; /* Reduced margin */
+}
+
+.introjs-progressbar {
+  background-color: #ffffff !important;
+  border-radius: 4px !important;
+}
+
+.introjs-bullets ul li a {
+  background-color: #555 !important;
+  border-radius: 50% !important;
+  width: 6px !important; /* Smaller bullets */
+  height: 6px !important; /* Smaller bullets */
+  margin: 0 3px !important; /* Reduced margin */
+}
+
+.introjs-bullets ul li a.active {
+  background-color: #ffffff !important;
+  transform: scale(1.1); /* Slightly enlarge active bullet */
+}
+
+/* Add animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
   }
-  body {
-    @apply bg-background text-foreground;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-
-
-
-
-
-
-@layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
+.introjs-tooltip {
+  animation: fadeIn 0.3s ease-out; /* Fade-in animation for tooltips */
 }
 
+.introjs-helperLayer {
+  animation: fadeIn 0.3s ease-out; /* Fade-in animation for highlights */
+}
