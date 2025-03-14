@@ -35,15 +35,10 @@ import { User } from "@prisma/client";
                         email:credentials?.username
                     }
                 });
-
                 if(!user) throw new Error("User name or password is incorrect");
-
                 if(!credentials?.password) throw new Error("Please provide your password")
-
                 const isPasswordCorrect = await bcrypt.compare(credentials.password,user.password);
-
                 if(!isPasswordCorrect) throw new Error("UserName or password is incorrect..Please try again");
-
                 // extract the password from the user object 
                 const { password,...userWithoutPass} = user;
                 return userWithoutPass; // this is send for next-auth session
@@ -67,5 +62,4 @@ import { User } from "@prisma/client";
 
 
  const handler = NextAuth(authOptions);
-
  export {handler as GET,handler as POST};

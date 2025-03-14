@@ -22,27 +22,11 @@ export default function RunButton() {
 
   return (
     <>
-      {/* <Button
-        onClick={handleRun}
-        disabled={isRunning}
-        variant = "default"
-        className="bg-zinc-100 text-black hover:bg-zinc-900 hover:text-white hover:scale-105 transition-all transition-colors "
-      
-      >
-        {isRunning ? (
-          <span className="text-sm font-medium text-white/90">Running</span>
-        ) : (
-          <>
-            <Play className="w-4 h-4 text-emerald-500 group-hover:scale-110  transition-transform" />
-            <span className="text-sm font-medium">Run Code</span>
-          </>
-        )}
-      </Button> */}
           <Button
         onClick={handleRun}
         disabled={isRunning}
         variant={"outline"}
-        className="text-zinc-300 hover:bg-zinc-900 border-y-0 border-x-4  border-zinc-500 h-8 hover:text-white hover:scale-105 transition-all w-32  "
+        className="text-zinc-300 hover:bg-zinc-900 rounded-full border-y-0 border-x-4  border-zinc-500 w-32 h-5  hover:text-white hover:scale-105 transition-all    "
       >
         {isRunning  ? (
           <Loader2 className="w-4 h-4 animate-spin" />

@@ -3,18 +3,8 @@
 //  cm7kklzg8000pbutcs2ksz8zq
 
 import prisma from "@/lib/prisma";
-import { mergeSortData } from "../data/(divide_conquer)/mergesort";
-import { quickSortData } from "../data/(divide_conquer)/quicksort";
-import { knapSackData } from "../data/(dynamic_programming)/knapsack";
-// import { floydsAlgorithmData } from "../data/(dynamic_programming)/floyd";
-import { dijkstraData } from "../data/(graph_algorithms)/dijkstra";
-import { kruskalData } from "../data/(greedy_techniques)/krushkal";
-import { primsData } from "../data/(greedy_techniques)/prims";
-import { topologicalSortData } from "../data/(graph_algorithms)/topological";
-import { bfsData } from "../data/(graph_algorithms)/bfs";
-import { dfsData } from "../data/(graph_algorithms)/dfs";
-import { warshallData } from "../data/(graph_algorithms)/warshall";
-import { nQueensData } from "../data/(backtracking)/nqueen";
+import { floydsAlgorithmData } from "../data/(dynamic_programming)/floyd";
+
 
 
 
@@ -36,7 +26,8 @@ export async function getModules() {
     const result = await prisma.module.findMany();
     return result;
   } catch (err) {
-    throw new Error("failed to fetch modules", err);
+    console.log(err);
+    throw new Error("failed to fetch modules", );
   }
 }
 // function to add topics in module
@@ -49,6 +40,7 @@ export async function createTopics() {
       moduleId: "cm7j4tic90000buo8oh7a0scf",
     },
   });
+  console.log(result);
 }
 // function to create Content
 export async function createContent() {
@@ -88,7 +80,7 @@ export async function createFAQ() {
         contentId: "cm7lgm7w7004jbu8ouk8n694l",
       },
     });
-
+    console.log(content)
     return createQuestions;
   } catch (err) {
     console.error("Failed to create FAQ's", err);
@@ -153,6 +145,7 @@ export async function implementation() {
     });
     return implementing;
   } catch (err) {
+    console.log(err);
     throw new Error("Server Error: Unable to create implementation");
   }
 }
@@ -181,4 +174,3 @@ export async function illustration() {
 }
 
 
-// Function for the 

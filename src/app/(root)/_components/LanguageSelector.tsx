@@ -26,7 +26,7 @@ export default function LanguageSelector() {
 
   return (
     <Select value={language} onValueChange={setLanguage}>
-      <SelectTrigger className="relative group flex items-center gap-2 w-32 px-3 py-2 rounded-lg border border-zinc-800 bg-zinc-900/50 backdrop-blur-md hover:bg-zinc-800/50 transition-all duration-300">
+      <SelectTrigger className="relative group flex items-center gap-2 w-40 px-3 py-2 rounded-lg border border-zinc-800 bg-zinc-900/50 backdrop-blur-md h-6  hover:bg-zinc-800/50 transition-all duration-300">
         <motion.div initial={{ scale: 0.9 }} animate={{ scale: 1 }} className="flex items-center gap-2">
           <motion.div
             className="relative size-5 rounded-md bg-zinc-800/50 p-1 ring-1 ring-zinc-700/50 group-hover:ring-zinc-600/50 transition-all duration-300"

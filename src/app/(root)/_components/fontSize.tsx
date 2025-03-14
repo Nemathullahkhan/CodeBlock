@@ -30,7 +30,7 @@ export default function FontSizeSelector({ fontSize, handleFontSizeChange }: Fon
           max={24}
           value={[fontSize]}
           onValueChange={(val) => handleFontSizeChange(val[0])}
-          className="w-24 transition-all"
+          className="w-20 h-5  transition-all"
         />
 
         {/* Compact Font Size Display */}

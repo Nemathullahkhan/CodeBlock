@@ -28,8 +28,14 @@ export default function ThemeSelector() {
     "solarized-dark": <Cloud className="size-4" />,
   }
 
+  const handleThemeChange = (newTheme: string) => {
+    setTheme(newTheme)
+    // Force Monaco editor to update its theme
+    window.dispatchEvent(new Event('resize'))
+  }
+
   return (
-    <Select value={theme} onValueChange={setTheme}>
+    <Select value={theme} onValueChange={handleThemeChange}>
       <SelectTrigger className="relative group flex items-center gap-3 px-4 py-2.5 rounded-xl border border-zinc-800 bg-zinc-900/50 backdrop-blur-md hover:bg-zinc-800/50 transition-all duration-300">
         <motion.div
           initial={{ scale: 0.9 }}
@@ -40,7 +46,7 @@ export default function ThemeSelector() {
 
           <SelectValue asChild>
             <span className="text-zinc-300 font-medium tracking-wide">
-              {currentTheme?.label}
+              {currentTheme?.label || 'Select Theme'}
             </span>
           </SelectValue>
 

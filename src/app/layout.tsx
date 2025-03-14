@@ -3,9 +3,8 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "next-themes";
-// import { ToastContainer } from "react-toastify";
 import { SessionProvider } from "next-auth/react";
-import { Toaster } from "@/components/ui/sonner";
+import { ToastContainer } from "react-toastify";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,13 +33,9 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            
-              {/* <Appbar /> */}
               {children}
           </ThemeProvider>
-          <Toaster />
-          {/* <ToastContainer position="top-right" theme="dark" /> */}
-
+          <ToastContainer position="top-right" theme="dark" />
         </SessionProvider>
       </body>
     </html>

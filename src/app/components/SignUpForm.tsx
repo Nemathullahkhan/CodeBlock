@@ -9,7 +9,7 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage, 
+  FormMessage,
 } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -17,10 +17,18 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { passwordStrength } from "check-password-strength";
-import { FaUser, FaEnvelope, FaPhone, FaLock, FaEye, FaEyeSlash } from "react-icons/fa";
+import {
+  FaUser,
+  FaEnvelope,
+  FaPhone,
+  FaLock,
+  FaEye,
+  FaEyeSlash,
+} from "react-icons/fa";
 import PasswordStrength from "./PasswordStrength";
 import { registerUser } from "@/lib/actions/authActions";
 import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 
 const formSchema = z
   .object({
@@ -45,11 +53,9 @@ const formSchema = z
       .string()
       .min(6, { message: "Password must be at least 6 characters" })
       .max(50, { message: "Password must be less than 50 characters" }),
-    accepted: z
-      .boolean()
-      .refine((val) => val === true, {
-        message: "You must accept the terms and conditions",
-      }),
+    accepted: z.boolean().refine((val) => val === true, {
+      message: "You must accept the terms and conditions",
+    }),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords do not match!",
@@ -72,34 +78,35 @@ export default function SignUpForm() {
       accepted: false,
     },
   });
-// for password strength 
 
- const passwordy = form.watch("password");
- const passwordLength:string | undefined = form.watch("password")
-  
- 
+  // for password strength
+  const router = useRouter();
+  const passwordy = form.watch("password");
+  const passwordLength: string | undefined = form.watch("password");
 
-  const [passStrength,setPassStrength] = useState(0);
-  useEffect(()=>{
-    if(passwordy){
-      setPassStrength(passwordStrength(passwordy).id)
-      console.log(passStrength)
+  const [passStrength, setPassStrength] = useState(0);
+  useEffect(() => {
+    if (passwordy) {
+      setPassStrength(passwordStrength(passwordy).id);
+      console.log(passStrength);
     }
-  },[passwordy])
+  }, [passwordy]);
 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  const saveUser = async (values: InputType) => { // savind database here
-    const {confirmPassword,accepted, ...user} = values; // we are destructing 
-    try{
+  const saveUser = async (values: InputType) => {
+    // savind database here
+    const { confirmPassword, accepted, ...user } = values; // we are destructing
+    try {
       const result = await registerUser(user);
+      console.log(result)
       toast.success("User registerd succesfully");
-    }catch(error){
+      router.push("/auth/signin");
+    } catch (error) {
       toast.error("Failed to register");
       console.log(error);
     }
-
   };
 
   return (
@@ -150,14 +157,18 @@ export default function SignUpForm() {
           name="email"
           render={({ field }) => (
             <FormItem className="col-span-2">
-              <FormLabel className="text-[13px] px-1 " >Email</FormLabel>
+              <FormLabel className="text-[13px] px-1 ">Email</FormLabel>
               <div className="flex items-center border-2 rounded-md px-2 gap-2">
                 <FaEnvelope className="text-zinc-200/90 w-4 h-4" />
                 <FormControl>
-                  <Input type="email" placeholder="Enter your email" {...field} />
+                  <Input
+                    type="email"
+                    placeholder="Enter your email"
+                    {...field}
+                  />
                 </FormControl>
               </div>
-              <FormMessage /> 
+              <FormMessage />
             </FormItem>
           )}
         />
@@ -168,14 +179,18 @@ export default function SignUpForm() {
           name="phone"
           render={({ field }) => (
             <FormItem className="col-span-2">
-              <FormLabel  className="text-[13px] px-1 " >Phone</FormLabel>
+              <FormLabel className="text-[13px] px-1 ">Phone</FormLabel>
               <div className="flex items-center border-2 rounded-md px-2 gap-2">
                 <FaPhone className="text-zinc-200/90 w-4 h-4" />
                 <FormControl>
-                  <Input type="tel" placeholder="Enter your phone number" {...field} />
+                  <Input
+                    type="tel"
+                    placeholder="Enter your phone number"
+                    {...field}
+                  />
                 </FormControl>
               </div>
-              <FormMessage /> 
+              <FormMessage />
             </FormItem>
           )}
         />
@@ -186,23 +201,34 @@ export default function SignUpForm() {
           name="password"
           render={({ field }) => (
             <FormItem className="col-span-2">
-              <FormLabel className="text-[13px] px-1 " >Password</FormLabel>
+              <FormLabel className="text-[13px] px-1 ">Password</FormLabel>
               <div className="flex items-center border-2 rounded-md px-2 gap-2">
                 <FaLock className="text-zinc-200/90 w-4 h-4" />
                 <FormControl>
-                  <Input type={showPassword ? "text" : "password"} placeholder="Enter password" {...field} />
+                  <Input
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Enter password"
+                    {...field}
+                  />
                 </FormControl>
-                <button type="button" onClick={() => setShowPassword(!showPassword)} className="text-zinc-200/90 w-4 h-4">
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="text-zinc-200/90 w-4 h-4"
+                >
                   {showPassword ? <FaEyeSlash /> : <FaEye />}
                 </button>
               </div>
-              <FormMessage /> 
+              <FormMessage />
             </FormItem>
           )}
         />
         {/* Password Strength  */}
         <div className="flex items-center w-full col-span-2">
-        <PasswordStrength passStrength = {passStrength} passwordLength = {passwordLength} />
+          <PasswordStrength
+            passStrength={passStrength}
+            passwordLength={passwordLength}
+          />
         </div>
 
         {/* Confirm Password */}
@@ -211,18 +237,27 @@ export default function SignUpForm() {
           name="confirmPassword"
           render={({ field }) => (
             <FormItem className="col-span-2">
-              <FormLabel className="text-[13px] px-1 " >Confirm Password</FormLabel>
+              <FormLabel className="text-[13px] px-1 ">
+                Confirm Password
+              </FormLabel>
               <div className="flex items-center border-2 rounded-md px-2 gap-2">
                 <FaLock className="text-zinc-200/90 w-4 h-4" />
                 <FormControl>
-                  <Input type={showConfirmPassword ? "text" : "password"} placeholder="Confirm password" {...field} />
+                  <Input
+                    type={showConfirmPassword ? "text" : "password"}
+                    placeholder="Confirm password"
+                    {...field}
+                  />
                 </FormControl>
-                <button type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)} className="text-zinc-200/90 w-4 h-4">
+                <button
+                  type="button"
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  className="text-zinc-200/90 w-4 h-4"
+                >
                   {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
                 </button>
               </div>
-              <FormMessage /> 
-
+              <FormMessage />
             </FormItem>
           )}
         />
@@ -234,23 +269,27 @@ export default function SignUpForm() {
           render={({ field }) => (
             <FormItem className="col-span-2 flex items-center gap-1 mt-1">
               <FormControl>
-                <Checkbox checked={field.value} onCheckedChange={field.onChange} className="w-4 h-4 ml-1 mt-1 border-2" />
+                <Checkbox
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                  className="w-4 h-4 ml-1 mt-1 border-2"
+                />
               </FormControl>
               <FormLabel className="flex items-center gap-2">
                 I accept the terms and conditions
               </FormLabel>
               <FormMessage />
-
             </FormItem>
           )}
         />
 
         {/* Submit Button */}
         <div className="col-span-2 mt-2 flex justify-center  ">
-          <Button type="submit"  className="w-28 h-5 ">Submit</Button>
+          <Button type="submit" className="w-28 h-5 ">
+            Submit
+          </Button>
         </div>
       </form>
     </Form>
   );
 }
-

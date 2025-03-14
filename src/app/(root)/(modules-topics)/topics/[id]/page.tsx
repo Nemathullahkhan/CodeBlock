@@ -1,5 +1,5 @@
 import prisma from "@/lib/prisma";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import Photos from "../_components/Photos";
 import Working from "../_components/Working";
 import Illustration from "../_components/Illustration";
@@ -15,10 +15,10 @@ import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { NextResponse } from "next/server";
-import { CheckCircle } from "lucide-react";
+import { CheckCircle, Codesandbox } from "lucide-react";
 import ProblemImplementation from "../_components/ProblemImplementation";
 import PageLinks from "../_components/PageLinks";
+import UserBadge from "@/app/(root)/playground/[id]/_components/UserBadge";
 
 export default async function TopicPage({
   params,
@@ -27,7 +27,7 @@ export default async function TopicPage({
 }) {
   const session = await getServerSession(authOptions);
   if (!session || !session.user?.id) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    redirect("/auth/signin");
   }
   const userId = session.user.id;
 
@@ -40,11 +40,11 @@ export default async function TopicPage({
       illustration: true,
       implementation: true,
       UserProgress: true,
-      topic:{
-        include:{
-          module:true
-        }
-      }
+      topic: {
+        include: {
+          module: true,
+        },
+      },
     },
   });
 
@@ -53,7 +53,7 @@ export default async function TopicPage({
   );
 
   if (!contents) return notFound();
-  
+
   const moduleId = contents.topic.module.id;
   const moduleName = contents.topic.module.name;
 
@@ -71,7 +71,6 @@ export default async function TopicPage({
     { id: "videos", title: "Videos" },
     { id: "problems", title: "Problem and Implmentation" },
   ];
-
 
   const formatTitle = (title: string) => {
     const parts = title.split(/\(([^)]+)\)/);
@@ -91,8 +90,24 @@ export default async function TopicPage({
   const title = contents.title;
   return (
     <div className="min-h-screen bg-zinc-950">
+      <div className="w-[1400px] sticky mx-auto flex justify-center">
+        <div className="flex items-center justify-between px-10 py-2 border-b-4 border-zinc-800  m-3 w-full">
+          {/* Left-aligned Codesandbox */}
+          <div className="flex justify-start items-center">
+            <Link href="/home" className="flex items-center gap-2">
+              <Codesandbox />
+              <span className="text-lg">CodeBlock</span>
+            </Link>
+          </div>
+
+          {/* Right-aligned UserBadge */}
+          <div className="flex justify-end items-center">
+            <UserBadge />
+          </div>
+        </div>
+      </div>
       <div className="px-10">
-        <PageLinks id = {moduleId} moduleName ={moduleName}/>
+        <PageLinks id={moduleId} moduleName={moduleName} />
       </div>
       <div className="w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="space-y-8">
@@ -174,7 +189,9 @@ export default async function TopicPage({
                     implementation={{
                       intuition: contents.implementation.intuition,
                       approach: contents.implementation.approach,
-                      code: contents.implementation.code as { language: string; code: string }[] | null,
+                      code: contents.implementation.code as
+                        | { language: string; code: string }[]
+                        | null,
                     }}
                   />
                 </section>
@@ -231,8 +248,12 @@ export default async function TopicPage({
               )}
 
               {/* Playground */}
-              <section id = "problems" className="space-y-6">
-                <ProblemImplementation id = {contents.id} completedPrograms = {completedPrograms} programName = {contents.title}/>
+              <section id="problems" className="space-y-6">
+                <ProblemImplementation
+                  id={contents.id}
+                  completedPrograms={completedPrograms}
+                  programName={contents.title}
+                />
               </section>
             </div>
           </div>

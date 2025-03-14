@@ -16,7 +16,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaEnvelope, FaEye, FaEyeSlash, FaLock } from "react-icons/fa";
 import { toast } from "react-toastify";
-import {  z } from "zod";
+import { z } from "zod";
 
 interface SignInProps {
   callbackUrl?: string;
@@ -32,24 +32,24 @@ const formSchema = z.object({
 type InputType = z.infer<typeof formSchema>;
 
 const SignInForm = (props: SignInProps) => {
-
-    const router = useRouter();
+  const router = useRouter();
   const form = useForm<InputType>({
     resolver: zodResolver(formSchema),
   });
 
   const saveUser = async (values: InputType) => {
-    const result = await signIn("credentials",{  // basically calling authorize function from route.ts signIn === authorize()
-        redirect:false,
-        username: values.email,
-        password:values.password
+    const result = await signIn("credentials", {
+      // basically calling authorize function from route.ts signIn === authorize()
+      redirect: false,
+      username: values.email,
+      password: values.password,
     });
-    if(!result?.ok) {
-        toast.error(result?.error);
-        return;
+    if (!result?.ok) {
+      toast.error(result?.error);
+      return;
     }
-    router.push(props.callbackUrl? props.callbackUrl:"/home");
-    toast.success("Welcome")
+    router.push(props.callbackUrl ? props.callbackUrl : "/home");
+    toast.success("Welcome");
     console.log(values);
     //
   };

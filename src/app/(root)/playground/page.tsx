@@ -9,9 +9,14 @@ import {
 import EditorPanel from "../_components/EditorPanel";
 import InputPanel from "../_components/InputPanel";
 import OutputPanel from "../_components/OutputPanel";
-import { GripHorizontal, GripVertical } from "lucide-react";
+import { Codesandbox, GripHorizontal, GripVertical } from "lucide-react";
+import Link from "next/link";
+import { useSession } from "next-auth/react";
+import UserBadge from "./[id]/_components/UserBadge";
+import { Button } from "@/components/ui/button";
 
 export default function Page() {
+  const {status} = useSession();
   const [panelSizes, setPanelSizes] = useState({
     editor: 60,
     input: 50,
@@ -44,7 +49,30 @@ export default function Page() {
 
   return (
     <div className="h-screen overflow-hidden p-4">
-      <div className="max-w-[1800px] mx-auto p-4 h-full">
+      <div className="max-w-[1800px] mx-auto h-full">
+        <div className="flex items-center justify-between px-10 py-2 border-b-4 border-zinc-800  w-full">
+                  {/* Left-aligned Codesandbox */}
+                  <div className="flex justify-start items-center">
+                    <Link href="/home" className="flex items-center gap-2">
+                      <Codesandbox className="w-6 h-6" />
+                      <span className="text-lg">CodeBlock</span>
+                    </Link>
+                  </div>
+
+                  <div className="flex  justify-end items-center gap-4">
+                    {status ==="authenticated" ? (
+                        <UserBadge/>
+                    ):(
+                      <>
+                      <Link href = "/auth/signin" className="text-sm font-medium hover:text-indigo-400">
+                      <Button variant = "default" className="h-5">
+                      Sign In</Button></Link>
+                      <Link href = "/auth/signup" className="text-sm font-medium hover:text-indigo-400">Sign Up</Link>
+                      </>
+                    )}
+                  </div>
+                </div>
+
         <PanelGroup direction="horizontal" className="h-full">
           {/* Editor Panel */}
           <Panel 

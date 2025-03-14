@@ -1,48 +1,3 @@
-// "use client"
-
-// import { Sidebar } from "@/components/ui/sidebar";
-// import { fetchProblemList } from "@/lib/actions/rendering";
-// import Link from "next/link";
-// import { useEffect, useState } from "react";
-
-// export  function ProblemSidebar() {
-//   const [topics,setTopics] = useState([]);
-
-//     useEffect(()=>{
-//       const fetchProblem = async()=>{
-//         const data = await fetchProblemList();
-//         setTopics(data);
-//       };
-//       fetchProblem();
-//     },[])
-
-//   return (
-//     <Sidebar>
-//         {/* Home logo */}
-//         <div className="m-2 flex gap-2">
-//           <p>Home</p>
-//         <span>Problem List</span>
-//         </div>
-//         <div className="px-4">
-//           <div className="px-2">
-//             {topics.map((topic,idx)=>(
-//               <div key ={idx} className="">
-//                 <h1>{topic.name}</h1>
-//                 {topic.contents.map((program,idx)=>(
-//                   <div key = {idx} className="px-2">
-//                     <Link href ={`/topics/${program.id}`}>
-//                     {program.title}
-//                     </Link>
-//                   </div>
-//                 ))}
-//               </div>
-//             ))}
-//           </div>
-//         </div>
-//     </Sidebar>
-//   );
-// }
-
 "use client";
 import {
   Sidebar,
@@ -51,16 +6,12 @@ import {
 } from "@/components/ui/sidebar";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import {
-  ChevronDown,
-  ChevronRight,
-  Codesandbox,
-} from "lucide-react";
+import { ChevronDown, ChevronRight, Codesandbox } from "lucide-react";
 
 interface Program {
   id: string;
   title: string;
-  isCompleted: boolean; // Added this line
+  isCompleted: boolean;
 }
 
 interface Topic {
@@ -76,9 +27,11 @@ interface Topic {
 export function ProblemSidebar({
   isVisible,
   onClose,
+  currentQuestionId
 }: {
   isVisible: boolean;
   onClose: () => void;
+  currentQuestionId:string
 }) {
   const [topics, setTopics] = useState<Topic[]>([]);
   const [loading, setLoading] = useState(true);
@@ -93,6 +46,19 @@ export function ProblemSidebar({
       [topicId]: !prev[topicId],
     }));
   };
+  useEffect(() => {
+    if (currentQuestionId) {
+      setTopics((prevTopics) =>
+        prevTopics.map((topic) => ({
+          ...topic,
+          contents: topic.contents.map((program) => ({
+            ...program,
+            isCompleted: program.id === currentQuestionId ? false : program.isCompleted,
+          })),
+        }))
+      );
+    }
+  }, [currentQuestionId]);
 
   useEffect(() => {
     const fetchProblem = async () => {
@@ -141,16 +107,18 @@ export function ProblemSidebar({
       >
         <Sidebar className="w-full ">
           <SidebarHeader>
-            <div className=" flex flex-col  gap-2 border-b border-zinc-800"> 
+            <div className=" flex flex-col  gap-2 border-b border-zinc-800">
               <div className="flex justify-start items-center gap-2">
                 <Codesandbox className="w-10 h-10 text-primary/20" />
                 <Link href="/home" className="text-primary hover:text-white">
                   CodeBlock
                 </Link>
               </div>
-            </div>  
+            </div>
           </SidebarHeader>
-              <span className="text-zinc-300/90 mx-4 text-2xl font-semibold  tracking-tight">Problem List</span>
+          <span className="text-zinc-300/90 mx-4 text-2xl font-semibold  tracking-tight">
+            Problem List
+          </span>
 
           <SidebarContent className="overflow-y-auto  scrollbar-thin scrollbar-thumb-zinc-600  scrollbar-track-black ">
             <div className="py-2">

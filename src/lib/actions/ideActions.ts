@@ -1,17 +1,6 @@
 "use server";
 
-// import { mergeSortData } from "../data/(divide_conquer)/mergesort";
-// import { quickSortData } from "../data/(divide_conquer)/quicksort";
-// import { floydsAlgorithmData } from "../data/(dynamic_programming)/floyd";
-// import { knapSackData } from "../data/(dynamic_programming)/knapsack";
-// import { dijkstraData } from "../data/(graph_algorithms)/dijkstra";
 
-// import { warshallData } from "../data/(graph_algorithms)/warshall";
-// import { topologicalSortData } from "../data/(graph_algorithms)/topological";
-// import { bfsData } from "../data/(graph_algorithms)/bfs";
-// import { dfsData } from "../data/(graph_algorithms)/dfs";
-// import { kruskalData } from "../data/(greedy_techniques)/krushkal";
-// import { primsData } from "../data/(greedy_techniques)/prims";
 import { nQueensData } from "../data/(backtracking)/nqueen";
 import prisma from "../prisma";
 
@@ -47,9 +36,8 @@ export async function questions() {
       },
     });
     return questions;
-  } catch (err: any) {
-    console.error("Prisma Error:", err);
-    throw new Error(`Server Error: ${err.message}`);
+  } catch (err) {
+    console.error("Prisma Error in questions ", err);
   }
 }
 
@@ -68,27 +56,20 @@ export async function updateTestCases() {
     });
 
     return updatedQuestion;
-  } catch (err: any) {
-    console.error("Prisma Error:", err);
-    throw new Error(`Server Error: ${err.message}`);
+  } catch (err) {
+    console.error("Prisma Error in updateTestCases", err);
   }
 }
 
 
 export async function getQuestions() {
   try {
-    // const program = await prisma.content.findUnique({
-    //   where:{id:"cm7j5g8wc0003bugszt63oddx"},
-    // })
-    // if(!program) throw new Error("Id is incorrect");
-
     const section = await prisma.questions.findUnique({
       where: { id: "cm7lal1lu000nbu8ostvrgszc" },
     });
     return section;
-  } catch (err: any) {
-    console.error("Prisma Error:", err);
-    throw new Error(`Server Error: ${err.message}`);
+  } catch (err) {
+    console.error("Prisma Error in getQuestions", err);
   }
 }
 
@@ -99,44 +80,10 @@ export async function questionCompleted({ id }: { id: string }) {
       data:{ iscompleted: true}, 
       })
       console.log(result);
-  } catch (err: any) {
-    console.error("Prisma Error:", err);
-    throw new Error(`Server Error: ${err.message}`);
+  } catch (err) {
+    console.error("Prisma Errorin ide Actions questionCompleted", err);
   }
 }
-
-
-// export async function questionUserProgress({ id, userId, completed }: { id: string, userId: string, completed: boolean }) {
-//   try {
-//     // Find the Content record with the associated UserProgress
-//     const content = await prisma.content.findUnique({
-//       where: { id },
-//       include: { UserProgress: true },
-//     });
-
-//     if (!content) {
-//       throw new Error("Content not found");
-//     }
-
-//     // Find the specific UserProgress record for the given userId and contentId
-//     const userProgress = content.UserProgress.find((up) => up.userId === userId);
-
-//     if (!userProgress) {
-//       throw new Error("UserProgress not found for the given user and content");
-//     }
-
-//     // Update the UserProgress record
-//     const updatedUserProgress = await prisma.userProgress.update({
-//       where: { id: userProgress.id },
-//       data: { completed }, // Update the `completed` field
-//     });
-
-//     return updatedUserProgress;
-//   } catch (err: any) {
-//     console.error("Prisma Error:", err);
-//     throw new Error(`Server Error: ${err.message}`);
-//   }
-// }
 
 export async function questionUserProgress({ id, userId, completed }: { id: string, userId: string, completed: boolean }) {
   try {
@@ -166,9 +113,8 @@ export async function questionUserProgress({ id, userId, completed }: { id: stri
       });
       return newUserProgress;
     }
-  } catch (err: any) {
-    console.error("Prisma Error:", err);
-    throw new Error(`Server Error: ${err.message}`);
+  } catch (err) {
+    console.error("Prisma Error in questionUserProgress", err);
   }
 }
 
@@ -183,8 +129,7 @@ export async function checkUserProgress({ id, userId }: { id: string, userId: st
     });
     
     return userProgress;
-  } catch (err: any) {
-    console.error("Prisma Error:", err);
-    throw new Error(`Server Error: ${err.message}`);
+  } catch (err) {
+    console.error("Prisma Error in checkUserProgress", err);
   }
 }
