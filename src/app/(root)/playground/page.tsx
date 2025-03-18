@@ -471,7 +471,10 @@ export default function Page() {
             </Link>
           </div>
 
-          <div className="flex  justify-end items-center gap-4">
+          <div className="flex  justify-end items-center gap-4 px-10">
+            <Button variant={"default"} className="h-8">
+              Save Program/Code
+            </Button>
             {status ==="authenticated" ? (
                 <UserBadge/>
             ):(

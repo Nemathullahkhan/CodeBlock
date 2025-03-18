@@ -72,7 +72,7 @@ const SignInForm = (props: SignInProps) => {
           render={({ field }) => (
             <FormItem>
               <FormLabel className="text-[13px] px-1">Email</FormLabel>
-              <div className="flex items-center border-2 rounded-md px-4 gap-2">
+              <div className="flex items-center border-2 border-zinc-600 rounded-md px-4 gap-2">
                 <FaEnvelope className="text-zinc-200/90 w-4 h-4 " />
                 <FormControl>
                   <Input
@@ -94,7 +94,7 @@ const SignInForm = (props: SignInProps) => {
           render={({ field }) => (
             <FormItem>
               <FormLabel className="text-[13px] px-1">Password</FormLabel>
-              <div className="flex items-center border-2 rounded-md px-4 gap-2">
+              <div className="flex items-center border-2 border-zinc-600 rounded-md px-4 gap-2">
                 <FaLock className="text-zinc-200/90 w-4 h-4" />
                 <Input type={showPassword ? "text" : "password"} {...field} />
                 {showPassword ? (

@@ -59,23 +59,17 @@ export default function EditorPanel() {
       <div className="flex items-center justify-around mb-4">
         <div className="flex items-center gap-3 ">
           {/* Language selector */}
-
           <LanguageSelector />
-
           {/* Font-Size*/}
-
           <FontSizeSelector
             fontSize={fontSize}
             handleFontSizeChange={handleFontSizeChange}
           />
-
           <div className="">
             <ThemeSelector />
           </div>
-
           {/*Run Button */}
           <RunButton />
-
           {/* Reset Button */}
           <motion.button
             whileHover={{ scale: 1.1 }}
@@ -100,7 +94,6 @@ export default function EditorPanel() {
             // onMount={(editor) => setEditor(editor)}
             onMount={(editor, monaco) => {
               setEditor(editor);
-
               // Dynamic error diagnostics based on selected language
               switch (LANGUAGE_CONFIG[language].monacoLanguage) {
                 case "javascript":
@@ -111,14 +104,12 @@ export default function EditorPanel() {
                       noSyntaxValidation: false,
                     }
                   );
-
                   monaco.languages.typescript.typescriptDefaults.setDiagnosticsOptions(
                     {
                       noSemanticValidation: false,
                       noSyntaxValidation: false,
                     }
                   );
-
                   monaco.languages.typescript.javascriptDefaults.setCompilerOptions(
                     {
                       target: monaco.languages.typescript.ScriptTarget.ESNext,
@@ -126,7 +117,6 @@ export default function EditorPanel() {
                       strict: true,
                     }
                   );
-
                   monaco.languages.typescript.typescriptDefaults.setCompilerOptions(
                     {
                       target: monaco.languages.typescript.ScriptTarget.ESNext,
@@ -136,14 +126,12 @@ export default function EditorPanel() {
                     }
                   );
                   break;
-
                 case "python":
                   monaco.languages.register({ id: "python" });
 
                   monaco.languages.onLanguage("python", () => {
                     monaco.editor.setModelLanguage(editor.getModel(), "python");
                   });
-
                   monaco.languages.python = monaco.languages.python || {};
                   monaco.languages.python.diagnostics =
                     monaco.languages.python.diagnostics || {};
@@ -152,14 +140,12 @@ export default function EditorPanel() {
                     lint: true,
                   };
                   break;
-
                 case "cpp":
                   monaco.languages.register({ id: "cpp" });
 
                   monaco.languages.onLanguage("cpp", () => {
                     monaco.editor.setModelLanguage(editor.getModel(), "cpp");
                   });
-
                   monaco.languages.cpp = monaco.languages.cpp || {};
                   monaco.languages.cpp.diagnostics =
                     monaco.languages.cpp.diagnostics || {};
@@ -168,14 +154,12 @@ export default function EditorPanel() {
                     lint: true,
                   };
                   break;
-
                 case "java":
                   monaco.languages.register({ id: "java" });
 
                   monaco.languages.onLanguage("java", () => {
                     monaco.editor.setModelLanguage(editor.getModel(), "java");
                   });
-
                   monaco.languages.java = monaco.languages.java || {};
                   monaco.languages.java.diagnostics =
                     monaco.languages.java.diagnostics || {};

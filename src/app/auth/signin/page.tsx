@@ -18,7 +18,7 @@ interface Props {
 }
 
 const SignInPage = ({ searchParams }: Props) => {
-  const {  status } = useSession();
+  const { status } = useSession();
   const router = useRouter();
 
   // Refs for the logos
@@ -37,9 +37,11 @@ const SignInPage = ({ searchParams }: Props) => {
   }, [status, router]);
 
   if (status === "loading") {
-    return <div className="min-h-screen bg-gradient-to-b from-zinc-950 to-zinc-900 flex items-center justify-center">
-    <LoaderCircle className="w-12 h-12 text-white animate-spin" />
-  </div>
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-zinc-950 to-zinc-900 flex items-center justify-center">
+        <LoaderCircle className="w-12 h-12 text-white animate-spin" />
+      </div>
+    );
   }
 
   return (
@@ -55,13 +57,10 @@ const SignInPage = ({ searchParams }: Props) => {
             </Link>
           </span>
           <SignInForm callbackUrl={searchParams.callbackUrl} />
-          <Link href={"/auth/forgotPass"} className="text-sm text-zinc-400">
-            Forgot Your Password?
-          </Link>
         </div>
 
         {/* Right Side: Logos and Animated Beams */}
-        <div className="min-h-screen items-center flex justify-center ">
+        <div className="min-h-screen items-center flex justify-center">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -74,7 +73,7 @@ const SignInPage = ({ searchParams }: Props) => {
                 <div className="p-2">
                   <div
                     ref={containerRef}
-                    className="relative w-[400px] h-[200px] flex items-center justify-center mt-28 " // Smaller and concise container
+                    className="relative w-[400px] h-[200px] flex items-center justify-center mt-28" // Smaller and concise container
                   >
                     {/* Logos */}
                     <div

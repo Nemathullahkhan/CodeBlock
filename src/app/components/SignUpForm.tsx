@@ -113,7 +113,7 @@ export default function SignUpForm() {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(saveUser)}
-        className="grid grid-cols-1 md:grid-cols-2  p-4 shadow-lg border rounded-md w-full max-w-2xl mx-auto"
+        className="grid grid-cols-1 md:grid-cols-2  p-4 shadow-lg border border-zinc-700 gap-x-2 rounded-md w-full max-w-2xl mx-auto"
       >
         {/* First Name */}
         <FormField
@@ -122,7 +122,7 @@ export default function SignUpForm() {
           render={({ field }) => (
             <FormItem>
               <FormLabel className="text-[13px] px-1">First Name</FormLabel>
-              <div className="flex items-center border-2 rounded-md px-2 gap-2">
+              <div className="flex items-center border-2 border-zinc-700  rounded-md px-2 gap-2">
                 <FaUser className="text-zinc-200/90 w-4 h-4 " />
                 <FormControl>
                   <Input placeholder="Enter your first name" {...field} />
@@ -139,8 +139,8 @@ export default function SignUpForm() {
           name="lastName"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-[13px] px-1 ">Last Name</FormLabel>
-              <div className="flex items-center border-2 rounded-md px-2 gap-2">
+              <FormLabel className="text-[13px] px-2 ">Last Name</FormLabel>
+              <div className="flex items-center border-2 border-zinc-700  rounded-md px-2 gap-2">
                 <FaUser className="text-zinc-200/90 w-4 h-4" />
                 <FormControl>
                   <Input placeholder="Enter your last name" {...field} />
@@ -158,7 +158,7 @@ export default function SignUpForm() {
           render={({ field }) => (
             <FormItem className="col-span-2">
               <FormLabel className="text-[13px] px-1 ">Email</FormLabel>
-              <div className="flex items-center border-2 rounded-md px-2 gap-2">
+              <div className="flex items-center border-2 border-zinc-700 rounded-md px-2 gap-2">
                 <FaEnvelope className="text-zinc-200/90 w-4 h-4" />
                 <FormControl>
                   <Input
@@ -180,7 +180,7 @@ export default function SignUpForm() {
           render={({ field }) => (
             <FormItem className="col-span-2">
               <FormLabel className="text-[13px] px-1 ">Phone</FormLabel>
-              <div className="flex items-center border-2 rounded-md px-2 gap-2">
+              <div className="flex items-center border-2 border-zinc-700 rounded-md px-2 gap-2">
                 <FaPhone className="text-zinc-200/90 w-4 h-4" />
                 <FormControl>
                   <Input
@@ -202,7 +202,7 @@ export default function SignUpForm() {
           render={({ field }) => (
             <FormItem className="col-span-2">
               <FormLabel className="text-[13px] px-1 ">Password</FormLabel>
-              <div className="flex items-center border-2 rounded-md px-2 gap-2">
+              <div className="flex items-center border-2 border-zinc-700 rounded-md px-2 gap-2">
                 <FaLock className="text-zinc-200/90 w-4 h-4" />
                 <FormControl>
                   <Input
@@ -240,7 +240,7 @@ export default function SignUpForm() {
               <FormLabel className="text-[13px] px-1 ">
                 Confirm Password
               </FormLabel>
-              <div className="flex items-center border-2 rounded-md px-2 gap-2">
+              <div className="flex items-center border-2 border-zinc-700 rounded-md px-2 gap-2">
                 <FaLock className="text-zinc-200/90 w-4 h-4" />
                 <FormControl>
                   <Input
@@ -272,7 +272,7 @@ export default function SignUpForm() {
                 <Checkbox
                   checked={field.value}
                   onCheckedChange={field.onChange}
-                  className="w-4 h-4 ml-1 mt-1 border-2"
+                  className="w-4 h-4 ml-1 mt-1 border-2 border-zinc-700"
                 />
               </FormControl>
               <FormLabel className="flex items-center gap-2">

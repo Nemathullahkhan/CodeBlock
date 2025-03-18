@@ -43,10 +43,13 @@ model User {
   emailVerified DateTime?
   phone         String
   image         String?
+  module        Module[]
   accounts      Account[]
   sessions      Session[]
   UserProgress  UserProgress[]
   CodeExecution CodeExecution[]
+  Folders       Folders[]
+  Programs      Programs[]
 }
 
 model VerificationToken {
@@ -61,9 +64,12 @@ model Module {
   id          String   @id @default(cuid())
   name        String   @unique
   description String
+  isCompleted Boolean  @default(false)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   topics      Topic[]
+  User        User?    @relation(fields: [userId], references: [id])
+  userId      String?
 }
 
 model Topic {
@@ -188,4 +194,30 @@ model CodeExecution {
   createdAt DateTime @default(now())
   user      User     @relation(fields: [userId], references: [id])
   content   Content  @relation(fields: [contentId], references: [id])
+}
+
+model Folders {
+  id          String     @id @default(cuid())
+  userId      String
+  name        String
+  description String?
+  createdAt   DateTime   @default(now())
+  user        User       @relation(fields: [userId], references: [id])
+  Programs    Programs[]
+}
+
+model Programs {
+  id          String   @id @default(cuid())
+  foldersId   String
+  userId      String
+  name        String
+  description String?
+  code        String?
+  approach    String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  tc          String?  @default("O(1)")
+  sc          String?  @default("O(1)")
+  folders     Folders  @relation(fields: [foldersId], references: [id])
+  user        User     @relation(fields: [userId], references: [id])
 }

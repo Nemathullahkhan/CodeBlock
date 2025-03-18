@@ -28,11 +28,11 @@ const SignUpPage = () => {
       ) : (
         <div className="grid grid-cols-[60%_40%] items-center justify-center min-h-screen bg-black text-white">
           {/* Left Section: Sign-Up Form */}
-          <div className="flex flex-col items-center px-4">
+          <div className="flex flex-col items-center px-4 ">
             <h1 className="text-3xl font-sans m-1 font-semibold">Sign Up</h1>
-            <span className="text-sm font-sans tracking-tight">
+            <span className="text-sm font-sans tracking-tight mb-2">
               Already have an account?{" "}
-              <Link href="/auth/signin" className="text-blue-400">
+              <Link href="/auth/signin" className="text-blue-400 ">
                 Sign in
               </Link>
             </span>
