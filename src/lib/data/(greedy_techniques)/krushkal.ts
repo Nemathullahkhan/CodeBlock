@@ -157,60 +157,94 @@ By definition, a minimum weight spanning tree is a subset of the edges of a conn
     code: [
       {
         language: "C",
-        code: `#include<stdio.h>
-  #include<stdlib.h>
-  
-  int i, j, k, a, b, u, v, n, ne = 1;
-  int min, mincost = 0, cost[9][9], parent[9];
-  
-  int find(int i) {
-      while (parent[i])
-          i = parent[i];
-      return i;
-  }
-  
-  int unionSets(int i, int j) {
-      if (i != j) {
-          parent[j] = i;
-          return 1;
-      }
-      return 0;
-  }
-  
-  int main() {
-      printf("Enter the number of vertices: ");
-      scanf("%d", &n);
-  
-      printf("Enter the cost adjacency matrix:");
-      for (i = 1; i <= n; i++)
-          for (j = 1; j <= n; j++) {
-              scanf("%d", &cost[i][j]);
-              if (cost[i][j] == 0) cost[i][j] = 999;
-          }
-  
-      printf("Edges in the Minimum Cost Spanning Tree:");
-      while (ne < n) {
-          for (i = 1, min = 999; i <= n; i++)
-              for (j = 1; j <= n; j++)
-                  if (cost[i][j] < min) {
-                      min = cost[i][j];
-                      a = u = i;
-                      b = v = j;
-                  }
-  
-          u = find(u);
-          v = find(v);
-  
-          if (unionSets(u, v)) {
-              printf("Edge %d: (%d, %d) Cost: %d", ne++, a, b, min);
-              mincost += min;
-          }
-          cost[a][b] = cost[b][a] = 999;
-      }
-  
-      printf("Minimum Cost: %d", mincost);
-      return 0;
-  }`,
+        code: `#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX 9
+
+// Function prototypes
+int find(int i, int parent[]);
+int uni(int i, int j, int parent[]);
+int kruskal(int n, int cost[MAX][MAX]);
+
+// Kruskal's algorithm implementation
+int kruskal(int n, int cost[MAX][MAX]) {
+    int parent[MAX] = {0};
+    int mincost = 0;
+    int ne = 1;
+
+    while (ne < n) {
+        int min = 999;
+        int a = -1, b = -1;
+
+        // Find the minimum edge
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= n; j++) {
+                if (cost[i][j] < min) {
+                    min = cost[i][j];
+                    a = i;
+                    b = j;
+                }
+            }
+        }
+
+        // Check if adding this edge forms a cycle
+        int u = find(a, parent);
+        int v = find(b, parent);
+
+        if (uni(u, v, parent)) {
+            printf("Edge %d: (%d, %d) Cost: %d\n", ne++, a, b, min);
+            mincost += min;
+        }
+
+        // Mark the edge as used
+        cost[a][b] = cost[b][a] = 999;
+    }
+
+    return mincost;
+}
+
+// Find function to detect cycles
+int find(int i, int parent[]) {
+    while (parent[i]) {
+        i = parent[i];
+    }
+    return i;
+}
+
+// Union function to merge two sets
+int uni(int i, int j, int parent[]) {
+    if (i != j) {
+        parent[j] = i;
+        return 1;
+    }
+    return 0;
+}
+
+// Main function
+int main() {
+    int n;
+    int cost[MAX][MAX];
+
+    printf("Enter the number of vertices: ");
+    scanf("%d", &n);
+
+    printf("Enter the cost adjacency matrix:\n");
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= n; j++) {
+            scanf("%d", &cost[i][j]);
+            if (cost[i][j] == 0) {
+                cost[i][j] = 999; // Represent no edge with a large number
+            }
+        }
+    }
+
+    printf("Edges in the Minimum Cost Spanning Tree:\n");
+    int mincost = kruskal(n, cost);
+    printf("Minimum Cost: %d\n", mincost);
+
+    return 0;
+}`,
       },
       {
         language: "Java",

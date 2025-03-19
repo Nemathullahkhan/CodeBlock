@@ -1,3 +1,5 @@
+// 
+
 export const floydsAlgorithmData = {
   module: {
     name: "Design And Analysis of Algorithms",
@@ -129,20 +131,93 @@ export const floydsAlgorithmData = {
       {
         language: "C",
         code: `#include <stdio.h>
+#include <stdlib.h>
 #define INF 99999
-#define V 4
 
-void floydWarshall(int graph[V][V]) {
-    int dist[V][V], i, j, k;
-    for (i = 0; i < V; i++)
-        for (j = 0; j < V; j++)
+// Function to initialize the distance matrix
+void initializeDistanceMatrix(int **graph, int **dist, int V) {
+    for (int i = 0; i < V; i++) {
+        for (int j = 0; j < V; j++) {
             dist[i][j] = graph[i][j];
+        }
+    }
+}
 
-    for (k = 0; k < V; k++)
-        for (i = 0; i < V; i++)
-            for (j = 0; j < V; j++)
-                if (dist[i][k] + dist[k][j] < dist[i][j])
-                    dist[i][j] = dist[i][k] + dist[k][j];
+// Function to perform the Floyd-Warshall algorithm
+void floydWarshallAlgorithm(int **dist, int V) {
+    for (int k = 0; k < V; k++) {
+        for (int i = 0; i < V; i++) {
+            for (int j = 0; j < V; j++) {
+                if (dist[i][k] != INF && dist[k][j] != INF) {
+                    int through_k_dist = dist[i][k] + dist[k][j];
+                    if (through_k_dist < dist[i][j]) {
+                        dist[i][j] = through_k_dist;
+                    }
+                }
+            }
+        }
+    }
+}
+
+// Function to print the distance matrix
+void printDistanceMatrix(int **dist, int V) {
+    for (int i = 0; i < V; i++) {
+        for (int j = 0; j < V; j++) {
+            if (dist[i][j] == INF) {
+                printf("-1 ");
+            } else {
+                printf("%d ", dist[i][j]);
+            }
+        }
+        printf("\n");
+    }
+}
+
+// Main function
+int main() {
+    int V;
+    scanf("%d", &V); // Read the number of vertices
+
+    // Allocate memory for the graph
+    int **graph = (int **)malloc(V * sizeof(int *));
+    for (int i = 0; i < V; i++) {
+        graph[i] = (int *)malloc(V * sizeof(int));
+    }
+
+    // Read the graph input as space-separated values
+    for (int i = 0; i < V; i++) {
+        for (int j = 0; j < V; j++) {
+            scanf("%d", &graph[i][j]);
+            if (graph[i][j] == -1) {
+                graph[i][j] = INF; // Replace -1 with INF
+            }
+        }
+    }
+
+    // Allocate memory for the distance matrix
+    int **dist = (int **)malloc(V * sizeof(int *));
+    for (int i = 0; i < V; i++) {
+        dist[i] = (int *)malloc(V * sizeof(int));
+    }
+
+    // Initialize the distance matrix
+    initializeDistanceMatrix(graph, dist, V);
+
+    // Run Floyd-Warshall algorithm
+    floydWarshallAlgorithm(dist, V);
+
+    // Print the output
+    printDistanceMatrix(dist, V);
+
+    // Free allocated memory for graph and dist
+    for (int i = 0; i < V; i++) {
+        free(graph[i]);
+        free(dist[i]);
+    }
+    free(graph);
+    free(dist);
+
+    return 0;
 }`,
       },
       {

@@ -6,7 +6,7 @@ export default function Photos ({photos}:{photos:string[]}){
                  key={index}
                  src={photo}
                 //  alt="photo"
-                 className="rounded-lg w-[500px] h-[250px]"
+                 className="rounded-lg  object-contain w-[500px] h-[250px]"
              />
             ))}
         </div>

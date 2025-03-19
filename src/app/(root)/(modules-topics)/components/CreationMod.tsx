@@ -11,6 +11,7 @@
 //   getModules,
 //   illustration,
 //   implementation,
+//   updateImplementation,
 //   working,
 // } from "@/lib/actions/moduleActions";
 // import { useState, useTransition } from "react";
@@ -109,6 +110,17 @@
 //     startTransition(async()=>{
 //       try{
 //         const implement = await implementation();
+//       }catch(err){
+//         setError(err.message);
+//         console.error("Failed to enter the implementation",err);
+//       }
+//     })
+//   }
+  
+//   const handleupdateImplementation = () =>{
+//     startTransition(async()=>{
+//       try{
+//         const implement = await updateImplementation();
 //       }catch(err){
 //         setError(err.message);
 //         console.error("Failed to enter the implementation",err);
@@ -220,6 +232,8 @@
 //         >
 //           {isPending ? "Creating.." : "Enter illustration"}
 //         </Button>
+
+
 //       </div>
 //       <div className="mx-10 mt-4">
 //         <h1 className="text-2xl">Playground Questions</h1>
@@ -242,60 +256,15 @@
 //         </Button>
 //       </div>
 
-      
-//     </div>
-//   );
-// }
-
-
-// "use client";
-
-// import { useState, useTransition } from "react";
-// import { Button } from "@/components/ui/button";
-// import { questionUserProgress } from "@/lib/actions/ideActions";
-// import { useSession } from "next-auth/react";
-
-// export default function CreationMod({ contentId }: { contentId: string }) {
-//   const [isPending, startTransition] = useTransition();
-//   const [error, setError] = useState<string | null>(null);
-//   const { data: session } = useSession();
-  
-//   const handleUserProgress = () => {
-//     if (!session?.user?.id) {
-//       setError("You must be logged in to track progress");
-//       return;
-//     }
-    
-//     startTransition(async () => {
-//       try {
-//         const result = await questionUserProgress({
-//           id: contentId,
-//           userId: session.user.id,
-//           completed: true // You can toggle this based on current state if needed
-//         });
-        
-//         console.log("User progress updated:", result);
-//         // Optional: Add success message or UI update here
-//       } catch (err: any) {
-//         setError(err.message);
-//         console.error("Failed to update user progress", err);
-//       }
-//     });
-//   };
-  
-//   return (
-//     <div>
-//       {error && <p className="text-red-500">{error}</p>}
-//       <div className="max-w-md grid grid-cols-2 ml-10 gap-2">
-//         <Button
-//           onClick={handleUserProgress}
-//           disabled={isPending || !session?.user}
-//           className="w-36 h-10 text-xs"
-//           variant={"outline"}
+//       <Button
+//           onClick={handleupdateImplementation}
+//           disabled={isPending}
+//           className="w-36 h-10 text-xs" variant={"outline"}
 //         >
-//           {isPending ? "Updating..." : "Mark as Completed"}
+//           {isPending ? "Creating.." : "Update implementation"}
 //         </Button>
-//       </div>
+
+      
 //     </div>
 //   );
 // }

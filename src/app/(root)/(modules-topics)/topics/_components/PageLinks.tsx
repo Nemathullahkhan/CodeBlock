@@ -10,13 +10,15 @@ export default function PageLinks({id,moduleName}:PageLinksProps) {
     <div>
       <Breadcrumb>
         <BreadcrumbList>
-          <BreadcrumbItem>
-            <BreadcrumbLink href={`/module/${id}`} className="text-sm ml-32">{moduleName}</BreadcrumbLink>
-          </BreadcrumbItem>
+        <BreadcrumbItem>
+          <BreadcrumbLink href={"/home"} className="text-sm ml-16">Home</BreadcrumbLink>
           <BreadcrumbSeparator className="-ml-1 -mr-2"/>
-          <BreadcrumbItem>
-            {/* <BreadcrumbPage>{name}</BreadcrumbPage> */}
           </BreadcrumbItem>
+          <BreadcrumbItem>
+            <BreadcrumbLink href={`/module/${id}`} className="text-sm ">{moduleName}</BreadcrumbLink>
+          </BreadcrumbItem>
+          
+         
         </BreadcrumbList>
       </Breadcrumb>
     </div>

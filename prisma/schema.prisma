@@ -202,7 +202,7 @@ model Folders {
   name        String
   description String?
   createdAt   DateTime   @default(now())
-  user        User       @relation(fields: [userId], references: [id])
+  user        User       @relation(fields: [userId], references: [id],onDelete: Cascade)
   Programs    Programs[]
 }
 
@@ -218,6 +218,6 @@ model Programs {
   updatedAt   DateTime @updatedAt
   tc          String?  @default("O(1)")
   sc          String?  @default("O(1)")
-  folders     Folders  @relation(fields: [foldersId], references: [id])
-  user        User     @relation(fields: [userId], references: [id])
+  folders     Folders  @relation(fields: [foldersId], references: [id],onDelete: Cascade)
+  user        User     @relation(fields: [userId], references: [id],onDelete: Cascade)
 }

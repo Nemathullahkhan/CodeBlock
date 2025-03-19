@@ -58,33 +58,6 @@ export async function getAllModules() {
   }
 }
 
-// export async function createFolder({
-//   id,
-//   name,
-//   description,
-// }: {
-//   id: string | null;
-//   name:string;
-//   description?:string;
-// }) {
-//   if (!id) {
-//     throw new Error("userId is required to create a folder");
-//   }
-//   try {
-//     const result = await prisma.folders.create({
-//       data: {
-//         userId: id,
-//         name,
-//         description
-//       },
-//     });
-//     return result;
-//   } catch (err) {
-//     console.log("Error occurred at createFolder controller:", err);
-//     throw new Error("Server error");
-//   }
-// }
-
 export async function createFolder({
   id,
   name,
@@ -119,10 +92,31 @@ export async function getFolders({ id }: { id: string | null }) {
   try {
     const result = await prisma.folders.findMany({
       where: { userId: id },
+      include:{
+        Programs:true
+      }
     });
     return result;
   } catch (err) {
     console.log("Error occurred at getFolders controller:", err);
+    throw new Error("Server error");
+  }
+}
+
+
+export async function deleteFolder({ folderId }: { folderId: string | null }) {
+  if (!folderId) {
+    throw new Error("folderId is required to delete a folder");
+  }
+
+  try {
+    const result = await prisma.folders.delete({
+      where: { id: folderId },
+    });
+    console.log(`Deleted successfully: ${result.name}`);
+    return { success: true, deletedFolder: result };
+  } catch (err) {
+    console.log("Error occurred while deleting folder:", err);
     throw new Error("Server error");
   }
 }
@@ -192,6 +186,9 @@ export async function userPrograms({
   try {
     const result = await prisma.programs.findMany({
       where: { userId: id, foldersId: folderId },
+      orderBy:{
+        createdAt:"desc"
+      }
     });
     return result;
   } catch (err) {
@@ -247,5 +244,27 @@ export async function listProgramsByLatest({
   } catch (err) {
     console.log("Error listing programs:", err);
     throw new Error("Failed to fetch programs");
+  }
+}
+
+
+export async function getProgramData({ programId }: { programId: string | null }) {
+  if (!programId) {
+    throw new Error("Program ID is required");
+  }
+
+  try {
+    const result = await prisma.programs.findUnique({
+      where: { id: programId },
+    });
+
+    if (!result) {
+      throw new Error("Program not found");
+    }
+
+    return result;
+  } catch (err) {
+    console.error("Error fetching program's data:", err);
+    throw new Error("Failed to fetch program data");
   }
 }

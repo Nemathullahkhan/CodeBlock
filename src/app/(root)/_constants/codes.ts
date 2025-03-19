@@ -450,53 +450,60 @@ for i in range(numTests):
         language: "c",
         monacoLanguage: "c",
         defaultCode: `#include <stdio.h>
-  
-  void merge(int arr[], int l, int m, int r) {
-      // Implement the merge function here
-  }
-  
-  void mergeSort(int arr[], int l, int r) {
-      // Implement the mergeSort function here
-  }
-  
-  void printArray(int A[], int size) {
-      printf("[");
-      for (int i = 0; i < size; i++) {
-          printf("%d", A[i]);
-          if (i < size - 1) {
-              printf(",");
-          }
-      }
-      printf("] ");
-  }
-  // Ignore the below code implementation
 
-/*-----------------XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-----------------XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
----------------------------------------------XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
---------------------------------------------XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-*/
+int max(int a, int b) {
+        // write your code from here
+}
 
-  int main() {
-      // Test cases
-      int testCases[][10] = {
-          {4,1,3,9,7},
-          {10,9,8,7,6,5,4,3,2,1},
-          {1,3,2},
-          {2,9,0,1}
-      };
-  
-      int testSizes[] = {5, 10, 3, 4};
-  
-      int numTests = sizeof(testSizes) / sizeof(testSizes[0]);
-  
-      for (int i = 0; i < numTests; i++) {
-          mergeSort(testCases[i], 0, testSizes[i] - 1);
-          printArray(testCases[i], testSizes[i]);
-      }
-  
-      return 0;
-  }`,
+int knapSack(int W, int weight[], int value[], int n) {
+           // write your code from here return Dp(2d) Array
+}
+
+
+// Driver Implemenation, You can ignore the below 
+// xxxxdhflahsdfjahdfjklhfahjhkjalshdjklfhakjfhjhaklfhkahdfkljahdkfhahdf
+// 0010101010100101010010101010000010101001010101001010101010101001010000101010101
+// 01001010101001000000110111111100101010101010110100101011010100100000000101011001
+// 000000001111111000000001111110000000111110000001111100000011111100000011111100000
+
+void printResult(int result) {
+    printf("%d\n", result);
+}
+
+int main() {
+    // Test cases
+    // Each test case is structured as: {capacity, n, value1, value2, ..., weight1, weight2, ...}
+    int testCases[][10] = {
+        {4, 3, 1, 2, 3, 4, 5, 1}, // capacity = 4, n = 3, values = [1, 2, 3], weights = [4, 5, 1]
+        {3, 3, 1, 2, 3, 4, 5, 6}, // capacity = 3, n = 3, values = [1, 2, 3], weights = [4, 5, 6]
+        {5, 4, 10, 40, 30, 50, 5, 4, 6, 3} // capacity = 5, n = 4, values = [10, 40, 30, 50], weights = [5, 4, 6, 3]
+    };
+
+    int testSizes[] = {8, 8, 10}; // Sizes of each test case array
+    int numTests = sizeof(testSizes) / sizeof(testSizes[0]);
+
+    for (int i = 0; i < numTests; i++) {
+        int capacity = testCases[i][0];
+        int n = testCases[i][1];
+
+        int value[n];
+        int weight[n];
+
+        // Extract values and weights from the test case array
+        for (int j = 0; j < n; j++) {
+            value[j] = testCases[i][2 + j];
+            weight[j] = testCases[i][2 + n + j];
+        }
+
+        // Compute the result using the knapSack function
+        int result = knapSack(capacity, weight, value, n);
+
+        // Print the result
+        printResult(result);
+    }
+
+    return 0;
+}`,
       },
     ],
   },

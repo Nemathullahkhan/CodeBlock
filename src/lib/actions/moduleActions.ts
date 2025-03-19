@@ -4,6 +4,11 @@
 
 import prisma from "@/lib/prisma";
 import { floydsAlgorithmData } from "../data/(dynamic_programming)/floyd";
+import { bfsData } from "../data/(graph_algorithms)/bfs";
+import { dfsData } from "../data/(graph_algorithms)/dfs";
+import { warshallData } from "../data/(graph_algorithms)/warshall";
+import { kruskalData } from "../data/(greedy_techniques)/krushkal";
+import { primsData } from "../data/(greedy_techniques)/prims";
 
 
 
@@ -110,14 +115,14 @@ export async function createViva() {
 export async function working() {
   try {
     const program = await prisma.content.findUnique({
-      where: { id: "cm7lgm7w7004jbu8ouk8n694l" },
+      where: { id: "cm7uvzzus0005buksajyrtv9o" },
     });
     if (!program) throw new Error("Wrong id ");
 
     const processing = await prisma.working.create({
       data: {
         explanation: floydsAlgorithmData.working.explanation,
-        contentId:"cm7lgm7w7004jbu8ouk8n694l",
+        contentId:"cm7uvzzus0005buksajyrtv9o",
       },
     });
     return processing;
@@ -125,11 +130,36 @@ export async function working() {
     console.error("Failed to write the processing", err);
   }
 }
+
+export async function updateImplementation() {
+  try {
+    const implementation = await prisma.implementation.findUnique({
+      where: { id: "cm7leb51o0021bu8oy55cxyij" },
+    });
+
+    if (!implementation) throw new Error("Wrong ID - Implementation not found");
+
+    const updating = await prisma.implementation.update({
+      where: { id: "cm7leb51o0021bu8oy55cxyij" },
+      data: {
+        intuition: primsData.implementation.intuition,
+        approach: primsData.implementation.approach,
+        code: primsData.implementation.code,
+        contentId: "cm7le8hlv001tbu8ohh0p6nqu", 
+      },
+    });
+
+    return updating;
+  } catch (err) {
+    console.log("Error occurred at updateImplementation", err);
+  }
+}
+
 export async function implementation() {
   try {
     // Fetch the related content
     const program = await prisma.content.findUnique({
-      where: { id: "cm7lgm7w7004jbu8ouk8n694l" },
+      where: { id: "cm7uvzzus0005buksajyrtv9o" },
     });
 
     if (!program) throw new Error("Wrong ID - Content not found");
@@ -140,7 +170,7 @@ export async function implementation() {
         intuition: floydsAlgorithmData.implementation.intuition,
         approach: floydsAlgorithmData.implementation.approach,
         code: floydsAlgorithmData.implementation.code,
-        contentId: "cm7lgm7w7004jbu8ouk8n694l",
+        contentId: "cm7uvzzus0005buksajyrtv9o",
       },
     });
     return implementing;
@@ -152,7 +182,7 @@ export async function implementation() {
 export async function illustration() {
   try {
     const program = await prisma.content.findUnique({
-      where: { id: "cm7lgm7w7004jbu8ouk8n694l" },
+      where: { id: "cm7uvzzus0005buksajyrtv9o" },
     });
 
     if (!program) throw new Error("Id is incorrect");
@@ -162,8 +192,8 @@ export async function illustration() {
         summary: floydsAlgorithmData.illustration.summary,
         tips: floydsAlgorithmData.illustration.tips,
         images: floydsAlgorithmData.illustration.images,
-        contentId: "cm7lgm7w7004jbu8ouk8n694l",
         explanation: floydsAlgorithmData.illustration.explanation,
+        contentId: "cm7uvzzus0005buksajyrtv9o",
       },
     });
     return illustrate;

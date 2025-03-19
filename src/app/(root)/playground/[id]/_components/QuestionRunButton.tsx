@@ -72,7 +72,7 @@ export default function QuestionRunButton({ id, programName }: QuestionRunButton
     setOpen(true); // Open dialog when execution starts
     try {
       await loadTestCases(); // Load test cases before running
-      if (["0/1 Knapsack Problem", "Merge Sort", "Quick Sort", "Depth-First Search (DFS)", "Kruskal Algorithm (Minimum Spanning Tree)", "Prim Algorithm (Minimum Spanning Tree)"].includes(programName)) {
+      if (["0/1 Knapsack Problem", "Merge Sort", "Quick Sort", "Depth-First Search (DFS)", "Kruskal Algorithm (Minimum Spanning Tree)", "Prim Algorithm (Minimum Spanning Tree)","N-Queens Problem"].includes(programName)) {
         await runAndVerifyCode(); // Run and verify the code
       } else if (["Warshall Algorithm (Transitive Closure)", "Dijkstra Algorithm (Single-Source Shortest Path)", "Breadth-First Search (BFS)"].includes(programName)) {
         await runWarshallAndVerifyCode();

@@ -51,7 +51,8 @@ export const warshallData = {
     },
     {
       question: "What is the time complexity of Warshall’s Algorithm?",
-      answer: "The time complexity is O(V³), where V is the number of vertices.",
+      answer:
+        "The time complexity is O(V³), where V is the number of vertices.",
       contentId: "cm7ja3jju000hbugs0bx8uvid",
     },
     {
@@ -86,15 +87,15 @@ export const warshallData = {
       contentId: "cm7ja3jju000hbugs0bx8uvid",
     },
     {
-      question: "What is the significance of the intermediate vertex in Warshall’s Algorithm?",
+      question:
+        "What is the significance of the intermediate vertex in Warshall’s Algorithm?",
       answer:
         "The intermediate vertex helps determine if there is a path from one vertex to another through an intermediate node.",
       contentId: "cm7ja3jju000hbugs0bx8uvid",
     },
   ],
   questions: {
-    question:
-      `You are given an adjacency matrix of a directed graph. Your task is to compute the transitive closure of the graph using Warshall’s Algorithm. The transitive closure of a graph is a matrix where each entry [i][j] is 1 if there is a path from vertex i to vertex j, and 0 otherwise.`,
+    question: `You are given an adjacency matrix of a directed graph. Your task is to compute the transitive closure of the graph using Warshall’s Algorithm. The transitive closure of a graph is a matrix where each entry [i][j] is 1 if there is a path from vertex i to vertex j, and 0 otherwise.`,
     examples: [
       {
         input: "3\n0 1 0\n0 0 1\n0 0 0", // Number of vertices = 3, adjacency matrix
@@ -143,8 +144,7 @@ export const warshallData = {
   implementation: {
     intuition:
       "Warshall’s Algorithm iterates over all nodes as intermediate steps to update the reachability matrix.",
-    approach:
-      `1. Initialize an adjacency matrix.\n
+    approach: `1. Initialize an adjacency matrix.\n
        2. Iterate over all nodes, considering each as an intermediate vertex.\n
        3. If a path exists from i → k and k → j, mark i → j as reachable.\n
        4. Repeat until all paths are processed.`,
@@ -153,59 +153,72 @@ export const warshallData = {
         language: "C",
         code: `#include <stdio.h>
 
-#define V 4
+void warshall(int graph[10][10], int n) {
+    int i, j, k;
 
-void warshall(int graph[V][V]) {
-    int reach[V][V], i, j, k;
+    // Warshall's algorithm for transitive closure
+    for (k = 0; k < n; k++) {
+        for (i = 0; i < n; i++) {
+            for (j = 0; j < n; j++) {
+                graph[i][j] = graph[i][j] || (graph[i][k] && graph[k][j]);
+            }
+        }
+    }
+}
 
-    for (i = 0; i < V; i++)
-        for (j = 0; j < V; j++)
-            reach[i][j] = graph[i][j];
-
-    for (k = 0; k < V; k++)
-        for (i = 0; i < V; i++)
-            for (j = 0; j < V; j++)
-                reach[i][j] = reach[i][j] || (reach[i][k] && reach[k][j]);
-
+void printMatrix(int graph[10][10], int n) {
     printf("Transitive Closure:\\n");
-    for (i = 0; i < V; i++) {
-        for (j = 0; j < V; j++)
-            printf("%d ", reach[i][j]);
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            printf("%d ", graph[i][j]);
+        }
         printf("\\n");
     }
 }
 
 int main() {
-    int graph[V][V] = { {1, 1, 0, 1},
-                        {0, 1, 1, 0},
-                        {0, 0, 1, 1},
-                        {0, 0, 0, 1} };
-    warshall(graph);
+    // Test Case 1: 4x4 matrix
+    int graph[10][10] = {
+        {1, 1, 0, 1},
+        {0, 1, 1, 0},
+        {0, 0, 1, 1},
+        {0, 0, 0, 1}
+    };
+    int size = 4;
+
+    // Apply Warshall's algorithm
+    warshall(graph, size);
+
+    // Print the transitive closure
+    printMatrix(graph, size);
+
     return 0;
 }`,
       },
       {
         language: "Python",
-        code: `V = 4
+        code: `def warshall(graph, n):
+    reach = [[graph[i][j] for j in range(n)] for i in range(n)]
 
-def warshall(graph):
-    reach = [[graph[i][j] for j in range(V)] for i in range(V)]
-
-    for k in range(V):
-        for i in range(V):
-            for j in range(V):
+    for k in range(n):
+        for i in range(n):
+            for j in range(n):
                 reach[i][j] = reach[i][j] or (reach[i][k] and reach[k][j])
 
     print("Transitive Closure:")
     for row in reach:
         print(" ".join(map(str, row)))
 
-graph = [[1, 1, 0, 1],
-         [0, 1, 1, 0],
-         [0, 0, 1, 1],
-         [0, 0, 0, 1]]
+# Test Case 1: 4x4 matrix
+graph = [
+    [1, 1, 0, 1],
+    [0, 1, 1, 0],
+    [0, 0, 1, 1],
+    [0, 0, 0, 1]
+]
+size = 4
 
-warshall(graph)`,
+warshall(graph, size)`,
       },
     ],
     contentId: "cm7ja3jju000hbugs0bx8uvid",
