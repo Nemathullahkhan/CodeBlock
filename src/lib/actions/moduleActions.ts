@@ -5,10 +5,103 @@
 import prisma from "@/lib/prisma";
 import { floydsAlgorithmData } from "../data/(dynamic_programming)/floyd";
 import { primsData } from "../data/(greedy_techniques)/prims";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { redirect } from "next/navigation";
 
 
+export async function getModuleData(moduleId: string, userId: string) {
+  // Verify authentication on the server side
+  const session = await getServerSession(authOptions);
+  if (!session || !session.user?.id || session.user.id !== userId) {
+    // If not authenticated or IDs don't match, redirect
+    redirect("/auth/signin");
+  }
 
+  try {
+    // Fetch the module data
+    const moduleData = await prisma.module.findUnique({
+      where: { id: moduleId },
+      include: {
+        topics: {
+          include: {
+            contents: {
+              select: {
+                id: true,
+                title: true,
+              },
+            },
+          },
+        },
+      },
+    });
 
+    if (!moduleData) {
+      return {
+        courseModule: null, // Renamed from `module` to `courseModule`
+        totalPrograms: 0,
+        userProgress: [],
+        progress: 0,
+      };
+    }
+
+    // Count total programs
+    const totalPrograms = await prisma.content.count({
+      where: {
+        topic: {
+          moduleId: moduleId,
+        },
+      },
+    });
+
+    // Get user progress
+    const userProgress = await prisma.userProgress.findMany({
+      where: {
+        userId,
+        content: {
+          topic: { moduleId: moduleId },
+        },
+      },
+      select: {
+        contentId: true,
+        completed: true,
+      },
+    });
+
+    const completedPrograms = userProgress.filter((up) => up.completed).length;
+
+    const progress = totalPrograms
+      ? parseFloat(((completedPrograms / totalPrograms) * 100).toFixed(2))
+      : 0;
+
+    // Transform the module data into a plain object
+    const courseModule = {
+      id: moduleData.id,
+      name: moduleData.name,
+      description: moduleData.description,
+      topics: moduleData.topics.map((topic) => ({
+        id: topic.id,
+        name: topic.name,
+        description: topic.description,
+        contents: topic.contents.map((content) => ({
+          id: content.id,
+          title: content.title,
+        })),
+      })),
+    };
+
+    // Return the formatted data
+    return {
+      courseModule, // Renamed from `module` to `courseModule`
+      totalPrograms,
+      userProgress,
+      progress,
+    };
+  } catch (error) {
+    console.error("Error fetching module data:", error);
+    throw new Error("Failed to fetch module data");
+  }
+}
 
 // Create modules
 export async function createModule() {

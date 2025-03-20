@@ -104,7 +104,6 @@ export default function CTASection() {
               <Link href="/playground">
                 <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}>
                   <LoadingButton
-                    variant="outline"
                     className="px-6 h-10 rounded-md border border-zinc-700 bg-transparent hover:bg-zinc-800/50 text-white"
                   >
                     Try Playground

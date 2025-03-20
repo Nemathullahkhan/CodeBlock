@@ -95,30 +95,20 @@ export default function SignUpForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  const saveUser = async (values: InputType) => {
-    // savind database here
-    const { confirmPassword, accepted, ...user } = values; // we are destructing
+  const saveUser = c: InputType) => {
+    // savind da// savind database here
+    tabase here
+    const { confirmPassword, accepted, ..s//ewerare des} uctingal
 
+ues;con/ol .lrstconfiumPassword + " " + acctpteding
 
-    console.log(confirmPassword + " " + accepted);
-    try {
-      const result = await registerUser(user);
-      console.log(result)
-      toast.success("User registerd succesfully");
+try
+{
+         console.log(confirmPassword + " " + accepted)con or{ lig regist(esult)
+      toast.sucUser ress("eUdegisted sluycesfully");
       router.push("/auth/signin");
-    } catch (error) {
-      toast.error("Failed to register");
-      console.log(error);
-    }
-  };
-
-  return (
-    <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(saveUser)}
-        className="grid grid-cols-1 md:grid-cols-2  p-4 shadow-lg border border-zinc-700 gap-x-2 rounded-md w-full max-w-2xl mx-auto"
-      >
-        {/* First Name */}
+    } catch (Failed to register");Failsolto() gi e}etu...form}con>ol.l or rror      onSubmitleSubmit(saveUser)}
+        className="grid gs-1 irst Name */}
         <FormField
           control={form.control}
           name="firstName"
@@ -136,14 +126,8 @@ export default function SignUpForm() {
           )}
         />
 
-        {/* Last Name */}
-        <FormField
-          control={form.control}
-          name="lastName"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="text-[13px] px-2 ">Last Name</FormLabel>
-              <div className="flex items-center border-2 border-zinc-700  rounded-md px-2 gap-2">
+        {/* Last  introl}
+          name="lastName" av classNaer border-2 border-zinc-700  rounded-md px-2 gap-2">
                 <FaUser className="text-zinc-200/90 w-4 h-4" />
                 <FormControl>
                   <Input placeholder="Enter your last name" {...field} />
@@ -160,13 +144,7 @@ export default function SignUpForm() {
           name="email"
           render={({ field }) => (
             <FormItem className="col-span-2">
-              <FormLabel className="text-[13px] px-1 ">Email</FormLabel>
-              <div className="flex items-center border-2 border-zinc-700 rounded-md px-2 gap-2">
-                <FaEnvelope className="text-zinc-200/90 w-4 h-4" />
-                <FormControl>
-                  <Input
-                    type="email"
-                    placeholder="Enter your email"
+              <FormLabel className="text-[13px] px-1 ">Emaild enter border-2 border-zinc-700 rou           =                 placeholder="Enter your email"
                     {...field}
                   />
                 </FormControl>
@@ -230,14 +208,8 @@ export default function SignUpForm() {
         <div className="flex items-center w-full col-span-2">
           <PasswordStrength
             passStrength={passStrength}
-            passwordLength={passwordLength}
-          />
-        </div>
-
-        {/* Confirm Password */}
-        <FormField
-          control={form.control}
-          name="confirmPassword"
+            psswordLength={passw
+         name="confirmPassword"
           render={({ field }) => (
             <FormItem className="col-span-2">
               <FormLabel className="text-[13px] px-1 ">
@@ -272,10 +244,7 @@ export default function SignUpForm() {
           render={({ field }) => (
             <FormItem className="col-span-2 flex items-center gap-1 mt-1">
               <FormControl>
-                <Checkbox
-                  checked={field.value}
-                  onCheckedChange={field.onChange}
-                  className="w-4 h-4 ml-1 mt-1 border-2 border-zinc-700"
+                <Ch ona ml-1 mt-1 border-2 border-zinc-700"
                 />
               </FormControl>
               <FormLabel className="flex items-center gap-2">
