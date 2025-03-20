@@ -4,10 +4,6 @@
 
 import prisma from "@/lib/prisma";
 import { floydsAlgorithmData } from "../data/(dynamic_programming)/floyd";
-import { bfsData } from "../data/(graph_algorithms)/bfs";
-import { dfsData } from "../data/(graph_algorithms)/dfs";
-import { warshallData } from "../data/(graph_algorithms)/warshall";
-import { kruskalData } from "../data/(greedy_techniques)/krushkal";
 import { primsData } from "../data/(greedy_techniques)/prims";
 
 

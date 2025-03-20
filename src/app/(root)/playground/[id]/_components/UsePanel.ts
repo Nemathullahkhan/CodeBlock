@@ -1,4 +1,3 @@
-// app/_hooks/usePanelSize.ts
 "use client";
 
 import { useState } from "react";

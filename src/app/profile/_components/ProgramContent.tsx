@@ -41,12 +41,11 @@
 // }: ProgramContentProps) {
 //   const [programList, setProgramList] = useState<any[]>([]);
 //   const [isLoading, setIsLoading] = useState(false);
-//   const [selectedProgramId, setSelectedProgramId] = useState<string | null>(
-//     null
-//   );
+//   const [selectedProgramId, setSelectedProgramId] = useState<string | null>(null);
 //   const [isRenameDialogOpen, setIsRenameDialogOpen] = useState(false);
 //   const [newProgramName, setNewProgramName] = useState("");
 //   const [programToRename, setProgramToRename] = useState<string | null>(null);
+//   const [isDeleting, setIsDeleting] = useState(false);
 
 //   const currentFolder = folderList.find((folder) => folder.id === folderId);
 
@@ -57,10 +56,10 @@
 //           setIsLoading(true);
 //           const result = await listProgramsByLatest({ userId, folderId });
 //           setProgramList(result);
-//           setIsLoading(false);
 //         }
 //       } catch (err) {
 //         console.log("Error fetching programs", err);
+//       } finally {
 //         setIsLoading(false);
 //       }
 //     };
@@ -86,12 +85,27 @@
 //           programId: programToRename,
 //           newName: newProgramName,
 //         });
-//         handleSuccess(); // Refresh the program list
-//         setIsRenameDialogOpen(false); // Close the dialog
-//         setNewProgramName(""); // Reset the input field
-//         setProgramToRename(null); // Reset the program to rename
+//         handleSuccess();
+//         setIsRenameDialogOpen(false);
+//         setNewProgramName("");
+//         setProgramToRename(null);
 //       } catch (err) {
 //         console.log("Error renaming program:", err);
+//       }
+//     }
+//   };
+
+//   const handleDeleteProgram = async (programId: string) => {
+//     const confirmDelete = confirm("Are you sure you want to delete this program?");
+//     if (confirmDelete) {
+//       try {
+//         setIsDeleting(true);
+//         await deleteProgram({ programId });
+//         handleSuccess();
+//       } catch (err) {
+//         console.log("Error deleting program:", err);
+//       } finally {
+//         setIsDeleting(false);
 //       }
 //     }
 //   };
@@ -160,7 +174,6 @@
 //                     <Link href={`/profile/program/${program.id}`}>
 //                       <div className="flex">
 //                         <Code className="h-7 w-5 mr-2 mt-2 text-muted-foreground" />
-
 //                         <div>
 //                           <h3 className="font-medium">{program.name}</h3>
 //                           <div className="flex items-center text-xs text-muted-foreground mt-1">
@@ -191,6 +204,10 @@
 //                       variant="ghost"
 //                       size="icon"
 //                       className="h-8 w-8 rounded-full"
+//                       onClick={() => {
+//                         setProgramToRename(program.id);
+//                         setIsRenameDialogOpen(true);
+//                       }}
 //                     >
 //                       <Pencil className="h-4 w-4" />
 //                     </Button>
@@ -207,23 +224,16 @@
 //                       <DropdownMenuContent align="end">
 //                         <DropdownMenuItem
 //                           onClick={() => {
-//                             setProgramToRename(program.id); // Set the program to rename
-//                             setIsRenameDialogOpen(true); // Open the dialog
+//                             setProgramToRename(program.id);
+//                             setIsRenameDialogOpen(true);
 //                           }}
 //                         >
 //                           Rename
 //                         </DropdownMenuItem>
 //                         <DropdownMenuItem
 //                           className="text-destructive"
-//                           onClick={async () => {
-//                             const confirmDelete = confirm(
-//                               "Are you sure you want to delete this program?"
-//                             );
-//                             if (confirmDelete) {
-//                               await deleteProgram({ programId: program.id });
-//                               handleSuccess(); // Refresh the program list
-//                             }
-//                           }}
+//                           onClick={() => handleDeleteProgram(program.id)}
+//                           disabled={isDeleting}
 //                         >
 //                           Delete
 //                         </DropdownMenuItem>
@@ -239,9 +249,9 @@
 
 //       {/* Rename Dialog */}
 //       <Dialog open={isRenameDialogOpen} onOpenChange={setIsRenameDialogOpen}>
-//         <DialogContent className=" border border-zinc-700">
+//         <DialogContent className="border border-zinc-700">
 //           <DialogHeader>
-//             <DialogTitle className="text-3xl ">Rename Program</DialogTitle>
+//             <DialogTitle className="text-3xl">Rename Program</DialogTitle>
 //             <DialogDescription className="text-xs">
 //               Enter a new name for the program.
 //             </DialogDescription>
@@ -254,7 +264,7 @@
 //           />
 //           <div className="flex justify-end mt-4">
 //             <Button
-//               variant={"default"}
+//               variant="default"
 //               onClick={handleRenameProgram}
 //               disabled={!newProgramName.trim()}
 //               className="bg-white h-5"
@@ -267,7 +277,6 @@
 //     </div>
 //   );
 // }
-
 
 "use client";
 
@@ -299,10 +308,35 @@ import {
 } from "@/components/ui/dialog";
 import Link from "next/link";
 
+// Define the Folder type based on your Prisma model
+interface Folder {
+  id: string;
+  userId: string;
+  name: string;
+  description: string | null;
+  createdAt: Date;
+  Programs: Program[]; // Programs array within the folder
+}
+
+// Define the Program type based on your Prisma model
+interface Program {
+  id: string;
+  foldersId: string;
+  userId: string;
+  name: string;
+  description: string | null;
+  code: string | null;
+  approach: string | null;
+  createdAt: Date;
+  updatedAt: Date;
+  tc: string | null;
+  sc: string | null;
+}
+
 interface ProgramContentProps {
   userId: string | null;
   folderId: string | null;
-  folderList: any[];
+  folderList: Folder[]; // Use the Folder type instead of any[]
 }
 
 export default function ProgramContent({
@@ -310,7 +344,7 @@ export default function ProgramContent({
   folderId,
   folderList,
 }: ProgramContentProps) {
-  const [programList, setProgramList] = useState<any[]>([]);
+  const [programList, setProgramList] = useState<Program[]>([]); // Use the Program type instead of any[]
   const [isLoading, setIsLoading] = useState(false);
   const [selectedProgramId, setSelectedProgramId] = useState<string | null>(null);
   const [isRenameDialogOpen, setIsRenameDialogOpen] = useState(false);

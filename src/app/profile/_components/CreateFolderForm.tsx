@@ -9,10 +9,10 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { createFolder } from "@/lib/actions/profileActions";
 import { DialogTitle } from "@radix-ui/react-dialog";
-import { Label } from "@radix-ui/react-dropdown-menu";
 import {  Folder, Plus } from "lucide-react";
 import { useState } from "react";
 

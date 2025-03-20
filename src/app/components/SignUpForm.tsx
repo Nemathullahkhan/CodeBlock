@@ -98,6 +98,9 @@ export default function SignUpForm() {
   const saveUser = async (values: InputType) => {
     // savind database here
     const { confirmPassword, accepted, ...user } = values; // we are destructing
+
+
+    console.log(confirmPassword + " " + accepted);
     try {
       const result = await registerUser(user);
       console.log(result)

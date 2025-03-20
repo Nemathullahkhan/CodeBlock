@@ -5,6 +5,7 @@ import "./globals.css";
 import { ThemeProvider } from "next-themes";
 import { SessionProvider } from "next-auth/react";
 import { ToastContainer } from "react-toastify";
+import BackgroundEffect from "./components/BackgroundEffect";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,6 +34,7 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
+              <BackgroundEffect />
               {children}
           </ThemeProvider>
           <ToastContainer position="top-right" theme="dark" />

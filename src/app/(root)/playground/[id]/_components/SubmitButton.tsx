@@ -16,7 +16,7 @@ import {
   DialogDescription,
   DialogFooter,
 } from "@/components/ui/dialog";
-import Link from "next/link";
+// import Link from "next/link";
 import { renderTimenSpace } from "@/lib/actions/rendering";
 
 export default function SubmitButton({
@@ -193,13 +193,13 @@ export default function SubmitButton({
             </div>
           </div>
           <DialogFooter>
-            {dialogContent?.title === "Success!" && (
+            {/* {dialogContent?.title === "Success!" && (
               <Link href={`/next-program`} passHref>
                 <Button className="bg-emerald-500 hover:bg-emerald-600 text-white">
                   Next Program
                 </Button>
               </Link>
-            )}
+            )} */}
             <Button variant="secondary" onClick={() => setDialogOpen(false)}>
               Close
             </Button>

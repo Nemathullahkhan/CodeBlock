@@ -1,4 +1,3 @@
-// components/OutputPanelSkeleton.jsx
 export default function OutputPanelSkeleton() {
   return (
     <div className="animate-pulse">

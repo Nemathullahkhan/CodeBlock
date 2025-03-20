@@ -1,143 +1,143 @@
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
-import { motion } from "framer-motion";
+"use client"
+
+import Link from "next/link"
+import { LoadingButton } from "@/components/ui/loading-button"
+import { motion } from "framer-motion"
 
 export default function CTASection() {
   return (
-    <div className="relative py-32 overflow-hidden bg-zinc-950/10">
+    <div className="relative py-24 overflow-hidden bg-black">
       {/* Gradient Background Similar to Hero */}
-      <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/10 to-blue-500/10 blur-3xl"></div>
+      <div className="absolute max-w-7xl inset-0 bg-gradient-to-r from-emerald-500/20 to-blue-500/20 rounded-3xl blur-3xl opacity-60" />
       
       {/* Animated Gradient Blobs Similar to Hero */}
       <motion.div 
-        className="absolute top-0 right-0 w-96 h-96 bg-emerald-500/5 rounded-full blur-3xl"
+        className="absolute top-0 right-0 w-[500px] h-[500px] bg-gradient-to-r from-emerald-500/20 to-blue-500/20 rounded-full blur-3xl"
         animate={{ 
+          scale: [1, 1.1, 1],
           x: [0, 20, 0], 
           y: [0, 15, 0],
-          opacity: [0.02, 0.04, 0.02]
+          opacity: [0.1, 0.15, 0.1]
         }}
         transition={{ duration: 10, repeat: Infinity, repeatType: "reverse" }}
       />
       
       <motion.div 
-        className="absolute bottom-0 left-0 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl"
+        className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-gradient-to-r from-blue-500/20 to-emerald-500/20 rounded-full blur-3xl"
         animate={{ 
+          scale: [1, 1.2, 1],
           x: [0, -20, 0], 
           y: [0, 20, 0],
-          opacity: [0.02, 0.04, 0.02]
+          opacity: [0.1, 0.12, 0.1]
         }}
         transition={{ duration: 12, repeat: Infinity, repeatType: "reverse" }}
       />
 
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
+      <div className="max-w-5xl mx-auto px-6 lg:px-8 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: "easeOut" }}
           viewport={{ once: true }}
-          className="bg-zinc-900 border border-zinc-800 rounded-2xl p-12 lg:p-16 backdrop-blur-md overflow-hidden relative"
+          className="bg-zinc-900/80 backdrop-blur-md border border-zinc-800/80 rounded-xl p-8 lg:p-10 overflow-hidden relative"
         >
-          {/* Similar Border Gradient as in Hero */}
-          <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-emerald-500/20 via-emerald-400/30 to-blue-500/20"></div>
-          
+          {/* Subtle animated border */}
+          <div className="absolute inset-0 rounded-xl overflow-hidden">
+            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-zinc-800 via-zinc-600/50 to-zinc-800"></div>
+            <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-zinc-800 via-zinc-600/50 to-zinc-800"></div>
+            <div className="absolute top-0 bottom-0 left-0 w-px bg-gradient-to-b from-zinc-800 via-zinc-600/50 to-zinc-800"></div>
+            <div className="absolute top-0 bottom-0 right-0 w-px bg-gradient-to-b from-zinc-800 via-zinc-600/50 to-zinc-800"></div>
+          </div>
+
           <div className="relative">
-            {/* Label Tag with Hero Colors */}
+            {/* Label Tag */}
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 }}
               viewport={{ once: true }}
             >
-              <span className="px-3 py-1 bg-emerald-500/10 text-emerald-400 text-xs font-medium rounded-full inline-block mb-6 border border-emerald-500/20">
+              <span className="px-3 py-1 bg-zinc-800/80 text-zinc-400 text-xs font-medium rounded-full inline-block mb-4 border border-zinc-700/50">
                 FOR STUDENTS
               </span>
             </motion.div>
 
-            {/* Main Heading with Gradient Matching Hero */}
+            {/* Main Heading */}
             <motion.h2
               initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
               viewport={{ once: true }}
-              className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6"
+              className="text-3xl sm:text-4xl font-bold mb-4 text-white"
             >
-              <span className="text-primary">Learn.</span>{" "}
-              <span className="text-primary">Code.</span>{" "}
-              <span className="text-primary">Grow.</span>
+              <span>Learn. Code. Grow.</span>
             </motion.h2>
 
-            {/* Subheading - Styled like the hero section */}
+            {/* Subheading */}
             <motion.p
               initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.3 }}
               viewport={{ once: true }}
-              className="text-zinc-300 mb-10 max-w-2xl mx-auto text-md px-4"
+              className="text-zinc-400 mb-6 max-w-2xl text-sm"
             >
-              Kickstart your coding journey with interactive lessons and hands-on projects designed specifically for students. Track your progress and master programming with interactive challenges.
+              Kickstart your coding journey with interactive lessons and hands-on projects designed specifically for
+              students.
             </motion.p>
 
-            {/* CTA Buttons Matching Hero Style */}
+            {/* CTA Buttons */}
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.4 }}
               viewport={{ once: true }}
-              className="flex flex-col sm:flex-row gap-5 justify-center px-10"
+              className="flex flex-col sm:flex-row gap-4 justify-start"
             >
               <Link href="/auth/signup">
-                <motion.div
-                  whileHover={{ scale: 1.03 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  <Button 
-                    variant="outline"
-                    className="px-10 h-12 rounded-full border-x-8 border-x-emerald-500/30 border-emerald-400 border text-white"
-                  >
+                <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}>
+                  <LoadingButton className="px-6 h-10 rounded-md bg-white hover:bg-zinc-200 text-black border-0">
                     Start Learning
-                  </Button>
+                  </LoadingButton>
                 </motion.div>
               </Link>
 
               <Link href="/playground">
-                <motion.div
-                  whileHover={{ scale: 1.03 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  <Button
+                <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}>
+                  <LoadingButton
                     variant="outline"
-                    className="px-10 h-12 rounded-full border-x-8 border-x-slate-500/30 border-slate-500 border text-white"
+                    className="px-6 h-10 rounded-md border border-zinc-700 bg-transparent hover:bg-zinc-800/50 text-white"
                   >
                     Try Playground
-                  </Button>
+                  </LoadingButton>
                 </motion.div>
               </Link>
             </motion.div>
-            
-            {/* Course Features with Hero-matching style */}
+
+            {/* Course Features */}
             <motion.div
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               transition={{ duration: 0.8, delay: 0.6 }}
               viewport={{ once: true }}
-              className="mt-10 flex flex-wrap items-center justify-center gap-6"
+              className="mt-6 flex flex-wrap items-center gap-4"
             >
               <div className="flex items-center gap-2">
-                <div className="w-2 h-2 rounded-full bg-emerald-400"></div>
-                <span className="text-zinc-400 text-sm">Interactive Exercises</span>
+                <div className="w-1.5 h-1.5 rounded-full bg-zinc-500"></div>
+                <span className="text-zinc-500 text-xs">Interactive Exercises</span>
               </div>
               <div className="flex items-center gap-2">
-                <div className="w-2 h-2 rounded-full bg-emerald-400"></div>
-                <span className="text-zinc-400 text-sm">Beginner Friendly</span>
+                <div className="w-1.5 h-1.5 rounded-full bg-zinc-500"></div>
+                <span className="text-zinc-500 text-xs">Beginner Friendly</span>
               </div>
               <div className="flex items-center gap-2">
-                <div className="w-2 h-2 rounded-full bg-emerald-400"></div>
-                <span className="text-zinc-400 text-sm">Practical Projects</span>
+                <div className="w-1.5 h-1.5 rounded-full bg-zinc-500"></div>
+                <span className="text-zinc-500 text-xs">Practical Projects</span>
               </div>
             </motion.div>
           </div>
         </motion.div>
       </div>
     </div>
-  );
+  )
 }
+
