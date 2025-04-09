@@ -1,13 +1,65 @@
 "use server";
 
-//  cm7kklzg8000pbutcs2ksz8zq
-
 import prisma from "@/lib/prisma";
 import { floydsAlgorithmData } from "../data/(dynamic_programming)/floyd";
 import { primsData } from "../data/(greedy_techniques)/prims";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { redirect } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
+
+export async function fetchContent(id: string, userId: string) {
+  const session = await getServerSession(authOptions);
+  if (!session || !session.user?.id || session.user.id !== userId) {
+    redirect("/auth/signin");
+  }
+
+  const content = await prisma.content.findUnique({
+    where: { id },
+    include: {
+      faq: true,
+      vivaQuestions: true,
+      working: true,
+      illustration: true,
+      implementation: true,
+      UserProgress: true,
+      topic: {
+        include: {
+          module: true,
+          contents: {
+            orderBy: { createdAt: "asc" },
+          },
+        },
+      },
+    },
+  });
+
+  if (!content) {
+    notFound();
+  }
+
+  return content;
+}
+
+// Mark content as completed
+export async function markContentAsCompleted(userId: string, contentId: string) {
+  await prisma.userProgress.upsert({
+    where: {
+      userId_contentId: {
+        userId,
+        contentId,
+      },
+    },
+    update: {
+      completed: true,
+    },
+    create: {
+      userId,
+      contentId,
+      completed: true,
+    },
+  });
+}
+
 
 
 export async function getModuleData(moduleId: string, userId: string) {
@@ -268,6 +320,8 @@ export async function implementation() {
     throw new Error("Server Error: Unable to create implementation");
   }
 }
+
+
 export async function illustration() {
   try {
     const program = await prisma.content.findUnique({

@@ -12,12 +12,11 @@ import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useState, useCallback } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaEnvelope, FaEye, FaEyeSlash, FaLock } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { z } from "zod";
-import { motion, AnimatePresence } from "framer-motion";
 
 interface SignInProps {
   callbackUrl?: string;

@@ -95,20 +95,25 @@ export default function SignUpForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  const saveUser = c: InputType) => {
-    // savind da// savind database here
-    tabase here
-    const { confirmPassword, accepted, ..s//ewerare des} uctingal
-
-ues;con/ol .lrstconfiumPassword + " " + acctpteding
-
-try
-{
-         console.log(confirmPassword + " " + accepted)con or{ lig regist(esult)
-      toast.sucUser ress("eUdegisted sluycesfully");
+  const saveUser = (c: InputType) => {
+    // saving to database here
+    const { confirmPassword, accepted, ...userData } = c;
+    
+    try {
+      console.log(confirmPassword + " " + accepted);
+      registerUser(userData);
+      toast.success("User registered successfully");
       router.push("/auth/signin");
-    } catch (Failed to register");Failsolto() gi e}etu...form}con>ol.l or rror      onSubmitleSubmit(saveUser)}
-        className="grid gs-1 irst Name */}
+    } catch (error) {
+      toast.error("Failed to register");
+      console.log(error);
+    }
+  };
+
+  return (
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(saveUser)} className="grid gs-1">
+        {/* First Name */}
         <FormField
           control={form.control}
           name="firstName"
@@ -126,8 +131,14 @@ try
           )}
         />
 
-        {/* Last  introl}
-          name="lastName" av classNaer border-2 border-zinc-700  rounded-md px-2 gap-2">
+        {/* Last Name */}
+        <FormField
+          control={form.control}
+          name="lastName"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="text-[13px] px-1">Last Name</FormLabel>
+              <div className="flex items-center border-2 border-zinc-700  rounded-md px-2 gap-2">
                 <FaUser className="text-zinc-200/90 w-4 h-4" />
                 <FormControl>
                   <Input placeholder="Enter your last name" {...field} />
@@ -144,7 +155,13 @@ try
           name="email"
           render={({ field }) => (
             <FormItem className="col-span-2">
-              <FormLabel className="text-[13px] px-1 ">Emaild enter border-2 border-zinc-700 rou           =                 placeholder="Enter your email"
+              <FormLabel className="text-[13px] px-1 ">Email</FormLabel>
+              <div className="flex items-center border-2 border-zinc-700 rounded-md px-2 gap-2">
+                <FaEnvelope className="text-zinc-200/90 w-4 h-4" />
+                <FormControl>
+                  <Input
+                    type="email"
+                    placeholder="Enter your email"
                     {...field}
                   />
                 </FormControl>
@@ -204,12 +221,19 @@ try
             </FormItem>
           )}
         />
+
         {/* Password Strength  */}
         <div className="flex items-center w-full col-span-2">
           <PasswordStrength
             passStrength={passStrength}
-            psswordLength={passw
-         name="confirmPassword"
+            passwordLength={passwordLength}
+          />
+        </div>
+
+        {/* Confirm Password */}
+        <FormField
+          control={form.control}
+          name="confirmPassword"
           render={({ field }) => (
             <FormItem className="col-span-2">
               <FormLabel className="text-[13px] px-1 ">
@@ -244,7 +268,9 @@ try
           render={({ field }) => (
             <FormItem className="col-span-2 flex items-center gap-1 mt-1">
               <FormControl>
-                <Ch ona ml-1 mt-1 border-2 border-zinc-700"
+                <Checkbox
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
                 />
               </FormControl>
               <FormLabel className="flex items-center gap-2">

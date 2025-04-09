@@ -4,7 +4,7 @@ import { signIn, useSession } from "next-auth/react";
 import Link from "next/link";
 
 const SigninButton = () => {
-  const { data: session } = useSession();
+  const { data: session } = useSession(); 
   console.log({session});
   return (
     <div className="flex items-center gap-2">
