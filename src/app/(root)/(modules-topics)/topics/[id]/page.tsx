@@ -384,7 +384,11 @@ interface Content {
   UserProgress: UserProgress[];
   topic: Topic;
 }
-export default function TopicPage({ params }: { params: { id: string } }) {
+export default function TopicPage({ 
+  params 
+}: { 
+  params: { id: string } 
+})  {
   const { data: session, status } = useSession();
   const router = useRouter();
   const [contents, setContents] = useState<Content | null>(null);

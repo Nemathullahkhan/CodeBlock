@@ -36,7 +36,7 @@ export default function EditorPanel() {
     const defaultCode = LANGUAGE_CONFIG[language].defaultCode;
     if (editor) editor.setValue(defaultCode);
 
-    localStorage.removeItme(`editor-code=${language}`);
+    localStorage.removeItem(`editor-code=${language}`);
   };
 
   const handleEditorChange = (value: string | undefined) => {

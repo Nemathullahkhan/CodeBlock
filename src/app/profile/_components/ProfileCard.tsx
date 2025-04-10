@@ -27,6 +27,7 @@ export default function ProfileCard() {
         <Card className="flex-col justify-center p-4 border-zinc-700  bg-transparent/60 z-10">
           <div className="flex justify-center">
             <div className="p-4 border border-zinc-600 rounded-full bg-gradient-to-r from-green-600/10 to-blue-500/10 w-16 h-16 text-primary font-semibold text-center text-2xl">
+              <div className="absolute top-0 right-24">dafhkljah</div>
               <p className="flex justify-center">{firstLetter}</p>
             </div>
           </div>
