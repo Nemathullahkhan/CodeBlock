@@ -153,3 +153,104 @@ export interface QuestionData {
     averageTime: string;
   };
 }
+
+
+
+
+// Define the types based on what getTopicContent returns
+export interface UserProgress {
+  id: string;
+  userId: string;
+  contentId: string;
+  completed: boolean;
+  attempts: number;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface FAQ {
+  id: string;
+  question: string;
+  answer: string;
+  contentId: string;
+}
+
+export interface VivaQuestion {
+  id: string;
+  question: string;
+  answer: string;
+  contentId: string;
+}
+
+export interface Working {
+  id: string;
+  contentId: string;
+  explanation: string;
+}
+
+export interface Illustration {
+  id: string;
+  contentId: string;
+  summary: string | null;
+  tips: string[];
+  images: string[];
+  explanation: string;
+}
+
+export interface Implementation {
+  id: string;
+  contentId: string;
+  intuition: string;
+  approach: string;
+  code: string; // Using any for JSON type, but could be more specific
+}
+
+export interface Module {
+  id: string;
+  name: string;
+  description: string;
+  isCompleted: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+  userId: string | null;
+}
+
+export interface Topic {
+  id: string;
+  name: string;
+  description: string;
+  moduleId: string;
+  createdAt: Date;
+  updatedAt: Date;
+  module: Module;
+}
+
+export interface Content {
+  id: string;
+  title: string;
+  description: string;
+  brief: string;
+  photos: string[];
+  complexityAnalysis: string | null;
+  timeComplexity: string;
+  spaceComplexity: string | null;
+  applications: string[];
+  advantages: string[];
+  disadvantages: string[];
+  iscompleted: boolean;
+  videos: string[];
+  testCases: string[];
+  topicId: string;
+  createdAt: Date;
+  updatedAt: Date;
+  faq: FAQ[];
+  vivaQuestions: VivaQuestion[];
+  working: Working | null;
+  illustration: Illustration | null;
+  implementation: Implementation | null;
+  UserProgress: UserProgress[];
+  topic: Topic;
+}
+
+// This is what getTopicContent returns
+export type TopicContentResponse = Content | null;

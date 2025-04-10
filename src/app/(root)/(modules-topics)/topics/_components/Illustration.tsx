@@ -3,10 +3,10 @@
 import { Button } from "@/components/ui/button"
 import React, { useState } from "react"
 
-interface IllustrationProps {
+export interface IllustrationProps {
   illustration?: {
     explanation: string | null
-    summary: string | null
+    summary: string | null | undefined
     tips: string[]
     images: string[]
   } | null
