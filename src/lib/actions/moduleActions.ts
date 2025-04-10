@@ -4,8 +4,8 @@ import prisma from "@/lib/prisma";
 import { floydsAlgorithmData } from "../data/(dynamic_programming)/floyd";
 import { primsData } from "../data/(greedy_techniques)/prims";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { notFound, redirect } from "next/navigation";
+import { authOptions } from "../auth";
 
 export async function fetchContent(id: string, userId: string) {
   const session = await getServerSession(authOptions);

@@ -390,12 +390,10 @@ export default function TopicPage( ) {
   const router = useRouter();
   const [contents, setContents] = useState<Content | null>(null);
   const [loading, setLoading] = useState(true);
-  const [topicId, setTopicId] = useState<string>("");
 
   // Store the id separately to avoid using params directly in the dependency array
   const params = useParams();
-  const id = params.id as string;
-  setTopicId(id);
+  const topicId =params.id as string;
   useEffect(() => {
     // Check authentication
     if (status === "unauthenticated") {

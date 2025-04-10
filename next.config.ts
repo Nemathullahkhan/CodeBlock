@@ -9,6 +9,7 @@ const nextConfig: NextConfig = {
     });
     return config;
   },
+  // ignoreBuildErrors: true,
 };
 
 export default nextConfig;

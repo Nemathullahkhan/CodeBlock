@@ -212,13 +212,17 @@ export default function ProblemImplementation({
         {isCompleted ? (
           <>
             <div className="flex items-center gap-4">
-              <Button
-                variant={"ghost"}
-                className="bg-gradient-to-tl from-emerald-950 to-emerald-600"
-              >
-                <CheckCircle className="w-5 h-5" />
-                <p className="font-medium">Completed: {programName}</p>
-              </Button>
+              <Link
+                href={`/playground/${id}`}>
+
+                <Button
+                  variant={"ghost"}
+                  className="bg-gradient-to-tl from-emerald-950 to-emerald-600"
+                >
+                  <CheckCircle className="w-5 h-5" />
+                  <p className="font-medium">Completed: {programName}</p>
+                </Button>
+              </Link>
 
               {/* Render "Next" button only if nextContentId exists */}
               {nextContentId ? (

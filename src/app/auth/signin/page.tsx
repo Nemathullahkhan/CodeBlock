@@ -5,22 +5,33 @@ import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { LoaderCircle } from "lucide-react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 interface Props {
-  searchParams: {
+  searchParams: Promise<{
     callbackUrl?: string;
-  };
+  }>;
 }
 
 const SignInPage = ({ searchParams }: Props) => {
   const { status } = useSession();
   const router = useRouter();
+  const [resolvedSearchParams, setResolvedSearchParams] = useState<{
+    callbackUrl?: string;
+  }>({});
+
   useEffect(() => {
+    // Resolve the searchParams promise
+    const resolveParams = async () => {
+      const params = await searchParams;
+      setResolvedSearchParams(params);
+    };
+    resolveParams();
+
     if (status === "authenticated") {
       router.push("/home");
     }
-  }, [status, router]);
+  }, [status, router, searchParams]);
 
   if (status === "loading") {
     return (
@@ -32,10 +43,7 @@ const SignInPage = ({ searchParams }: Props) => {
 
   return (
     <div className="flex items-center justify-center min-h-screen relative">
-      {/* Background gradient positioned behind everything */}
-
-      {/* Form container with relative positioning and z-index to appear above the background */}
-      <div className="flex flex-col items-center p-4 relative z-10  rounded-lg backdrop-blur-sm">
+      <div className="flex flex-col items-center p-4 relative z-10 rounded-lg backdrop-blur-sm">
         <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/20 to-blue-500/20 rounded-3xl blur-3xl pointer-events-none" />
         <h1 className="text-3xl font-sans m-1 font-semibold">Sign In</h1>
         <span className="text-sm font-sans tracking-tight">
@@ -44,7 +52,7 @@ const SignInPage = ({ searchParams }: Props) => {
             signup
           </Link>
         </span>
-        <SignInForm callbackUrl={searchParams.callbackUrl} />
+        <SignInForm callbackUrl={resolvedSearchParams.callbackUrl} />
       </div>
     </div>
   );
