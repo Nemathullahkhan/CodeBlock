@@ -161,15 +161,25 @@
 //   );
 // }
 
-
 "use client";
 
 import { useState } from "react";
-import { ChevronDown, ChevronRight, File, Folder, FolderPlus, MoreHorizontal } from "lucide-react";
+import {
+  ChevronDown,
+  ChevronRight,
+  File,
+  Folder,
+  MoreHorizontal,
+} from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import CreateFolderForm from "./CreateFolderForm";
 import { deleteFolder, userPrograms } from "@/lib/actions/profileActions";
 
@@ -215,8 +225,12 @@ export default function FolderSidebar({
   refreshFolders,
   isLoading,
 }: FolderSidebarProps) {
-  const [expandedFolders, setExpandedFolders] = useState<Record<string, boolean>>({});
-  const [folderPrograms, setFolderPrograms] = useState<Record<string, Program[]>>({}); // Use Program[] instead of any[]
+  const [expandedFolders, setExpandedFolders] = useState<
+    Record<string, boolean>
+  >({});
+  const [folderPrograms, setFolderPrograms] = useState<
+    Record<string, Program[]>
+  >({}); // Use Program[] instead of any[]
 
   const toggleFolder = async (folderId: string) => {
     setExpandedFolders((prev) => ({
@@ -240,9 +254,10 @@ export default function FolderSidebar({
 
   const handleDeleteFolder = async (folderId: string | null) => {
     if (!folderId) return;
-
     try {
-      const confirmDelete = confirm("Are you sure you want to delete this folder?");
+      const confirmDelete = confirm(
+        "Are you sure you want to delete this folder?"
+      );
       if (confirmDelete) {
         await deleteFolder({ folderId });
         await refreshFolders(); // Refresh the folder list after deletion
@@ -255,7 +270,7 @@ export default function FolderSidebar({
   return (
     <div className="w-64 border-r border-border flex flex-col h-full bg-muted/10">
       <div className="p-3 flex items-center justify-between border-b border-border">
-        <CreateFolderForm userId={userId} onSuccess={refreshFolders} />
+        <CreateFolderForm userId={userId} onSuccess={refreshFolders} startPoint="existing"/>
       </div>
 
       <div className="overflow-y-auto flex-1 py-2">
@@ -268,15 +283,8 @@ export default function FolderSidebar({
         ) : folders.length === 0 ? (
           <div className="px-4 py-3 text-sm text-muted-foreground">
             <p>No folders yet</p>
-            <Button
-              variant="ghost"
-              size="sm"
-              className="mt-2 w-full justify-start text-xs"
-              onClick={() => refreshFolders()}
-            >
-              <FolderPlus className="mr-2 h-4 w-4" />
-              Create your first folder
-            </Button>
+            <CreateFolderForm userId={userId} onSuccess={refreshFolders} startPoint="new"/>
+            
           </div>
         ) : (
           <div className="space-y-1">
@@ -285,7 +293,9 @@ export default function FolderSidebar({
                 <div
                   className={cn(
                     "flex items-center px-2 py-1.5 text-sm rounded-sm group cursor-pointer",
-                    selectedFolderId === folder.id ? "bg-accent text-accent-foreground" : "hover:bg-muted/50",
+                    selectedFolderId === folder.id
+                      ? "bg-accent text-accent-foreground"
+                      : "hover:bg-muted/50"
                   )}
                   onClick={() => setSelectedFolderId(folder.id)}
                 >
@@ -316,7 +326,10 @@ export default function FolderSidebar({
                         <MoreHorizontal className="h-4 w-4" />
                       </Button>
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end" className="w-40 border border-zinc-700">
+                    <DropdownMenuContent
+                      align="end"
+                      className="w-40 border border-zinc-700"
+                    >
                       <DropdownMenuItem>Rename</DropdownMenuItem>
                       <DropdownMenuItem
                         className="text-destructive"

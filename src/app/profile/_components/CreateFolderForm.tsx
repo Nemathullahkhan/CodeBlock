@@ -13,17 +13,21 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { createFolder } from "@/lib/actions/profileActions";
 import { DialogTitle } from "@radix-ui/react-dialog";
-import {  Folder, Plus } from "lucide-react";
+import {  Folder, FolderPlus, Plus } from "lucide-react";
 import { useState } from "react";
+
+
 
 interface CreateFolderFormProps {
   userId: string | null;
   onSuccess: () => void;
+  startPoint : "new" | "existing"
 }
 
 export default function CreateFolderForm({
   userId,
   onSuccess,
+  startPoint
 }: CreateFolderFormProps) {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -51,7 +55,8 @@ export default function CreateFolderForm({
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button
+        {startPoint =="existing" ? (
+          <Button
           variant="ghost"
           className="h-7 w-full justify-between  flex items-center gap-2 px-4 py-2 rounded-md hover:bg-zinc-800"
         >
@@ -61,6 +66,17 @@ export default function CreateFolderForm({
           </div>
           <Plus className="flex justify-end h-4 w-4" />
         </Button>
+        ):(
+          <Button
+                        variant="ghost"
+                        size="sm"
+                        className="mt-2 w-full justify-start text-xs"
+                      >
+                        <FolderPlus className="mr-2 h-4 w-4" />
+                        Create your first folder
+                      </Button>
+        )}
+        
       </DialogTrigger>
       <DialogContent className="max-w-xl h-[65vh] flex flex-col overflow-hidden border-zinc-700 bg-zinc-900 text-zinc-100">
         <DialogHeader className="pb-1 border-b border-zinc-700">

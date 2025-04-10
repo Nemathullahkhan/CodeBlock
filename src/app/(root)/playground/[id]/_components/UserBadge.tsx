@@ -20,15 +20,15 @@ export default function UserBadge() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Badge className="rounded-full h-9 w-9 flex justify-center text-xl cursor-pointer hover:bg-primary/90">
+        <Badge className="rounded-full h-7 w-7 flex justify-center text-md cursor-pointer hover:bg-primary/90 ">
           {firstLetter}
         </Badge>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-48 border border-zinc-800">
-        <DropdownMenuItem className="cursor-pointer">
+      <DropdownMenuContent className="w-40 border border-zinc-800 bg-zinc-400/10 transition-all duration-300">
+        <DropdownMenuItem className="cursor-pointer ">
           <Link href={"/profile"} className="flex gap-2">
             <User className=" h-4 w-4" />
-            <span className="border-l border-zinc-500 px-1">Profile</span>
+            <span className="border-l border-zinc-500 px-3 text-sm">Profile</span>
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem
@@ -36,7 +36,7 @@ export default function UserBadge() {
           onClick={() => signOut({ callbackUrl: "/" })}
         >
           <LogOut className=" h-4 w-4" />
-          <span className="border-l border-zinc-500 px-1">Logout</span>
+          <span className="border-l border-zinc-500 px-3 text-sm">Logout</span>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

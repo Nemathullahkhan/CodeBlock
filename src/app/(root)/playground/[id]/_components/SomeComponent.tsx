@@ -3,7 +3,6 @@
 import {
   BookOpen,
   ChevronDown,
-  Code,
   Codesandbox,
   FileCode,
   GripHorizontal,
@@ -23,8 +22,8 @@ import Link from "next/link";
 import { ProblemSidebar } from "./ProblemSidebar";
 import { Button } from "@/components/ui/button";
 import UserBadge from "./UserBadge";
-import { useSession } from "next-auth/react"; // Import useSession
-import { useRouter } from "next/navigation"; // Import useRouter for redirection
+import { useSession } from "next-auth/react"; 
+import { useRouter } from "next/navigation"; 
 
 type SomeProps = {
   id: string;
@@ -76,18 +75,6 @@ export default function SomeComponent({ id, programName }: SomeProps) {
     }));
     localStorage.setItem(`panel-size-${id}`, size.toString());
   };
-
-  // Enforce panel size limits during drag
-  // const handlePanelResize = (panelId: string, size: number) => {
-  //   if (panelId === "left-panel") {
-  //     // Limit left panel to 60% of container width
-  //     const maxSize = 50;
-  //     if (size > maxSize) {
-  //       return maxSize;
-  //     }
-  //   }
-  //   return size;
-  // };
 
   useEffect(() => {
     const savedEditorSize = localStorage.getItem("panel-size-editor");
@@ -144,7 +131,7 @@ export default function SomeComponent({ id, programName }: SomeProps) {
           </div>
 
           {/* Spacer to balance the flex layout */}
-          <div className="mx-10">
+          <div className="mr-20">
             <UserBadge />
           </div>
         </div>
@@ -198,13 +185,6 @@ export default function SomeComponent({ id, programName }: SomeProps) {
                           <BookOpen className="w-4 h-4 mr-2" />
                           Solution
                         </TabsTrigger>
-                        <TabsTrigger
-                          value="submissions"
-                          className="data-[state=active]:bg-zinc-300 data-[state=active]:text-black flex items-center px-4 h-5 rounded-md transition-colors bg-zinc-800"
-                        >
-                          <Code className="w-4 h-4 mr-2" />
-                          Submissions
-                        </TabsTrigger>
                       </TabsList>
                       <TabsContent
                         value="problem"
@@ -220,21 +200,6 @@ export default function SomeComponent({ id, programName }: SomeProps) {
                       >
                         <div className="p-4 text-gray-300">
                           <SolutionTab id={id} />
-                        </div>
-                      </TabsContent>
-                      <TabsContent
-                        value="submissions"
-                        className="mt-0 h-[calc(100vh-120px)] overflow-auto w-full"
-                      >
-                        <div className="p-4 text-gray-300 w-full">
-                          <h3 className="text-xl font-bold mb-4">
-                            Your Submissions
-                          </h3>
-                          <div className="bg-black rounded-md p-4 border border-[#30363d] w-full">
-                            <p className="text-center text-gray-400 w-5xl">
-                              No submissions yet
-                            </p>
-                          </div>
                         </div>
                       </TabsContent>
                     </Tabs>

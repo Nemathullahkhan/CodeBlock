@@ -287,7 +287,7 @@ import {
   listProgramsByLatest,
 } from "@/lib/actions/profileActions";
 import { Button } from "@/components/ui/button";
-import { File, MoreHorizontal, Calendar, Code, Pencil } from "lucide-react";
+import { File, MoreHorizontal, Calendar, Code, Pencil, Delete } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
@@ -528,18 +528,11 @@ export default function ProgramContent({
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
                         <DropdownMenuItem
-                          onClick={() => {
-                            setProgramToRename(program.id);
-                            setIsRenameDialogOpen(true);
-                          }}
-                        >
-                          Rename
-                        </DropdownMenuItem>
-                        <DropdownMenuItem
                           className="text-destructive"
                           onClick={() => handleDeleteProgram(program.id)}
                           disabled={isDeleting}
                         >
+                          <Delete/>
                           Delete
                         </DropdownMenuItem>
                       </DropdownMenuContent>
@@ -564,7 +557,7 @@ export default function ProgramContent({
           <Input
             value={newProgramName}
             onChange={(e) => setNewProgramName(e.target.value)}
-            placeholder="Enter new program name"
+            placeholder="Enter new program "
             className="mt-2 h-7"
           />
           <div className="flex justify-end mt-4">

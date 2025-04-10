@@ -202,7 +202,7 @@ export interface Implementation {
   contentId: string;
   intuition: string;
   approach: string;
-  code: string; // Using any for JSON type, but could be more specific
+  code: string; 
 }
 
 export interface Module {
