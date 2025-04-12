@@ -264,7 +264,7 @@ type UserProgress = {
   contentId: string;
   completed: boolean;
 };export default function ModulePage( ) {
-  const id =   useParams();
+  const params =   useParams<{id:string}>();
   const router = useRouter();
   const { data: session, status } = useSession();
 
@@ -295,7 +295,7 @@ type UserProgress = {
           }
 
           // Fetch data and assert the type
-          const data = await getModuleData(params.id, session.user.id);
+          const data = await getModuleData(params?.id, session.user.id);
           setModuleData(data);
         } catch (error) {
           console.error("Error fetching module data:", error);
@@ -309,7 +309,7 @@ type UserProgress = {
       // If session.user.id is undefined, set loading to false
       setLoading(false);
     }
-  }, [params.id, session, status, router]);
+  }, [params, session, status, router]);
 
   if (loading || !moduleData) {
     return (
