@@ -8,11 +8,11 @@ export default function CTASection() {
   return (
     <div className="relative py-24 overflow-hidden bg-black">
       {/* Gradient Background Similar to Hero */}
-      <div className="absolute max-w-7xl inset-0 bg-gradient-to-r from-emerald-500/20 to-blue-500/20 rounded-3xl blur-3xl opacity-60" />
+      <div className="absolute mx-16 max-w-7xl inset-0 bg-gradient-to-b from-zinc-800/20 via-blue-500/20 to-emerald-500/20 rounded-3xl blur-3xl opacity-60" />
       
       {/* Animated Gradient Blobs Similar to Hero */}
       <motion.div 
-        className="absolute top-0 right-0 w-[500px] h-[500px] bg-gradient-to-r from-emerald-500/20 to-blue-500/20 rounded-full blur-3xl"
+        className="absolute top-0 right-0 w-[500px] h-[500px] bg-gradient-to-r from-zinc-800/20 via-blue-500/20 to-emerald-500/20 rounded-full blur-3xl"
         animate={{ 
           scale: [1, 1.1, 1],
           x: [0, 20, 0], 
@@ -23,7 +23,7 @@ export default function CTASection() {
       />
       
       <motion.div 
-        className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-gradient-to-r from-blue-500/20 to-emerald-500/20 rounded-full blur-3xl"
+        className="absolute bottom-0 left-0 max-w-7xl bg-gradient-to-r from-zinc-800/20 via-blue-500/20 to-emerald-500/20 rounded-full blur-3xl"
         animate={{ 
           scale: [1, 1.2, 1],
           x: [0, -20, 0], 
@@ -39,15 +39,9 @@ export default function CTASection() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: "easeOut" }}
           viewport={{ once: true }}
-          className="bg-zinc-900/80 backdrop-blur-md border border-zinc-800/80 rounded-xl p-8 lg:p-10 overflow-hidden relative"
+          className="bg-zinc-950/40 backdrop-blur-md border border-zinc-800/80 rounded-xl p-8 lg:p-10 overflow-hidden relative"
         >
-          {/* Subtle animated border */}
-          <div className="absolute inset-0 rounded-xl overflow-hidden">
-            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-zinc-800 via-zinc-600/50 to-zinc-800"></div>
-            <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-zinc-800 via-zinc-600/50 to-zinc-800"></div>
-            <div className="absolute top-0 bottom-0 left-0 w-px bg-gradient-to-b from-zinc-800 via-zinc-600/50 to-zinc-800"></div>
-            <div className="absolute top-0 bottom-0 right-0 w-px bg-gradient-to-b from-zinc-800 via-zinc-600/50 to-zinc-800"></div>
-          </div>
+          
 
           <div className="relative">
             {/* Label Tag */}
@@ -121,15 +115,15 @@ export default function CTASection() {
               className="mt-6 flex flex-wrap items-center gap-4"
             >
               <div className="flex items-center gap-2">
-                <div className="w-1.5 h-1.5 rounded-full bg-zinc-500"></div>
+                <div className="w-1.5 h-1.5 rounded-full bg-indigo-500"></div>
                 <span className="text-zinc-500 text-xs">Interactive Exercises</span>
               </div>
               <div className="flex items-center gap-2">
-                <div className="w-1.5 h-1.5 rounded-full bg-zinc-500"></div>
+                <div className="w-1.5 h-1.5 rounded-full bg-emerald-500"></div>
                 <span className="text-zinc-500 text-xs">Beginner Friendly</span>
               </div>
               <div className="flex items-center gap-2">
-                <div className="w-1.5 h-1.5 rounded-full bg-zinc-500"></div>
+                <div className="w-1.5 h-1.5 rounded-full bg-rose-500"></div>
                 <span className="text-zinc-500 text-xs">Practical Projects</span>
               </div>
             </motion.div>

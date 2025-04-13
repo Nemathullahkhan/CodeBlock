@@ -69,7 +69,7 @@ export default function FeaturesSection() {
   return (
     <div className="relative py-24 overflow-hidden bg-black">
       {/* Dynamic background effects */}
-      <div className="absolute max-w-7xl inset-0 bg-gradient-to-r from-zinc-500/20 to-blue-500/20 rounded-3xl blur-3xl opacity-70" />
+      <div className="absolute max-w-7xl inset-4 bg-gradient-to-r from-zinc-800/20 via-emerald-500/20 to-zinc-800/20 rounded-3xl blur-3xl opacity-70" />
       
       {/* Animated gradient orbs */}
       <motion.div
@@ -94,7 +94,7 @@ export default function FeaturesSection() {
         transition={{ duration: 10, repeat: Infinity, repeatType: "reverse" }}
       />
 
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
+      <div className="max-w-6xl mx-auto px-6 lg:px-8 relative z-10">
         {/* Section Header */}
         <div className="text-center mb-16">
           <motion.div

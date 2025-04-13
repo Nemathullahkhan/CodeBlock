@@ -1,38 +1,30 @@
-"use client";
-
-import { useState, useEffect } from "react";
+  "use client";
 import { Button } from "@/components/ui/button";
 import {
+  BookOpen,
+  ChevronRight,
   Code2,
   Codesandbox,
-  Laptop2,
-  LoaderCircle,
-  Settings,
-  ChevronRight,
-  Terminal,
-  Zap,
   ExternalLink,
   Heart,
-  BookOpen,
+  Laptop2,
+  Settings,
+  Terminal,
+  Zap,
 } from "lucide-react";
-import { motion } from "framer-motion";
 import Link from "next/link";
+import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 import { Editor } from "@monaco-editor/react";
 import { LANGUAGE_CONFIG, THEMES } from "./(root)/_constants";
 import { useCodeEditorStore } from "@/store/useCodeEditorStore";
 import FeaturesSection from "./components/FeatureSection";
 import CTASection from "./components/CTASection";
-import { useSession } from "next-auth/react";
-import { redirect } from "next/navigation";
 
-export default function Home() {
-  const { status } = useSession();
+export default function LandingPage() {
   const { language, theme, setTheme } = useCodeEditorStore();
   const [fontSize, setFontSize] = useState(14);
   const [fontSizePercentage, setFontSizePercentage] = useState(50);
-  const [isScrolled, setIsScrolled] = useState(false);
- 
-  // Update font size based on percentage slider
   const handleFontSizeChange = (percentage: string) => {
     const newPercentage = Number.parseInt(percentage);
     setFontSizePercentage(newPercentage);
@@ -40,119 +32,46 @@ export default function Home() {
     const newFontSize = 10 + (newPercentage / 100) * 14;
     setFontSize(Math.round(newFontSize));
   };
+  const [isScrolled, setIsScrolled] = useState(false);
 
-  // Handle scroll for navbar effect
+  const sampleCode = `// Your coding journey starts here
+  #include<stdio.h>
+
+  function greet() {
+    printf("Hello, welcome to CodeBlock!");
+  }
+
+  int main() {
+    greet();
+    return 0;
+  }`;
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
     };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
-
-
-  // Sample code for editor
-  const sampleCode = `// Your coding journey starts here
-#include<stdio.h>
-
-function greet() {
-  printf("Hello, welcome to CodeBlock!");
-}
-
-int main() {
-  greet();
-  return 0;
-}`;
-
-  if (status === "loading") {
-    return (
-      <div className="min-h-screen bg-black flex items-center justify-center">
-        <LoaderCircle className="w-12 h-12 text-white animate-spin" />
-      </div>
-    );
-  }
-
-  if (status === "authenticated") {
-    redirect("/home");
-  }
-
+  
   return (
     <div className="min-h-screen bg-black text-white">
-      {/* Dynamic Background Effect */}
-      <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
-        {/* Animated gradient orbs */}
-        <motion.div
-          className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-gradient-to-r from-emerald-500/20 to-blue-500/20 rounded-full blur-3xl"
-          animate={{
-            scale: [1, 1.1, 1],
-            opacity: [0.1, 0.15, 0.1],
-            x: [0, 20, 0],
-            y: [0, 15, 0],
-          }}
-          transition={{ duration: 8, repeat: Infinity, repeatType: "reverse" }}
-        />
-        <motion.div
-          className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-gradient-to-r from-blue-500/20 to-emerald-500/20 rounded-full blur-3xl"
-          animate={{
-            scale: [1, 1.2, 1],
-            opacity: [0.1, 0.12, 0.1],
-            x: [0, -20, 0],
-            y: [0, 20, 0],
-          }}
-          transition={{ duration: 10, repeat: Infinity, repeatType: "reverse" }}
-        />
-
-        {/* Code pattern overlay */}
-        <div className="absolute inset-0 opacity-[0.05]">
-          {Array.from({ length: 50 }).map((_, i) => (
-            <div
-              key={i}
-              className="absolute font-mono text-xs text-emerald-500/50 whitespace-nowrap transform transition-all duration-1000 ease-out animate-float-code"
-              style={{
-                top: `${Math.random() * 100}%`,
-                left: `${Math.random() * 100}%`,
-                transform: `rotate(${Math.random() * 360}deg)`,
-                animationDelay: `${Math.random() * 5}s`,
-              }}
-            >
-              {`${Math.random().toString(36).substring(2, 7)}`}
-            </div>
-          ))}
-        </div>
-
-        {/* Subtle noise texture */}
-        <div className="absolute inset-0 opacity-[0.03] mix-blend-overlay">
-          <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
-            <filter id="noiseFilter">
-              <feTurbulence
-                type="fractalNoise"
-                baseFrequency="0.8"
-                numOctaves="4"
-                stitchTiles="stitch"
-              />
-              <feColorMatrix
-                type="matrix"
-                values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0"
-              />
-            </filter>
-            <rect width="100%" height="100%" filter="url(#noiseFilter)" />
-          </svg>
-        </div>
-      </div>
-
-      {/* Navigation Bar */}
+      {/* Navigation MenuBar */}
       <nav
-        className={`fixed w-full z-50 transition-all duration-300 ${
+        className={`fixed top-0 w-full z-50 transition-all duration-300 ${
           isScrolled
             ? "bg-black/80 backdrop-blur-md border-b border-zinc-800/50 py-2"
             : "bg-transparent py-4"
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-2">
-              <Codesandbox className="w-8 h-8 text-white" />
-              <span className="text-2xl font-sans font-semibold text-white">
+              <Codesandbox className="w-7 h-7 text-white" />
+              <span className="text-xl font-sans font-semibold text-white">
                 CodeBlock
               </span>
             </div>
@@ -173,34 +92,11 @@ int main() {
         </div>
       </nav>
 
-      {/* Sun rays dimming effect based on scroll */}
-      <script
-        dangerouslySetInnerHTML={{
-          __html: `
-          document.addEventListener('DOMContentLoaded', () => {
-            const sunRays = document.querySelectorAll('.sun-rays');
-            const maxScroll = document.body.scrollHeight - window.innerHeight;
-            
-            window.addEventListener('scroll', () => {
-              const scrollPercentage = Math.min(window.scrollY / (maxScroll * 0.4), 1);
-              const opacity = Math.max(0.15 - (scrollPercentage * 0.15), 0);
-              
-              sunRays.forEach(ray => {
-                ray.style.opacity = opacity;
-              });
-            });
-          });
-        `,
-        }}
-      />
-
       {/* Hero Section */}
-      <div className="relative pt-32 pb-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
-        {/* Subtle gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black via-black to-black/90 pointer-events-none" />
-
-        <div className="max-w-7xl mx-auto relative">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      <div className="min-h-screen flex items-center justify-center ">
+        <div className="absolute inset-0 bg-gradient-to-b from-black via-black to-black/90 pointer-events-none z-0" />
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 z-10 mt-12">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 items-center">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -266,6 +162,7 @@ int main() {
                 </Link>
               </motion.div>
             </motion.div>
+
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -277,7 +174,7 @@ int main() {
                 <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/20 to-blue-500/20 rounded-3xl blur-[50px] opacity-70" />
 
                 {/* Code editor card */}
-                <div className="relative bg-zinc-900/80 backdrop-blur-md border border-zinc-800/80 rounded-2xl overflow-hidden shadow-2xl">
+                <div className="relative bg-zinc-900/80 backdrop-blur-md border border-zinc-800/80 rounded-2xl overflow-hidden shadow-2xl mt-20">
                   {/* Card header */}
                   <div className="flex items-center gap-2 px-4 py-3 border-b border-zinc-800/80 bg-zinc-950/80">
                     <div className="flex space-x-2">
@@ -339,93 +236,117 @@ int main() {
       </div>
 
       {/* Languages Section */}
-      <div className="py-24 relative overflow-hidden">
-        {/* Subtle gradient background */}
-        {/* <div className="absolute inset-0 bg-gradient-to-b from-black via-zinc-950 to-black"></div> */}
-        
-
+      <div className="py-32 relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-     
+          <div className="absolute max-w-7xl inset-0 bg-gradient-to-r from-zinc-800/20 via-blue-500/30 to-zinc-800/20 rounded-3xl blur-3xl opacity-70" />
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 1.5 }}
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-               <div className="absolute max-w-7xl inset-0 bg-gradient-to-r from-zinc-500/20 to-blue-500/20 rounded-3xl blur-3xl opacity-70" />
-            <h2 className="text-4xl sm:text-6xl tracking-tight font-bold text-white mb-4">
+            <h2 className="text-4xl sm:text-6xl tracking-tight font-bold text-white  mb-4">
               Learn Programming Languages
             </h2>
             <p className="text-zinc-400 mt-4 max-w-2xl mx-auto">
               Master popular programming languages with our structured
               curriculum
             </p>
+            <div className="flex items-center justify-center gap-2 mt-5">
+              <div className="h-px w-8 bg-zinc-700"></div>
+              <span className="text-zinc-500 text-sm font-medium uppercase tracking-wider">
+                Supported Languages
+              </span>
+              <div className="h-px w-8 bg-zinc-700"></div>
+            </div>
           </motion.div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            {[
-              {
-                name: "Python",
-                desc: "Beginner Friendly",
-                img: "/python.png",
-                color: "from-blue-500/20 to-cyan-500/20",
-              },
-              {
-                name: "Java",
-                desc: "Object Oriented",
-                img: "/java.png",
-                color: "from-orange-500/20 to-red-500/20",
-              },
-              {
-                name: "C++",
-                desc: "Performance Focused",
-                img: "/cpp.png",
-                color: "from-blue-500/20 to-indigo-500/20",
-              },
-              {
-                name: "C",
-                desc: "Fundamentally Strong",
-                img: "/c.png",
-                color: "from-zinc-500/20 to-zinc-400/20",
-              },
-            ].map((lang, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                whileHover={{ y: -5, scale: 1.02 }}
-                className="group relative overflow-hidden rounded-xl bg-zinc-900/50 backdrop-blur-sm hover:bg-zinc-800/50 transition-all duration-300 border border-zinc-800/50"
-              >
-                {/* Card gradient background */}
-                <div
-                  className={`absolute inset-0 bg-gradient-to-br ${lang.color} opacity-0 group-hover:opacity-20 transition-opacity duration-500`}
-                ></div>
+          <div className="flex justify-center">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-16 px-4 ">
+              {[
+                {
+                  name: "Python",
+                  desc: "Beginner Friendly",
+                  img: "/python.png",
+                  color: "from-emerald-400/10 to-cyan-500/20",
+                },
+                {
+                  name: "C++",
+                  desc: "Performance Focused",
+                  img: "/cpp.png",
+                  color: "from-blue-400/10 to-indigo-500/20",
+                },
+                {
+                  name: "Java",
+                  desc: "Object Oriented",
+                  img: "/java.png",
+                  color: "from-amber-400/10 to-orange-500/20",
+                },
+                {
+                  name: "C",
+                  desc: "Fundamentally Strong",
+                  img: "/c.png",
+                  color: "from-zinc-400/10 to-zinc-500/20",
+                },
+              ].map((lang, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  transition={{
+                    duration: 0.6,
+                    delay: index * 0.1,
+                    type: "spring",
+                    damping: 10,
+                    stiffness: 100,
+                  }}
+                  viewport={{ once: true, margin: "0px 0px -30px 0px" }}
+                  whileHover={{ y: -8, scale: 1.05 }}
+                  className="group relative"
+                >
+                  <div className="aspect-square w-full flex flex-col items-center justify-center p-1">
+                    {/* Glow effect */}
+                    <div
+                      className={`absolute inset-0 rounded-full ${lang.color} opacity-0 group-hover:opacity-30 blur-md transition-all duration-500`}
+                    />
 
-                <div className="p-6 relative z-10">
-                  <div className="flex items-center gap-4">
-                    <div className="bg-zinc-800/80 backdrop-blur-sm p-3 rounded-lg border border-zinc-700/50 shadow-lg">
-                      <img
-                        src={lang.img || "/placeholder.svg?height=40&width=40"}
-                        alt={lang.name}
-                        className="w-10 h-10"
-                      />
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-semibold text-white group-hover:text-primary transition-colors duration-300">
+                    {/* Main circular card */}
+                    <div className="relative z-10 h-full w-full flex flex-col items-center justify-center gap-3 rounded-full bg-gradient-to-br from-zinc-900 to-slate-900/10 border border-zinc-800/50 group-hover:border-zinc-700 transition-all duration-300 shadow-lg shadow-black/50">
+                      {/* Icon container with subtle ring */}
+                      <div className="relative mb-3 p-3 rounded-full bg-zinc-300/10 group-hover:bg-zinc-700/30 transition-colors duration-300">
+                        <div
+                          className={`absolute inset-0 rounded-full ${lang.color.replace(
+                            "10",
+                            "30"
+                          )} opacity-0 group-hover:opacity-100 transition-opacity duration-300`}
+                        />
+                        <img
+                          src={lang.img}
+                          alt={lang.name}
+                          className="w-10 h-10 object-contain relative z-10 group-hover:scale-110 transition-transform duration-300"
+                          loading="lazy"
+                        />
+                      </div>
+
+                      {/* Language name */}
+                      <h3 className="text-md font-extralight  text-zinc-400 ">
                         {lang.name}
                       </h3>
-                      <p className="text-sm text-zinc-400">{lang.desc}</p>
+
+                      {/* Description that appears on hover */}
+                      <motion.p
+                        initial={{ opacity: 0, y: 5 }}
+                        whileHover={{ opacity: 1, y: 0 }}
+                        className="absolute bottom-4 text-xs text-zinc-300 bg-zinc-800/90 px-3 py-1 rounded-full border border-zinc-700/50 backdrop-blur-sm whitespace-nowrap"
+                      >
+                        {lang.desc}
+                      </motion.p>
                     </div>
                   </div>
-                </div>
-
-                {/* Animated border on hover */}
-                <div className="absolute inset-0 border border-white/0 group-hover:border-white/10 rounded-xl transition-all duration-300"></div>
-              </motion.div>
-            ))}
+                </motion.div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
@@ -433,9 +354,9 @@ int main() {
       {/* Editor Features Section */}
       <div className="py-24 relative overflow-hidden">
         {/* Subtle gradient background */}
-        <div className="absolute max-w-7xl px-10 my-10 inset-0 bg-gradient-to-r from-zinc-500/20 to-emerald-500/40 rounded-3xl blur-3xl opacity-40" />
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="absolute max-w-7xl inset-0 bg-gradient-to-r from-zinc-800/20 via-emerald-500/20 to-zinc-800/20 rounded-3xl blur-3xl opacity-70" />
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -466,28 +387,28 @@ int main() {
                   description:
                     "Visualize your code with vivid syntax highlighting that makes reading and understanding code easier.",
                   icon: <Code2 className="w-6 h-6 text-yellow-400" />,
-                  gradient: "from-yellow-500/20 to-amber-500/20",
+                  gradient: "from-yellow-500/20 to-amber-500",
                 },
                 {
                   title: "Error Detection",
                   description:
                     "Identify issues before they become problems with real-time error checking and suggestions.",
                   icon: <Settings className="w-6 h-6 text-rose-400" />,
-                  gradient: "from-rose-500/20 to-pink-500/20",
+                  gradient: "from-rose-500/20 to-pink-500",
                 },
                 {
                   title: "Intelligent Autocomplete",
                   description:
                     "Write code faster with context-aware suggestions and completions as you type.",
                   icon: <Zap className="w-6 h-6 text-blue-400" />,
-                  gradient: "from-blue-500/20 to-indigo-500/20",
+                  gradient: "from-blue-500/20 to-indigo-500",
                 },
                 {
                   title: "Terminal Integration",
                   description:
                     "Run your code and see results directly in the integrated terminal without leaving the editor.",
                   icon: <Terminal className="w-6 h-6 text-emerald-400" />,
-                  gradient: "from-emerald-500/20 to-green-500/20",
+                  gradient: "from-emerald-500/20 to-green-500",
                 },
               ].map((feature, index) => (
                 <motion.div
@@ -500,7 +421,7 @@ int main() {
                   className="flex gap-6 group"
                 >
                   <div
-                    className={`relative w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0 border border-zinc-800/80 bg-zinc-900/80 backdrop-blur-sm overflow-hidden group-hover:border-zinc-700/80 transition-all duration-300`}
+                    className={`relative w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 border border-zinc-800/80 bg-zinc-900/80 backdrop-blur-sm overflow-hidden group-hover:border-zinc-700/80 transition-all duration-300`}
                   >
                     {/* Feature icon gradient background */}
                     <div
@@ -509,12 +430,18 @@ int main() {
                     <div className="relative z-10">{feature.icon}</div>
                   </div>
                   <div>
-                    <h3 className="text-2xl tracking-tight font-medium text-white mb-2 group-hover:text-primary transition-colors duration-300">
+                    <h3
+                      className="text-xl font-medium text-zinc-100 mb-2 group-hover:text-primary 
+                    transition-colors duration-300"
+                    >
                       {feature.title}
                     </h3>
-                    <p className="text-zinc-400 text-sm">
+                    <p className="text-zinc-500 text-sm">
                       {feature.description}
                     </p>
+                    <div
+                      className={`absolute inset-0 -mx-4 -my-2 px-4 py-2 rounded-lg bg-gradient-to-br ${feature.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-500 -z-10`}
+                    ></div>
                   </div>
                 </motion.div>
               ))}
@@ -601,13 +528,86 @@ int main() {
         </div>
       </div>
 
-      {/* Customization Section */}
+      {/* Customization Editor */}
       <div className="py-24 relative overflow-hidden">
-        {/* Subtle gradient background */}
-        <div className="absolute max-w-7xl mr-24 inset-0 bg-gradient-to-r from-zinc-500/20 to-blue-500/10 rounded-3xl blur-3xl opacity-70" />
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="absolute inset-0 bg-gradient-to-bl from-zinc-800/20 via-blue-500/20 to-zinc-800/20 rounded-xl blur-[30px] opacity-70"></div>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div className="">
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5 }}
+                viewport={{ once: true }}
+                className="space-y-8 order-1 lg:order-2"
+              >
+                <h2 className="text-4xl sm:text-6xl tracking-tight font-bold text-white mb-3">
+                  Personalize Your Experience
+                </h2>
+                <p className="text-md text-zinc-400">
+                  Make CodeBlock truly yours with extensive customization
+                  options. Tailor the environment to match your workflow and
+                  preferences.
+                </p>
+
+                {[
+                  {
+                    title: "Custom Themes",
+                    description:
+                      "Choose from a variety of editor themes or create your own to reduce eye strain and enhance focus.",
+                    icon: <Settings className="w-6 h-6 text-purple-400" />,
+                    gradient: "from-purple-500/20 to-indigo-500/20",
+                  },
+                  {
+                    title: "Keyboard Shortcuts",
+                    description:
+                      "Configure keybindings to match your favorite editor, boosting your productivity instantly.",
+                    icon: <Laptop2 className="w-6 h-6 text-blue-400" />,
+                    gradient: "from-blue-500/20 to-cyan-500/20",
+                  },
+                  {
+                    title: "Code Snippets",
+                    description:
+                      "Create and save reusable code snippets to speed up your development workflow.",
+                    icon: <Code2 className="w-6 h-6 text-emerald-400" />,
+                    gradient: "from-emerald-500/20 to-green-500/20",
+                  },
+                ].map((feature, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, y: 10 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3, delay: index * 0.1 }}
+                    viewport={{ once: true }}
+                    whileHover={{ x: -5 }}
+                    className="flex gap-4 group"
+                  >
+                    <div className="relative w-14 h-14 rounded-lg flex items-center justify-center flex-shrink-0 border border-zinc-800/80 bg-zinc-900/80 backdrop-blur-sm overflow-hidden group-hover:border-zinc-700/80 transition-all duration-300">
+                      {/* Feature icon gradient background */}
+                      <div
+                        className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500`}
+                      ></div>
+                      <div className="relative z-10">{feature.icon}</div>
+                    </div>
+                    <div>
+                      <h3
+                        className="text-xl font-medium text-zinc-100 mb-2 group-hover:text-primary 
+                    transition-colors duration-300"
+                      >
+                        {feature.title}
+                      </h3>
+                      <p className="text-zinc-500 text-sm">
+                        {feature.description}
+                      </p>
+                      <div
+                        className={`absolute inset-0 -mx-4 -my-2 px-4 py-2 rounded-lg bg-gradient-to-br ${feature.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-500 -z-10`}
+                      ></div>
+                    </div>
+                  </motion.div>
+                ))}
+              </motion.div>
+            </div>
+
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
@@ -615,10 +615,7 @@ int main() {
               viewport={{ once: true }}
               className="relative order-2 lg:order-1"
             >
-              <div className="relative w-full max-w-lg mx-auto">
-                {/* Glow effect */}
-                <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-blue-500/10 rounded-xl blur-[30px] opacity-70"></div>
-
+              <div className="relative  max-w-lg mx-auto">
                 {/* Settings panel */}
                 <div className="relative bg-zinc-900/80 backdrop-blur-md border border-zinc-800/80 rounded-xl overflow-hidden shadow-2xl mb-6">
                   <div className="flex items-center justify-between px-4 py-3 border-b border-zinc-800/80 bg-zinc-950/80">
@@ -705,72 +702,6 @@ int main() {
                 </div>
               </div>
             </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5 }}
-              viewport={{ once: true }}
-              className="space-y-8 order-1 lg:order-2"
-            >
-              <h2 className="text-4xl sm:text-6xl tracking-tight font-bold text-white mb-3">
-                Personalize Your Experience
-              </h2>
-              <p className="text-md text-zinc-400">
-                Make CodeBlock truly yours with extensive customization options.
-                Tailor the environment to match your workflow and preferences.
-              </p>
-
-              {[
-                {
-                  title: "Custom Themes",
-                  description:
-                    "Choose from a variety of editor themes or create your own to reduce eye strain and enhance focus.",
-                  icon: <Settings className="w-6 h-6 text-purple-400" />,
-                  gradient: "from-purple-500/20 to-indigo-500/20",
-                },
-                {
-                  title: "Keyboard Shortcuts",
-                  description:
-                    "Configure keybindings to match your favorite editor, boosting your productivity instantly.",
-                  icon: <Laptop2 className="w-6 h-6 text-blue-400" />,
-                  gradient: "from-blue-500/20 to-cyan-500/20",
-                },
-                {
-                  title: "Code Snippets",
-                  description:
-                    "Create and save reusable code snippets to speed up your development workflow.",
-                  icon: <Code2 className="w-6 h-6 text-emerald-400" />,
-                  gradient: "from-emerald-500/20 to-green-500/20",
-                },
-              ].map((feature, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 10 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3, delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                  whileHover={{ x: -5 }}
-                  className="flex gap-4 group"
-                >
-                  <div className="relative w-14 h-14 rounded-lg flex items-center justify-center flex-shrink-0 border border-zinc-800/80 bg-zinc-900/80 backdrop-blur-sm overflow-hidden group-hover:border-zinc-700/80 transition-all duration-300">
-                    {/* Feature icon gradient background */}
-                    <div
-                      className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500`}
-                    ></div>
-                    <div className="relative z-10">{feature.icon}</div>
-                  </div>
-                  <div>
-                    <h3 className="text-2xl tracking-tight font-medium text-white mb-2 group-hover:text-primary transition-colors duration-300">
-                      {feature.title}
-                    </h3>
-                    <p className="text-zinc-400 text-sm">
-                      {feature.description}
-                    </p>
-                  </div>
-                </motion.div>
-              ))}
-            </motion.div>
           </div>
         </div>
       </div>
@@ -779,14 +710,15 @@ int main() {
 
       <CTASection />
 
+      {/* Footer */}
       <footer className="py-16 border-t border-slate-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-[60%_20%_20%] gap-12">
             {/* Brand section */}
             <div className="space-y-6">
               <div className="flex items-center gap-2">
-                <Codesandbox className="w-8 h-8 text-white" />
-                <span className="text-xl font-medium text-white">
+                <Codesandbox className="w-7 h-7 text-white" />
+                <span className="text-lg font-medium text-white">
                   CodeBlock
                 </span>
               </div>
