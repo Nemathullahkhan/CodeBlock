@@ -206,8 +206,8 @@ export default function TopicPage( ) {
   
   return (
     <div className="min-h-screen bg-zinc-950">
-      <div className="w-[1400px] sticky mx-auto flex justify-center">
-        <div className="flex items-center justify-between px-10 py-2 border-b-4 border-zinc-800  m-3 w-full">
+      <div className="w-[1300px] sticky mx-auto flex justify-center">
+        <div className="flex items-center justify-between px-10 py-2 border-b-2 border-zinc-800  m-3 w-full">
           {/* Left-aligned Codesandbox */}
           <div className="flex justify-start items-center">
             <Link href="/home" className="flex items-center gap-2">
